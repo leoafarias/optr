@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:optr/components/edge.dart';
+import 'package:optr/components/edges.dart';
 
 /// Generic wrapper for Optr
 class Wrapper extends StatelessWidget {
