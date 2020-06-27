@@ -13,6 +13,8 @@ dependencies:
   simple_animations: ^2.2.1
   sa_stateless_animation: ^1.0.1
   soundpool: ^1.1.1
+  flutter_secure_storage: ^3.3.3
+  hooks_riverpod: ^0.1.0
 
 dev_dependencies:
   flutter_test:
