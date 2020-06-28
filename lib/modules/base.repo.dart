@@ -10,14 +10,7 @@ abstract class BaseRepo<T extends BaseModel> {
 
   /// Saves password to secure storage
   Future<void> save(T model) async {
-    // Store password on secure storage
-    if (!model.validate()) {
-      throw Exception('Model is not valid');
-    }
-
     await _storage.write(key: model.id, value: model.toJson());
-
-    // Adds updated model to password list
   }
 
   /// Deletes a Password Model from storage

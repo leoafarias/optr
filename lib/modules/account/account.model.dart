@@ -4,6 +4,7 @@
 
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:optr/modules/base.model.dart';
 
@@ -19,9 +20,6 @@ class Account implements BaseModel {
   /// Master ID that the account uses
   String masterId;
 
-  /// Friendly name of the account
-  String name;
-
   /// Version of the account
   int version;
 
@@ -32,12 +30,11 @@ class Account implements BaseModel {
 
   /// Constructor
   Account({
-    this.id,
-    this.identifier,
-    this.masterId,
-    this.name,
-    this.version = 0,
-    this.website,
+    @required this.id,
+    this.identifier = '',
+    this.masterId = '',
+    this.version = 1,
+    this.website = '',
   });
 
   /// Create Account form Json
@@ -48,20 +45,9 @@ class Account implements BaseModel {
         id: json['id'],
         identifier: json['identifier'],
         masterId: json['masterID'],
-        name: json['name'],
         version: json['version'],
         website: json['website'],
       );
-
-  /// Validates model
-  @override
-  bool validate() {
-    return id.isNotEmpty &&
-        identifier.isNotEmpty &&
-        masterId.isNotEmpty &&
-        name.isNotEmpty &&
-        !version.isNaN;
-  }
 
   /// Converts Account into JSON
   @override
@@ -73,7 +59,6 @@ class Account implements BaseModel {
         'id': id,
         'identifier': identifier,
         'masterID': masterId,
-        'name': name,
         'version': version,
         'website': website,
         'type': _type.toString(),

@@ -21,9 +21,6 @@ abstract class BaseModel {
   /// Constructor
   BaseModel({this.id});
 
-  /// Validates model
-  bool validate();
-
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
