@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:optr/helpers/sound_effect.dart';
 
 import 'package:simple_animations/simple_animations.dart';
 
@@ -12,6 +13,8 @@ class Frame extends StatefulWidget {
   final List<BoxShadow> boxShadow;
   final BlendMode backgroundBlendMode;
   final DecorationPosition position;
+  final bool enableSoundEffect;
+  final Future<int> soundEffect;
   final Widget child;
 
   const Frame({
@@ -25,6 +28,8 @@ class Frame extends StatefulWidget {
     this.boxShadow,
     this.backgroundBlendMode,
     this.position = DecorationPosition.background,
+    this.enableSoundEffect = false,
+    this.soundEffect,
     this.child,
   }) : super(key: key);
 
@@ -37,7 +42,9 @@ class _FrameState extends State<Frame> {
   void initState() {
     super.initState();
 
-    // SoundEffect.play(SoundEffect.deploy);
+    if (widget.enableSoundEffect) {
+      SoundEffect.play(widget.soundEffect ?? SoundEffect.deploy);
+    }
   }
 
   @override
@@ -136,103 +143,103 @@ class _FrameDecorationPainter extends BoxPainter {
 
     _paintShadows(canvas, rect);
     _paintBackgroundColor(canvas, rect);
-    _drawRect(canvas, configuration.size);
-    _drawCorners(canvas, configuration.size);
+    _drawRect(canvas, rect);
+    _drawCorners(canvas, rect);
   }
 
-  void _drawCorners(Canvas canvas, Size size) {
+  void _drawCorners(Canvas canvas, Rect rect) {
     final paint = Paint()
       ..color = lineColor.withOpacity(step)
       ..strokeWidth = cornerStroke
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.square;
 
-    final length = step * size.shortestSide * cornerLengthRatio;
+    final length = step * rect.shortestSide * cornerLengthRatio;
 
     final topLeftCorner = Path()
-      ..lineTo(length, 0.0)
-      ..moveTo(0.0, 0.0)
-      ..lineTo(0.0, length);
+      ..moveTo(rect.topLeft.dx, rect.topLeft.dy + length)
+      ..relativeLineTo(0.0, -length)
+      ..relativeLineTo(length, 0.0);
 
     canvas.drawPath(topLeftCorner, paint);
 
     final topRightCorner = Path()
-      ..moveTo(size.width - length, 0.0)
-      ..lineTo(size.width, 0.0)
-      ..lineTo(size.width, length);
+      ..moveTo(rect.topRight.dx - length, rect.topRight.dy)
+      ..relativeLineTo(length, 0.0)
+      ..relativeLineTo(0.0, length);
 
     canvas.drawPath(topRightCorner, paint);
 
     final bottomLeftCorner = Path()
-      ..moveTo(0.0, size.height - length)
-      ..lineTo(0.0, size.height)
-      ..lineTo(length, size.height);
+      ..moveTo(rect.bottomLeft.dx, rect.bottomLeft.dy - length)
+      ..relativeLineTo(0.0, length)
+      ..relativeLineTo(length, 0.0);
 
     canvas.drawPath(bottomLeftCorner, paint);
 
     final bottomRightCorner = Path()
-      ..moveTo(size.width, size.height - length)
-      ..lineTo(size.width, size.height)
-      ..lineTo(size.width - length, size.height);
+      ..moveTo(rect.bottomRight.dx - length, rect.bottomRight.dy)
+      ..relativeLineTo(length, 0.0)
+      ..relativeLineTo(0.0, -length);
 
     canvas.drawPath(bottomRightCorner, paint);
   }
 
-  void _drawRect(Canvas canvas, Size size) {
+  void _drawRect(Canvas canvas, Rect rect) {
     final paint = Paint()
       ..color = lineColor.withOpacity(step)
       ..strokeWidth = lineStroke
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.square;
 
-    canvas.drawPath(_topPath(size), paint);
-    canvas.drawPath(_rightPath(size), paint);
-    canvas.drawPath(_bottomPath(size), paint);
-    canvas.drawPath(_leftPath(size), paint);
+    canvas.drawPath(_topPath(rect), paint);
+    canvas.drawPath(_rightPath(rect), paint);
+    canvas.drawPath(_bottomPath(rect), paint);
+    canvas.drawPath(_leftPath(rect), paint);
   }
 
-  Path _topPath(Size size) {
-    final start = Tween<double>(begin: size.width / 2, end: 0.0);
-    final length = Tween<double>(begin: size.width / 2, end: size.width);
+  Path _topPath(Rect rect) {
+    final tween = RectTween(
+      begin: Rect.zero.shift(rect.topCenter),
+      end: rect,
+    ).transform(step);
 
-    final path = Path();
-    path.moveTo(start.transform(step), 0.0);
-    path.lineTo(length.transform(step), 0.0);
-
-    return path;
+    return Path()
+      ..moveTo(tween.topLeft.dx, tween.topLeft.dy)
+      ..relativeLineTo(tween.width, 0.0);
   }
 
-  Path _rightPath(Size size) {
-    final start = Tween<double>(begin: size.height / 2, end: 0.0);
-    final length = Tween<double>(begin: size.height / 2, end: size.height);
+  Path _rightPath(Rect rect) {
+    final tween = RectTween(
+      begin: Rect.zero.shift(rect.centerRight),
+      end: rect,
+    ).transform(step);
 
-    final path = Path();
-    path.moveTo(size.width, start.transform(step));
-    path.lineTo(size.width, length.transform(step));
-
-    return path;
+    return Path()
+      ..moveTo(tween.topRight.dx, tween.topRight.dy)
+      ..relativeLineTo(0.0, tween.height);
   }
 
-  Path _bottomPath(Size size) {
-    final start = Tween<double>(begin: size.width / 2, end: 0.0);
-    final length = Tween<double>(begin: size.width / 2, end: size.width);
+  Path _bottomPath(Rect rect) {
+    final tween = RectTween(
+      begin: Rect.zero.shift(rect.bottomCenter),
+      end: rect,
+    ).transform(step);
 
-    final path = Path();
-    path.moveTo(start.transform(step), size.height);
-    path.lineTo(length.transform(step), size.height);
-
-    return path;
+    return Path()
+      ..moveTo(tween.bottomLeft.dx, tween.bottomLeft.dy)
+      ..relativeLineTo(tween.width, 0.0);
   }
 
-  Path _leftPath(Size size) {
-    final start = Tween<double>(begin: size.height / 2, end: 0.0);
-    final length = Tween<double>(begin: size.height / 2, end: size.height);
+  Path _leftPath(Rect rect) {
+    final tween = RectTween(
+      begin: Rect.zero.shift(rect.centerLeft),
+      end: rect,
+    ).transform(step);
 
-    final path = Path();
-    path.moveTo(0.0, start.transform(step));
-    path.lineTo(0.0, length.transform(step));
-
-    return path;
+    return Path()
+      ..moveTo(tween.topLeft.dx, tween.topLeft.dy)
+      ..relativeLineTo(0.0, tween.height);
   }
 
   void _paintShadows(Canvas canvas, Rect rect) {

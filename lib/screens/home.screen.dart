@@ -51,17 +51,22 @@ class HomeScreen extends HookWidget {
                   style: GoogleFonts.orbitron(),
                 ),
                 const SizedBox(height: 40),
-                OptrButton.success(
-                  label: 'Success',
-                  icon: Icons.thumb_up,
-                ),
-                const SizedBox(height: 40),
-                OptrButton.error(
-                  label: 'Error',
-                  icon: Icons.clear,
+                Row(
+                  children: <Widget>[
+                    OptrButton.success(
+                      label: 'Success',
+                      icon: Icons.thumb_up,
+                    ),
+                    const SizedBox(width: 40),
+                    OptrButton.error(
+                      label: 'Error',
+                      icon: Icons.clear,
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 40),
                 Frame(
+                  enableSoundEffect: true,
                   child: Column(
                     children: <Widget>[
                       Center(
