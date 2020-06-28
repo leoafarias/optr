@@ -19,13 +19,14 @@ class OptrTextField extends StatefulWidget {
   final Function(String) onChanged;
 
   /// TExt field constructor
-  OptrTextField(
+  const OptrTextField(
       {this.label,
       this.value,
       this.obscureText = false,
       @required this.onChanged,
       this.autofocus = false});
 
+  @override
   _OptrTextFieldState createState() => _OptrTextFieldState();
 }
 
@@ -75,13 +76,13 @@ class _OptrTextFieldState extends State<OptrTextField> {
         child: Padding(
           padding: const EdgeInsets.all(1.0),
           child: OptrEdges(
-            color: _hasFocus ? Colors.teal : Color(0xFF222222),
-            corners: EdgeCorners.cross(10, 0),
+            color: _hasFocus ? Colors.teal : const Color(0xFF222222),
+            corners: const EdgeCorners.cross(10, 0),
             child: Padding(
               padding: const EdgeInsets.all(1),
               child: OptrEdges(
-                color: Color(0xFF222222),
-                corners: EdgeCorners.cross(10, 0),
+                color: const Color(0xFF222222),
+                corners: const EdgeCorners.cross(10, 0),
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                   child: TextField(

@@ -10,7 +10,7 @@ final accountRepoProvider = Provider((_) => AccountRepo());
 
 /// Repository to be used with all password functionality
 class AccountRepo extends BaseRepo<Account> {
-  final _storage = FlutterSecureStorage();
+  final _storage = const FlutterSecureStorage();
 
   /// Constructor for Account Repo
   AccountRepo() : super();

@@ -10,7 +10,7 @@ final secretRepoProvider = Provider((_) => SecretRepo());
 
 /// Repository to be used with all password functionality
 class SecretRepo extends BaseRepo<Secret> {
-  final _storage = FlutterSecureStorage();
+  final _storage = const FlutterSecureStorage();
 
   /// Constructor for Master Secret Repo
   /// Creates or returns an existing instance of the Master Secret Repo

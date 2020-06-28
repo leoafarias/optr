@@ -8,10 +8,10 @@ import 'package:optr/helpers/build_barcode.dart';
 class HomeScreen extends HookWidget {
   final String _title;
 
-  HomeScreen(this._title);
+  const HomeScreen(this._title);
 
   /// Route of the screen to be used for navigation
-  static final String routeName = 'dashboard';
+  static const String routeName = 'dashboard';
 
   @override
   Widget build(BuildContext context) {
@@ -25,46 +25,45 @@ class HomeScreen extends HookWidget {
     }
 
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       body: SafeArea(
         child: Wrapper(
-          child: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                SizedBox(height: 20.0),
-                Column(
-                  children: <Widget>[
-                    SizedBox(height: 20),
-                    OptrTextField(label: 'Account ', onChanged: null),
-                    SizedBox(height: 20),
-                    OptrTextField(label: 'Name', onChanged: null),
-                    SizedBox(height: 20),
-                    Container(
-                      color: Colors.white,
-                      height: 200,
-                      width: 200,
-                      child: barCodeAnimated(svgPath.value, run: run.value),
-                    ),
-                    FlatButton(
-                      child: Text('Build Barcode'),
-                      onPressed: _onBuildBarcode,
-                    ),
-                    SizedBox(height: 20),
-                    Text(
-                      'Default Subtitle 1',
-                      style: Theme.of(context).textTheme.subtitle1,
-                    ),
-                    Text(
-                      'Titilium',
-                      style: GoogleFonts.titilliumWeb(),
-                    ),
-                    // Counter(min: 1, onChanged: print),
-                  ],
-                ),
-              ],
-              // Expanded(child: OptrPadding(child: AccountList(accountsList)))
-            ),
+          child: ListView(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+            children: <Widget>[
+              const SizedBox(height: 20.0),
+              Column(
+                children: <Widget>[
+                  const SizedBox(height: 20),
+                  const OptrTextField(label: 'Account ', onChanged: null),
+                  const SizedBox(height: 20),
+                  const OptrTextField(label: 'Name', onChanged: null),
+                  const SizedBox(height: 20),
+                  Container(
+                    color: Colors.white,
+                    height: 200,
+                    width: 200,
+                    child: barCodeAnimated(svgPath.value, run: run.value),
+                  ),
+                  FlatButton(
+                    child: const Text('Build Barcode'),
+                    onPressed: _onBuildBarcode,
+                  ),
+                  const SizedBox(height: 20),
+                  Text(
+                    'Default Subtitle 1',
+                    style: Theme.of(context).textTheme.subtitle1,
+                  ),
+                  Text(
+                    'Titilium',
+                    style: GoogleFonts.titilliumWeb(),
+                  ),
+                  // Counter(min: 1, onChanged: print),
+                ],
+              ),
+            ],
+            // Expanded(child: OptrPadding(child: AccountList(accountsList)))
           ),
         ),
       ),

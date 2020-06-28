@@ -67,7 +67,8 @@ class TextDecoder {
     var output = '';
     var complete = 0;
     _queue;
-    createOutput(Character c) {
+
+    void createOutput(Character c) {
       if (frame >= c.end) {
         complete++;
         output += c.to;
@@ -94,7 +95,7 @@ class TextDecoder {
     Future.delayed(delay, update);
   }
 
-  _randomChar() {
+  String _randomChar() {
     return _chars[Random().nextInt(_chars.length)];
   }
 }

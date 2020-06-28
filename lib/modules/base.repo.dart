@@ -6,7 +6,7 @@ abstract class BaseRepo<T extends BaseModel> {
   /// Constructor
   BaseRepo();
 
-  final _storage = FlutterSecureStorage();
+  final _storage = const FlutterSecureStorage();
 
   /// Saves password to secure storage
   Future<void> save(T model) async {

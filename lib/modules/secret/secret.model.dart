@@ -12,6 +12,7 @@ class Secret implements BaseModel {
   String hash;
 
   /// ID of Master Secret
+  @override
   String id;
 
   /// Friendly name of the Master Secret
@@ -33,13 +34,14 @@ class Secret implements BaseModel {
 
   /// Creates Master Seret from Map
   factory Secret.fromMap(Map<String, dynamic> json) => Secret(
-        hash: json["hash"],
-        id: json["id"],
-        name: json["name"],
-        accountCount: json["accountCount"],
+        hash: json['hash'],
+        id: json['id'],
+        name: json['name'],
+        accountCount: json['accountCount'],
       );
 
   /// Is MasterSecret ready to save
+  @override
   bool validate() {
     return id.isNotEmpty &&
         hash.isNotEmpty &&
@@ -48,14 +50,16 @@ class Secret implements BaseModel {
   }
 
   /// Converts Master Secret to Json
+  @override
   String toJson() => json.encode(toMap());
 
   /// Converts Master Secret to Map
+  @override
   Map<String, dynamic> toMap() => {
-        "hash": hash,
-        "id": id,
-        "name": name,
-        "type": _type.toString(),
-        "accountCount": accountCount,
+        'hash': hash,
+        'id': id,
+        'name': name,
+        'type': _type.toString(),
+        'accountCount': accountCount,
       };
 }

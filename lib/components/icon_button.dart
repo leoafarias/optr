@@ -22,15 +22,15 @@ class OptrIconButton extends StatelessWidget {
     return RawMaterialButton(
       fillColor: color,
       child: icon,
-      padding: EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(8.0),
       onPressed: onPressed,
-      shape: BeveledRectangleBorder(
+      shape: const BeveledRectangleBorder(
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(10),
               topRight: Radius.circular(0),
               bottomRight: Radius.circular(10),
               bottomLeft: Radius.circular(0))),
-      constraints: BoxConstraints(),
+      constraints: const BoxConstraints(),
       elevation: 0.0,
     );
   }

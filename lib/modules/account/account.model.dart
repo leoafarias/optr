@@ -9,6 +9,7 @@ import 'package:optr/modules/base.model.dart';
 /// Account Model
 class Account implements BaseModel {
   /// ID of the account
+  @override
   String id;
 
   /// Identifier of account
@@ -43,15 +44,16 @@ class Account implements BaseModel {
 
   /// Creates account from Map
   factory Account.fromMap(Map<String, dynamic> json) => Account(
-        id: json["id"],
-        identifier: json["identifier"],
-        masterId: json["masterID"],
-        name: json["name"],
-        version: json["version"],
-        website: json["website"],
+        id: json['id'],
+        identifier: json['identifier'],
+        masterId: json['masterID'],
+        name: json['name'],
+        version: json['version'],
+        website: json['website'],
       );
 
   /// Validates model
+  @override
   bool validate() {
     return id.isNotEmpty &&
         identifier.isNotEmpty &&
@@ -61,16 +63,18 @@ class Account implements BaseModel {
   }
 
   /// Converts Account into JSON
+  @override
   String toJson() => json.encode(toMap());
 
   /// Converts account to Map
+  @override
   Map<String, dynamic> toMap() => {
-        "id": id,
-        "identifier": identifier,
-        "masterID": masterId,
-        "name": name,
-        "version": version,
-        "website": website,
-        "type": _type.toString()
+        'id': id,
+        'identifier': identifier,
+        'masterID': masterId,
+        'name': name,
+        'version': version,
+        'website': website,
+        'type': _type.toString(),
       };
 }

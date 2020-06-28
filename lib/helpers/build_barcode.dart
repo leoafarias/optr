@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:ui';
 import 'package:barcode/barcode.dart';
 import 'package:drawing_animation/drawing_animation.dart';
 import 'package:flutter/material.dart';
@@ -27,10 +26,8 @@ Future<String> buildBarcode(
   // double fontHeight = 20,
 }) async {
   /// Create the Barcode
-  if (bc == null) {
-    // bc = Barcode.code128(useCode128A: false, useCode128C: false);
-    bc = Barcode.qrCode();
-  }
+  // bc = Barcode.code128(useCode128A: false, useCode128C: false);
+  bc ??= Barcode.qrCode();
 
   final rawSvg = bc.toSvg(data,
       width: width ?? 200,
@@ -49,7 +46,7 @@ Future<String> buildBarcode(
 
 /// Animated barcode
 Widget barCodeAnimated(String path, {bool run = false}) {
-  if (path.isEmpty) return SizedBox(height: 20);
+  if (path.isEmpty) return const SizedBox(height: 20);
   return Container(
     color: Colors.white,
     height: 200,
@@ -57,7 +54,7 @@ Widget barCodeAnimated(String path, {bool run = false}) {
       child: AnimatedDrawing.svg(
         path,
         run: run,
-        duration: Duration(seconds: 3),
+        duration: const Duration(seconds: 3),
         lineAnimation: LineAnimation.oneByOne,
         animationOrder: PathOrders.decreasingLength,
         animationCurve: Curves.linear,

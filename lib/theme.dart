@@ -16,7 +16,7 @@ ThemeData darkTheme() {
   return ThemeData(
     brightness: Brightness.dark,
     primaryColor: Colors.teal,
-    cardColor: Color(0xFF111111),
+    cardColor: const Color(0xFF111111),
     scaffoldBackgroundColor: Colors.black,
     // buttonColor: Color(0xFF111111),
     // cardTheme: CardTheme(color: Color(0xFF222222), elevation: 0),
