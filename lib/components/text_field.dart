@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:optr/components/edges.dart';
-import 'package:optr/helpers/hex_color.dart';
 
 /// Text Field component
 class OptrTextField extends StatefulWidget {
@@ -71,35 +70,36 @@ class _OptrTextFieldState extends State<OptrTextField> {
       child: Container(
         decoration: BoxDecoration(
             boxShadow: _hasFocus
-                ? [BoxShadow(color: Colors.teal.withAlpha(150), blurRadius: 10)]
+                ? [BoxShadow(color: Colors.teal.withAlpha(150), blurRadius: 5)]
                 : null),
         child: Padding(
           padding: const EdgeInsets.all(1.0),
           child: OptrEdges(
-            color: _hasFocus ? Colors.teal : HexColor('#222222'),
+            color: _hasFocus ? Colors.teal : Color(0xFF222222),
             corners: EdgeCorners.cross(10, 0),
             child: Padding(
               padding: const EdgeInsets.all(1),
               child: OptrEdges(
-                color: HexColor('#222222'),
+                color: Color(0xFF222222),
                 corners: EdgeCorners.cross(10, 0),
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                   child: TextField(
-                      controller: textFieldController,
-                      onChanged: widget.onChanged,
-                      cursorColor: Colors.teal,
-                      textInputAction: TextInputAction.next,
-                      autofocus: widget.autofocus,
-                      autocorrect: false,
-                      obscureText: _obscureText,
-                      focusNode: _focus,
-                      onSubmitted: (_) => FocusScope.of(context).nextFocus(),
-                      decoration: InputDecoration(
-                        suffixIcon: _buildRevealButton(),
-                        border: InputBorder.none,
-                        labelText: widget.label,
-                      )),
+                    controller: textFieldController,
+                    onChanged: widget.onChanged,
+                    cursorColor: Colors.teal,
+                    textInputAction: TextInputAction.next,
+                    autofocus: widget.autofocus,
+                    autocorrect: false,
+                    obscureText: _obscureText,
+                    focusNode: _focus,
+                    onSubmitted: (_) => FocusScope.of(context).nextFocus(),
+                    decoration: InputDecoration(
+                      suffixIcon: _buildRevealButton(),
+                      border: InputBorder.none,
+                      labelText: widget.label,
+                    ),
+                  ),
                 ),
               ),
             ),

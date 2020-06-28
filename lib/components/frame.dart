@@ -39,7 +39,10 @@ class _FrameState extends State<Frame> {
       duration: const Duration(milliseconds: 800),
       builder: (context, child, value) {
         return CustomPaint(
-          child: child,
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: child,
+          ),
           painter: _ShapePainter(
             step: value,
             lineStrokeWidth: widget.lineStrokeWidth,

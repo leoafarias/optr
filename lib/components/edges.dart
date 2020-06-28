@@ -12,12 +12,12 @@ class OptrEdges extends StatelessWidget {
   final EdgeCorners corners;
 
   /// Constructor
-  const OptrEdges(
-      {Key key,
-      @required this.child,
-      this.color = Colors.cyan,
-      this.corners = const EdgeCorners.only(5, 5, 5, 5)})
-      : super(key: key);
+  const OptrEdges({
+    Key key,
+    @required this.child,
+    this.color = Colors.grey,
+    this.corners = const EdgeCorners.only(5, 5, 5, 5),
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,13 +25,59 @@ class OptrEdges extends StatelessWidget {
     return ClipPath(
       clipper: ShapeBorderClipper(
         shape: BeveledRectangleBorder(
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(corners.topLeft),
-                topRight: Radius.circular(corners.topRight),
-                bottomRight: Radius.circular(corners.bottomRight),
-                bottomLeft: Radius.circular(corners.bottomLeft))),
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(corners.topLeft),
+            topRight: Radius.circular(corners.topRight),
+            bottomRight: Radius.circular(corners.bottomRight),
+            bottomLeft: Radius.circular(corners.bottomLeft),
+          ),
+        ),
       ),
       child: Container(child: child, decoration: BoxDecoration(color: color)),
+    );
+  }
+}
+
+class OptrDoubleEdge extends StatelessWidget {
+  /// Widget child
+  final Widget child;
+
+  /// Edge color
+  final Color color;
+
+  /// Border color
+  final Color borderColor;
+
+  ///Border width
+  final double borderWidth;
+
+  /// Sharpness of the corners
+  final EdgeCorners corners;
+
+  /// Constructor
+  const OptrDoubleEdge({
+    Key key,
+    @required this.child,
+    this.borderColor = Colors.teal,
+    this.color = Colors.black,
+    this.borderWidth = 1.0,
+    this.corners = const EdgeCorners.only(5, 5, 5, 5),
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    // if (corners == null) corners = EdgeCorners.only(25, 25, 0, 40);
+    return OptrEdges(
+      color: borderColor,
+      corners: corners,
+      child: Padding(
+        padding: EdgeInsets.all(borderWidth),
+        child: OptrEdges(
+          color: color,
+          corners: corners,
+          child: child,
+        ),
+      ),
     );
   }
 }
@@ -62,10 +108,11 @@ class EdgeCorners {
   const EdgeCorners.only(
       double topRight, double topLeft, double bottomRight, double bottomLeft)
       : this(
-            topLeft: topLeft,
-            topRight: topRight,
-            bottomLeft: bottomLeft,
-            bottomRight: bottomRight);
+          topLeft: topLeft,
+          topRight: topRight,
+          bottomLeft: bottomLeft,
+          bottomRight: bottomRight,
+        );
 
   /// Creates cross axis edge corners
   const EdgeCorners.cross(double topToBottom, double bottomToTop)

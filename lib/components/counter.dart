@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:optr/components/edges.dart';
 import 'package:optr/components/icon_button.dart';
 
 /// Increment and decrement widget
@@ -17,7 +18,7 @@ class OptrCounter extends HookWidget {
   final int max;
 
   /// Constructor
-  const OptrCounter({int value, this.onChanged, this.min = 0, this.max = 100})
+  const OptrCounter(int value, this.onChanged, {this.min = 0, this.max = 100})
       : _value = value ?? min;
 
   @override
@@ -46,28 +47,37 @@ class OptrCounter extends HookWidget {
       count.value--;
     }
 
-    return Container(
-      child: Container(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: <Widget>[
-            OptrIconButton(
+    return OptrEdges(
+      color: Colors.black,
+      corners: EdgeCorners.cross(10, 0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          SizedBox(width: 10),
+          Expanded(
+              child: Text('Version',
+                  style: Theme.of(context).textTheme.subtitle1)),
+          Container(
+            child: IconButton(
               icon: Icon(Icons.remove),
               onPressed: decrement,
             ),
-            SizedBox(width: 10.0, height: 60.0),
-            ConstrainedBox(
-                constraints: BoxConstraints(minWidth: 20.0),
-                child: Text(count.value.toString(),
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 14.0))),
-            SizedBox(width: 10.0),
-            OptrIconButton(
+          ),
+          SizedBox(width: 10.0),
+          ConstrainedBox(
+              constraints: BoxConstraints(minWidth: 20.0),
+              child: Text(count.value.toString(),
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 14.0))),
+          SizedBox(width: 10.0),
+          Container(
+            color: Colors.black,
+            child: IconButton(
               icon: Icon(Icons.add),
               onPressed: increment,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
