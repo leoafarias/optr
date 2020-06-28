@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:optr/components/cut_edges_decoration.dart';
-import 'package:optr/components/edges.dart';
 
 /// Text Field component
 class OptrTextField extends StatefulWidget {

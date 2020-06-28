@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:optr/components/button.dart';
 import 'package:optr/components/frame.dart';
 import 'package:optr/components/text_field.dart';
 import 'package:optr/components/wrapper.dart';
@@ -35,25 +37,22 @@ class HomeScreen extends HookWidget {
               const OptrTextField(label: 'Account ', onChanged: null),
               const SizedBox(height: 20),
               const OptrTextField(label: 'Name', onChanged: null),
-              const SizedBox(height: 20),
-              Frame(
-                color: Colors.black,
-                lineColor: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.tealAccent.withAlpha(150),
-                    blurRadius: 5.0,
-                    spreadRadius: 5.0,
-                  )
-                ],
-                child: const Center(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 20.0),
-                    child: Text('Customized Frame'),
-                  ),
-                ),
+              const SizedBox(height: 40),
+              OptrButton(
+                label: 'Cyberpunk',
+                style: GoogleFonts.orbitron(),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 40),
+              OptrButton.success(
+                label: 'Success',
+                icon: Icons.thumb_up,
+              ),
+              const SizedBox(height: 40),
+              OptrButton.error(
+                label: 'Error',
+                icon: Icons.clear,
+              ),
+              const SizedBox(height: 40),
               Frame(
                 child: Column(
                   children: <Widget>[
