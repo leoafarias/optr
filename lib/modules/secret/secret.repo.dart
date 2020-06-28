@@ -10,6 +10,9 @@ final secretRepoProvider = Provider((_) => SecretRepo());
 
 /// Repository to be used with all password functionality
 class SecretRepo extends BaseRepo<Secret> {
+  /// Hive box name
+  static const boxName = 'account';
+
   final _storage = const FlutterSecureStorage();
 
   /// Constructor for Master Secret Repo

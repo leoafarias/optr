@@ -4,6 +4,7 @@
 
 import 'dart:convert';
 
+import 'package:hive/hive.dart';
 import 'package:optr/modules/base.model.dart';
 
 /// Master Secret Model
@@ -62,4 +63,19 @@ class Secret implements BaseModel {
         'type': _type.toString(),
         'accountCount': accountCount,
       };
+}
+
+class SecretAdapter extends TypeAdapter<Secret> {
+  @override
+  int get typeId => 1; // this is unique, no other Adapter can have the same id.
+
+  @override
+  Secret read(BinaryReader reader) {
+    return Secret.fromMap(reader.readMap());
+  }
+
+  @override
+  void write(BinaryWriter writer, Secret obj) {
+    writer.writeMap(obj.toMap());
+  }
 }

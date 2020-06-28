@@ -4,6 +4,7 @@
 
 import 'dart:convert';
 
+import 'package:hive/hive.dart';
 import 'package:optr/modules/base.model.dart';
 
 /// Account Model
@@ -77,4 +78,19 @@ class Account implements BaseModel {
         'website': website,
         'type': _type.toString(),
       };
+}
+
+class AccountAdapter extends TypeAdapter<Account> {
+  @override
+  int get typeId => 0; // this is unique, no other Adapter can have the same id.
+
+  @override
+  Account read(BinaryReader reader) {
+    return Account.fromMap(reader.readMap());
+  }
+
+  @override
+  void write(BinaryWriter writer, Account obj) {
+    writer.writeMap(obj.toMap());
+  }
 }
