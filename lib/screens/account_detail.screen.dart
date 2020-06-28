@@ -1,19 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:optr/components/button.dart';
 
 import 'package:optr/components/counter.dart';
 import 'package:optr/components/edges.dart';
+import 'package:optr/components/instructions.dart';
+import 'package:optr/components/spacer.dart';
 import 'package:optr/components/text_field.dart';
-import 'package:optr/components/frame.dart';
+
+import 'package:optr/modules/account/account.provider.dart';
+import 'package:uuid/uuid.dart';
 
 class AccountDetail extends HookWidget {
-  const AccountDetail();
+  /// Unique Identifier for the Account Password
+  final String _uuid;
+
+  /// Flags if screen is in edit state
+  final bool editing;
+
+  AccountDetail({String uuid})
+      : _uuid = uuid ?? Uuid().v4(),
+        editing = uuid == null;
 
   /// Route of the screen to be used for navigation
   static const String routeName = 'account-detail';
 
   @override
   Widget build(BuildContext context) {
+    final provider = useProvider(accountProvider);
+    final account = useState(provider.getById(_uuid));
+
+    void saveAccount() async {
+      if (account.value.identifier.isEmpty) {
+        // TODO - Display validation error
+      }
+      await provider.save(account.value);
+    }
+
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -26,51 +50,42 @@ class AccountDetail extends HookWidget {
                   color: const Color(0xFF111111),
                   child: Padding(
                     padding: const EdgeInsets.all(10),
-                    child: Column(
+                    child: ListView(
                       children: <Widget>[
-                        const SizedBox(height: 20),
+                        const OptrSpacer(),
                         Text(
                           'Account Passcode',
                           style: Theme.of(context).textTheme.headline4,
                         ),
-                        const SizedBox(height: 20),
-                        const OptrTextField(
-                          label: 'Account Name',
-                          onChanged: null,
-                        ),
-                        const SizedBox(height: 10),
-                        const OptrTextField(label: 'Website', onChanged: null),
-                        const SizedBox(height: 10),
-                        const OptrTextField(
-                          label: 'Account Name',
-                          onChanged: null,
-                        ),
-                        const SizedBox(height: 20),
-                        Frame(
-                          child: Container(
-                            child: const Text(
-                              'Instructions about something go here to explain how versions work',
-                            ),
-                          ),
-                        ),
+                        const OptrSpacer(),
+                        OptrTextField(
+                            label: 'Identifier',
+                            value: account.value.identifier,
+                            onChanged: (value) =>
+                                account.value.identifier = value),
+                        const OptrSpacer(),
+                        OptrTextField(
+                            label: 'Website',
+                            value: account.value.website,
+                            onChanged: (value) =>
+                                account.value.website = value),
+                        const OptrSpacer(),
                         OptrCounter(
-                          1,
-                          (value) => print(value),
-                        )
+                          value: account.value.version,
+                          onChanged: (value) => account.value.version = value,
+                        ),
+                        const OptrSpacer(),
+                        const Instructions(
+                            content:
+                                'Instructions about something go here to explain how versions work'),
+                        const SizedBox(height: 20),
+                        OptrButton.success(
+                          label: 'Save',
+                          onTap: saveAccount,
+                        ),
                       ],
                     ),
                   ),
-                ),
-              ),
-              OptrDoubleEdge(
-                borderColor: Colors.teal,
-                color: const Color(0xFF111111),
-                borderWidth: 1,
-                corners: const EdgeCorners.only(0, 0, 0, 40),
-                child: Row(
-                  children: const <Widget>[
-                    SizedBox(width: 20),
-                  ],
                 ),
               ),
             ],

@@ -5,7 +5,7 @@ import 'package:optr/components/button.dart';
 import 'package:optr/components/cut_edges_decoration.dart';
 import 'package:optr/components/frame.dart';
 import 'package:optr/components/text_field.dart';
-import 'package:optr/components/wrapper.dart';
+
 import 'package:optr/helpers/build_barcode.dart';
 
 class HomeScreen extends HookWidget {
