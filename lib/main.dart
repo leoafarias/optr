@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:optr/modules/account/account.model.dart';
 import 'package:optr/modules/secret/secret.model.dart';
-import 'package:optr/screens/home.screen.dart';
+import 'package:optr/screens/account_detail.screen.dart';
+import 'package:optr/screens/secret_detail.screen.dart';
 import 'package:optr/theme.dart';
 
 void main() async {
@@ -32,11 +34,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: darkTheme(),
-      debugShowCheckedModeBanner: false,
-      home: const HomeScreen(),
+    return ProviderScope(
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: darkTheme(),
+        debugShowCheckedModeBanner: false,
+        home: SecretDetail(),
+      ),
     );
   }
 }

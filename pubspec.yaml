@@ -20,6 +20,8 @@ dependencies:
   drawing_animation: ^0.1.3
   hive: ^1.4.1+1
   hive_flutter: ^0.3.0+2
+  uuid: ^2.1.0
+  cryptography: ^1.4.1
 
 dev_dependencies:
   flutter_test:
