@@ -5,6 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:optr/modules/account/account.model.dart';
 import 'package:optr/modules/secret/secret.model.dart';
 import 'package:optr/screens/account_detail.screen.dart';
+import 'package:optr/screens/home.screen.dart';
 import 'package:optr/screens/secret_detail.screen.dart';
 import 'package:optr/theme.dart';
 
@@ -39,7 +40,7 @@ class MyApp extends StatelessWidget {
         title: 'Flutter Demo',
         theme: darkTheme(),
         debugShowCheckedModeBanner: false,
-        home: SecretDetail(),
+        home: const HomeScreen(),
       ),
     );
   }

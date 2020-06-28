@@ -1,10 +1,10 @@
 /// Password Types
 enum PasswordType {
   /// Type of Account Password
-  accountPassword,
+  account,
 
   /// Type of Master Secret
-  masterSecret
+  secret
 }
 
 /// Base Model Class

@@ -104,6 +104,15 @@ class EdgeCorners {
     this.bottomRight = 0,
   });
 
+  /// Creates some edge cuts on all corners
+  const EdgeCorners.all(double size)
+      : this(
+          topLeft: size,
+          topRight: size,
+          bottomLeft: size,
+          bottomRight: size,
+        );
+
   /// Creates edge corners by setting eacy corner individually
   const EdgeCorners.only(
       double topRight, double topLeft, double bottomRight, double bottomLeft)

@@ -5,7 +5,9 @@ import 'package:google_fonts/google_fonts.dart';
 const kBlueColor = Color(0xFF005EFF);
 
 TextTheme _textTheme() {
-  return GoogleFonts.titilliumWebTextTheme().copyWith().apply(
+  return GoogleFonts.titilliumWebTextTheme()
+      .copyWith(headline6: GoogleFonts.orbitron())
+      .apply(
         bodyColor: Colors.white,
         displayColor: Colors.white,
       );
@@ -19,7 +21,7 @@ ThemeData darkTheme() {
     cardColor: const Color(0xFF111111),
     scaffoldBackgroundColor: Colors.black,
     // buttonColor: Color(0xFF111111),
-    // cardTheme: CardTheme(color: Color(0xFF222222), elevation: 0),
+    cardTheme: const CardTheme(color: Color(0xFF222222), elevation: 0),
     textTheme: _textTheme(),
   );
 }

@@ -23,9 +23,6 @@ class AccountDetail extends HookWidget {
       : _uuid = uuid ?? Uuid().v4(),
         editing = uuid == null;
 
-  /// Route of the screen to be used for navigation
-  static const String routeName = 'account-detail';
-
   @override
   Widget build(BuildContext context) {
     final provider = useProvider(accountProvider);

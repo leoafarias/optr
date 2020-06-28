@@ -26,7 +26,7 @@ class Account implements BaseModel {
   /// Website of the account
   String website;
 
-  final PasswordType _type = PasswordType.accountPassword;
+  final PasswordType _type = PasswordType.account;
 
   /// Constructor
   Account({

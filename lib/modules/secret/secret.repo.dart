@@ -11,7 +11,7 @@ final secretRepoProvider = Provider((_) => SecretRepo());
 /// Repository to be used with all password functionality
 class SecretRepo extends BaseRepo<Secret> {
   /// Hive box name
-  static const boxName = 'account';
+  static const boxName = 'secret';
 
   final _storage = const FlutterSecureStorage();
 
@@ -29,7 +29,7 @@ class SecretRepo extends BaseRepo<Secret> {
 
     allValues.removeWhere((k, v) {
       var mapValues = json.decode(v);
-      return mapValues['type'] != PasswordType.masterSecret.toString();
+      return mapValues['type'] != PasswordType.secret.toString();
     });
 
     final list = <Secret>[];

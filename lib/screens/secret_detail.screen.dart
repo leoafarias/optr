@@ -11,6 +11,11 @@ import 'package:optr/helpers/generate_optr.dart';
 import 'package:optr/modules/secret/secret.provider.dart';
 import 'package:uuid/uuid.dart';
 
+// Text(
+//                           '${DateFormat().format(_secret.createdAt).toUpperCase()} / ${_secret.device.info.toUpperCase()}',
+//                           style: Theme.of(context).textTheme.caption,
+//                         ),
+
 class SecretDetail extends HookWidget {
   /// Unique Identifier for the Account Password
   final String _uuid;
@@ -21,9 +26,6 @@ class SecretDetail extends HookWidget {
   SecretDetail({String uuid})
       : _uuid = uuid ?? Uuid().v4(),
         editing = uuid == null;
-
-  /// Route of the screen to be used for navigation
-  static const String routeName = 'secret-detail';
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +38,7 @@ class SecretDetail extends HookWidget {
     });
 
     void saveSecret() async {
-      if (secret.value.name.isEmpty) {
+      if (secret.value.label.isEmpty) {
         // TODO - Display validation error
       }
       await provider.save(secret.value);
@@ -64,9 +66,9 @@ class SecretDetail extends HookWidget {
                 ),
                 const OptrSpacer(),
                 OptrTextField(
-                  label: 'Name',
-                  value: secret.value.name,
-                  onChanged: (value) => secret.value.name = value,
+                  label: 'Label',
+                  value: secret.value.label,
+                  onChanged: (value) => secret.value.label = value,
                 ),
                 const OptrSpacer(),
                 OptrTextField(

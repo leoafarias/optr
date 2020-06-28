@@ -26,7 +26,7 @@ class AccountRepo extends BaseRepo<Account> {
 
     allValues.removeWhere((k, v) {
       var mapValues = json.decode(v);
-      return mapValues['type'] != PasswordType.accountPassword.toString();
+      return mapValues['type'] != PasswordType.account.toString();
     });
 
     final list = <Account>[];
