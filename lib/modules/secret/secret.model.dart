@@ -41,15 +41,6 @@ class Secret implements BaseModel {
         accountCount: json['accountCount'],
       );
 
-  /// Is MasterSecret ready to save
-  @override
-  bool validate() {
-    return id.isNotEmpty &&
-        hash.isNotEmpty &&
-        name.isNotEmpty &&
-        !accountCount.isNaN;
-  }
-
   /// Converts Master Secret to Json
   @override
   String toJson() => json.encode(toMap());
@@ -57,9 +48,9 @@ class Secret implements BaseModel {
   /// Converts Master Secret to Map
   @override
   Map<String, dynamic> toMap() => {
-        'hash': hash,
         'id': id,
         'name': name,
+        'hash': hash,
         'type': _type.toString(),
         'accountCount': accountCount,
       };
