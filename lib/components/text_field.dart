@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:optr/components/cut_edges_decoration.dart';
 import 'package:optr/components/edges.dart';
 
 /// Text Field component
@@ -68,43 +69,36 @@ class _OptrTextFieldState extends State<OptrTextField> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Container(
-        decoration: BoxDecoration(
-            boxShadow: _hasFocus
-                ? [BoxShadow(color: Colors.teal.withAlpha(150), blurRadius: 5)]
-                : null),
-        child: Padding(
-          padding: const EdgeInsets.all(1.0),
-          child: OptrEdges(
-            color: _hasFocus ? Colors.teal : const Color(0xFF222222),
-            corners: const EdgeCorners.cross(10, 0),
-            child: Padding(
-              padding: const EdgeInsets.all(1),
-              child: OptrEdges(
-                color: const Color(0xFF222222),
-                corners: const EdgeCorners.cross(10, 0),
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                  child: TextField(
-                    controller: textFieldController,
-                    onChanged: widget.onChanged,
-                    cursorColor: Colors.teal,
-                    textInputAction: TextInputAction.next,
-                    autofocus: widget.autofocus,
-                    autocorrect: false,
-                    obscureText: _obscureText,
-                    focusNode: _focus,
-                    onSubmitted: (_) => FocusScope.of(context).nextFocus(),
-                    decoration: InputDecoration(
-                      suffixIcon: _buildRevealButton(),
-                      border: InputBorder.none,
-                      labelText: widget.label,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
+      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+      decoration: CutEdgesDecoration(
+        color: _hasFocus ? Colors.black : Colors.transparent,
+        lineColor: _hasFocus ? Colors.teal : const Color(0xFF222222),
+        lineStroke: 2.0,
+        edges: const CutEdgeCorners.cross(10.0, 0.0),
+        boxShadow: _hasFocus
+            ? [
+                BoxShadow(
+                  color: Colors.tealAccent.withAlpha(150),
+                  blurRadius: 6.0,
+                  spreadRadius: 5.0,
+                )
+              ]
+            : null,
+      ),
+      child: TextField(
+        controller: textFieldController,
+        onChanged: widget.onChanged,
+        cursorColor: Colors.teal,
+        textInputAction: TextInputAction.next,
+        autofocus: widget.autofocus,
+        autocorrect: false,
+        obscureText: _obscureText,
+        focusNode: _focus,
+        onSubmitted: (_) => FocusScope.of(context).nextFocus(),
+        decoration: InputDecoration(
+          suffixIcon: _buildRevealButton(),
+          border: InputBorder.none,
+          labelText: widget.label,
         ),
       ),
     );

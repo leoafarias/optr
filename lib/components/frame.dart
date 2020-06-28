@@ -4,17 +4,27 @@ import 'package:simple_animations/simple_animations.dart';
 
 class Frame extends StatefulWidget {
   final Color color;
-  final double lineStrokeWidth;
-  final double cornerStrokeWidth;
+  final Color lineColor;
+  final double lineStroke;
+  final double cornerStroke;
   final double cornerLengthRatio;
+  final Gradient gradient;
+  final List<BoxShadow> boxShadow;
+  final BlendMode backgroundBlendMode;
+  final DecorationPosition position;
   final Widget child;
 
   const Frame({
     Key key,
     this.color,
-    this.lineStrokeWidth = 1.0,
-    this.cornerStrokeWidth = 3.0,
+    this.lineColor,
+    this.lineStroke = 1.0,
+    this.cornerStroke = 3.0,
     this.cornerLengthRatio = 0.15,
+    this.gradient,
+    this.boxShadow,
+    this.backgroundBlendMode,
+    this.position = DecorationPosition.background,
     this.child,
   }) : super(key: key);
 
@@ -38,54 +48,140 @@ class _FrameState extends State<Frame> {
       tween: Tween<double>(begin: 0.0, end: 1.0),
       duration: const Duration(milliseconds: 800),
       builder: (context, child, value) {
-        return CustomPaint(
-          child: Padding(
-            padding: const EdgeInsets.all(10),
-            child: child,
-          ),
-          painter: _ShapePainter(
+        return DecoratedBox(
+          position: widget.position,
+          decoration: FrameDecoration(
             step: value,
-            lineStrokeWidth: widget.lineStrokeWidth,
-            cornerStrokeWidth: widget.cornerStrokeWidth,
+            color: widget.color,
+            lineColor: widget.lineColor ?? Theme.of(context).primaryColor,
+            lineStroke: widget.lineStroke,
+            cornerStroke: widget.cornerStroke,
             cornerLengthRatio: widget.cornerLengthRatio,
-            color: widget.color ?? Theme.of(context).primaryColor,
+            gradient: widget.gradient,
+            boxShadow: widget.boxShadow,
+            backgroundBlendMode: widget.backgroundBlendMode,
           ),
+          child: child,
         );
       },
     );
   }
 }
 
-class _ShapePainter extends CustomPainter {
+class FrameDecoration extends Decoration {
   final double step;
   final Color color;
-  final double lineStrokeWidth;
-  final double cornerStrokeWidth;
+  final Color lineColor;
+  final double lineStroke;
+  final double cornerStroke;
   final double cornerLengthRatio;
+  final Gradient gradient;
+  final List<BoxShadow> boxShadow;
+  final BlendMode backgroundBlendMode;
 
-  const _ShapePainter({
-    @required this.color,
-    @required this.lineStrokeWidth,
-    @required this.cornerStrokeWidth,
-    @required this.cornerLengthRatio,
+  const FrameDecoration({
+    @required this.lineColor,
+    this.color,
     this.step = 1.0,
+    this.lineStroke = 1.0,
+    this.cornerStroke = 3.0,
+    this.cornerLengthRatio = 0.15,
+    this.gradient,
+    this.boxShadow,
+    this.backgroundBlendMode,
   });
 
   @override
-  void paint(Canvas canvas, Size size) {
-    _drawRect(canvas, size);
-    _drawCorners(canvas, size);
+  BoxPainter createBoxPainter([onChanged]) {
+    return _FrameDecorationPainter(
+      step: step,
+      color: color,
+      lineColor: lineColor,
+      lineStroke: lineStroke,
+      cornerStroke: cornerStroke,
+      cornerLengthRatio: cornerLengthRatio,
+      gradient: gradient,
+      boxShadow: boxShadow,
+      backgroundBlendMode: backgroundBlendMode,
+    );
   }
+}
+
+class _FrameDecorationPainter extends BoxPainter {
+  final double step;
+  final Color color;
+  final Color lineColor;
+  final double lineStroke;
+  final double cornerStroke;
+  final double cornerLengthRatio;
+  final Gradient gradient;
+  final List<BoxShadow> boxShadow;
+  final BlendMode backgroundBlendMode;
+
+  const _FrameDecorationPainter({
+    this.step = 1.0,
+    this.color,
+    @required this.lineColor,
+    @required this.lineStroke,
+    @required this.cornerStroke,
+    @required this.cornerLengthRatio,
+    this.gradient,
+    this.boxShadow,
+    this.backgroundBlendMode,
+  });
 
   @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
-    return true;
+  void paint(Canvas canvas, Offset offset, ImageConfiguration configuration) {
+    final rect = offset & configuration.size;
+
+    _paintShadows(canvas, rect);
+    _paintBackgroundColor(canvas, rect);
+    _drawRect(canvas, configuration.size);
+    _drawCorners(canvas, configuration.size);
+  }
+
+  void _drawCorners(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = lineColor.withOpacity(step)
+      ..strokeWidth = cornerStroke
+      ..style = PaintingStyle.stroke
+      ..strokeCap = StrokeCap.square;
+
+    final length = step * size.shortestSide * cornerLengthRatio;
+
+    final topLeftCorner = Path()
+      ..lineTo(length, 0.0)
+      ..moveTo(0.0, 0.0)
+      ..lineTo(0.0, length);
+
+    canvas.drawPath(topLeftCorner, paint);
+
+    final topRightCorner = Path()
+      ..moveTo(size.width - length, 0.0)
+      ..lineTo(size.width, 0.0)
+      ..lineTo(size.width, length);
+
+    canvas.drawPath(topRightCorner, paint);
+
+    final bottomLeftCorner = Path()
+      ..moveTo(0.0, size.height - length)
+      ..lineTo(0.0, size.height)
+      ..lineTo(length, size.height);
+
+    canvas.drawPath(bottomLeftCorner, paint);
+
+    final bottomRightCorner = Path()
+      ..moveTo(size.width, size.height - length)
+      ..lineTo(size.width, size.height)
+      ..lineTo(size.width - length, size.height);
+
+    canvas.drawPath(bottomRightCorner, paint);
   }
 
   void _drawRect(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = color.withOpacity(step)
-      ..strokeWidth = lineStrokeWidth
+      ..color = lineColor.withOpacity(step)
+      ..strokeWidth = lineStroke
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.square;
 
@@ -139,41 +235,31 @@ class _ShapePainter extends CustomPainter {
     return path;
   }
 
-  void _drawCorners(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = color.withOpacity(step)
-      ..strokeWidth = cornerStrokeWidth
-      ..style = PaintingStyle.stroke
-      ..strokeCap = StrokeCap.square;
+  void _paintShadows(Canvas canvas, Rect rect) {
+    if (boxShadow == null) {
+      return;
+    }
 
-    final length = step * size.shortestSide * cornerLengthRatio;
+    for (final shadow in boxShadow) {
+      final paint = shadow.toPaint();
+      final bounds = rect.shift(shadow.offset).inflate(shadow.spreadRadius);
+      canvas.drawRect(bounds, paint);
+    }
+  }
 
-    final topLeftCorner = Path()
-      ..lineTo(length, 0.0)
-      ..moveTo(0.0, 0.0)
-      ..lineTo(0.0, length);
+  void _paintBackgroundColor(Canvas canvas, Rect rect) {
+    if (color == null) {
+      return;
+    }
 
-    canvas.drawPath(topLeftCorner, paint);
+    final paint = Paint();
 
-    final topRightCorner = Path()
-      ..moveTo(size.width - length, 0.0)
-      ..lineTo(size.width, 0.0)
-      ..lineTo(size.width, length);
+    if (backgroundBlendMode != null) paint.blendMode = backgroundBlendMode;
+    if (color != null) paint.color = color;
+    if (gradient != null) {
+      paint.shader = gradient.createShader(rect);
+    }
 
-    canvas.drawPath(topRightCorner, paint);
-
-    final bottomLeftCorner = Path()
-      ..moveTo(0.0, size.height - length)
-      ..lineTo(0.0, size.height)
-      ..lineTo(length, size.height);
-
-    canvas.drawPath(bottomLeftCorner, paint);
-
-    final bottomRightCorner = Path()
-      ..moveTo(size.width, size.height - length)
-      ..lineTo(size.width, size.height)
-      ..lineTo(size.width - length, size.height);
-
-    canvas.drawPath(bottomRightCorner, paint);
+    canvas.drawRect(rect, paint);
   }
 }

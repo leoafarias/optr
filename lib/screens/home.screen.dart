@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:optr/components/frame.dart';
 import 'package:optr/components/text_field.dart';
 import 'package:optr/components/wrapper.dart';
 import 'package:optr/helpers/build_barcode.dart';
@@ -35,17 +36,41 @@ class HomeScreen extends HookWidget {
               const SizedBox(height: 20),
               const OptrTextField(label: 'Name', onChanged: null),
               const SizedBox(height: 20),
-              Center(
-                child: Container(
-                  color: Colors.white,
-                  height: 200,
-                  width: 200,
-                  child: barCodeAnimated(svgPath.value, run: run.value),
+              Frame(
+                color: Colors.black,
+                lineColor: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.tealAccent.withAlpha(150),
+                    blurRadius: 5.0,
+                    spreadRadius: 5.0,
+                  )
+                ],
+                child: const Center(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 20.0),
+                    child: Text('Customized Frame'),
+                  ),
                 ),
               ),
-              FlatButton(
-                child: const Text('Build Barcode'),
-                onPressed: _onBuildBarcode,
+              const SizedBox(height: 20),
+              Frame(
+                child: Column(
+                  children: <Widget>[
+                    Center(
+                      child: Container(
+                        color: Colors.white,
+                        height: 200,
+                        width: 200,
+                        child: barCodeAnimated(svgPath.value, run: run.value),
+                      ),
+                    ),
+                    FlatButton(
+                      child: const Text('Build Barcode'),
+                      onPressed: _onBuildBarcode,
+                    ),
+                  ],
+                ),
               ),
             ],
             // Expanded(child: OptrPadding(child: AccountList(accountsList)))
