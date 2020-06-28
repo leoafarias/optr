@@ -42,54 +42,47 @@ class AccountDetail extends HookWidget {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: <Widget>[
-              Expanded(
-                child: OptrEdges(
-                  corners: const EdgeCorners.only(25, 25, 0, 0),
-                  color: const Color(0xFF111111),
-                  child: Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: ListView(
-                      children: <Widget>[
-                        const OptrSpacer(),
-                        Text(
-                          'Account Passcode',
-                          style: Theme.of(context).textTheme.headline4,
-                        ),
-                        const OptrSpacer(),
-                        OptrTextField(
-                            label: 'Identifier',
-                            value: account.value.identifier,
-                            onChanged: (value) =>
-                                account.value.identifier = value),
-                        const OptrSpacer(),
-                        OptrTextField(
-                            label: 'Website',
-                            value: account.value.website,
-                            onChanged: (value) =>
-                                account.value.website = value),
-                        const OptrSpacer(),
-                        OptrCounter(
-                          value: account.value.version,
-                          onChanged: (value) => account.value.version = value,
-                        ),
-                        const OptrSpacer(),
-                        const Instructions(
-                            content:
-                                'Instructions about something go here to explain how versions work'),
-                        const SizedBox(height: 20),
-                        OptrButton.success(
-                          label: 'Save',
-                          onTap: saveAccount,
-                        ),
-                      ],
-                    ),
-                  ),
+          child: OptrEdges(
+            corners: const EdgeCorners.only(25, 25, 0, 0),
+            color: const Color(0xFF111111),
+            child: ListView(
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+              children: <Widget>[
+                const OptrSpacer(),
+                Text(
+                  'Account Passcode',
+                  style: Theme.of(context).textTheme.headline4,
                 ),
-              ),
-            ],
-            // Expanded(child: OptrPadding(child: AccountList(accountsList)))
+                const OptrSpacer(),
+                OptrTextField(
+                  label: 'Identifier',
+                  value: account.value.identifier,
+                  onChanged: (value) => account.value.identifier = value,
+                ),
+                const OptrSpacer(),
+                OptrTextField(
+                  label: 'Website',
+                  value: account.value.website,
+                  onChanged: (value) => account.value.website = value,
+                ),
+                const OptrSpacer(),
+                OptrCounter(
+                  value: account.value.version,
+                  onChanged: (value) => account.value.version = value,
+                ),
+                const OptrSpacer(),
+                const Instructions(
+                  content:
+                      'Instructions about something go here to explain how versions work',
+                ),
+                const SizedBox(height: 20),
+                OptrButton.success(
+                  label: 'Save',
+                  onTap: saveAccount,
+                ),
+              ],
+            ),
           ),
         ),
       ),

@@ -46,50 +46,41 @@ class SecretDetail extends HookWidget {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: <Widget>[
-              Expanded(
-                child: OptrEdges(
-                  corners: const EdgeCorners.only(25, 25, 0, 0),
-                  color: const Color(0xFF111111),
-                  child: Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: ListView(
-                      children: <Widget>[
-                        const OptrSpacer(),
-                        Text(
-                          'Create Optr',
-                          style: Theme.of(context).textTheme.headline4,
-                        ),
-                        const OptrSpacer(),
-                        const Instructions(
-                            content:
-                                'Optr (One Password to Rule): Is a hashed passphrase which allows you to retrieve any account passwords from memory.'),
-                        const OptrSpacer(),
-                        OptrTextField(
-                            label: 'Name',
-                            value: secret.value.name,
-                            onChanged: (value) => secret.value.name = value),
-                        const OptrSpacer(),
-                        OptrTextField(
-                            label: 'Passphrase',
-                            obscureText: true,
-                            value: passphrase.value,
-                            onChanged: (value) => passphrase.value = value),
-                        const OptrSpacer(),
-                        Text(secret.value.hash),
-                        const OptrSpacer(),
-                        OptrButton.success(
-                          label: 'Save',
-                          onTap: saveSecret,
-                        ),
-                      ],
-                    ),
-                  ),
+          child: OptrEdges(
+            corners: const EdgeCorners.only(25, 25, 0, 0),
+            color: const Color(0xFF111111),
+            child: ListView(
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              children: <Widget>[
+                const OptrSpacer(),
+                Text(
+                  'Create Optr',
+                  style: Theme.of(context).textTheme.headline4,
                 ),
-              ),
-            ],
-            // Expanded(child: OptrPadding(child: secretList(secretsList)))
+                const OptrSpacer(),
+                const Instructions(
+                  content:
+                      'Optr (One Password to Rule): Is a hashed passphrase which allows you to retrieve any account passwords from memory.',
+                ),
+                const OptrSpacer(),
+                OptrTextField(
+                  label: 'Name',
+                  value: secret.value.name,
+                  onChanged: (value) => secret.value.name = value,
+                ),
+                const OptrSpacer(),
+                OptrTextField(
+                  label: 'Passphrase',
+                  obscureText: true,
+                  value: passphrase.value,
+                  onChanged: (value) => passphrase.value = value,
+                ),
+                const OptrSpacer(),
+                Text(secret.value.hash),
+                const OptrSpacer(),
+                OptrButton.success(label: 'Save', onTap: saveSecret),
+              ],
+            ),
           ),
         ),
       ),
