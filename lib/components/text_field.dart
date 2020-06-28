@@ -73,14 +73,14 @@ class _OptrTextFieldState extends State<OptrTextField> {
       decoration: CutEdgesDecoration(
         color: _hasFocus ? Colors.black : Colors.transparent,
         lineColor: _hasFocus ? Colors.teal : const Color(0xFF222222),
-        lineStroke: 2.0,
+        lineStroke: 1.0,
         edges: const CutEdgeCorners.cross(10.0, 0.0),
         boxShadow: _hasFocus
             ? [
                 BoxShadow(
                   color: Colors.tealAccent.withAlpha(150),
                   blurRadius: 6.0,
-                  spreadRadius: 5.0,
+                  spreadRadius: 1.0,
                 )
               ]
             : null,

@@ -31,7 +31,7 @@ class OptrButton extends StatelessWidget {
   factory OptrButton.success({
     Key key,
     @required String label,
-    IconData icon,
+    IconData icon = Icons.check,
     TextStyle style,
     EdgeInsets padding = const EdgeInsets.all(15.0),
     VoidCallback onTap,

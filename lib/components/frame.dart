@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:optr/helpers/sound_effect.dart';
+
 import 'package:simple_animations/simple_animations.dart';
 
 class Frame extends StatefulWidget {
@@ -37,7 +37,7 @@ class _FrameState extends State<Frame> {
   void initState() {
     super.initState();
 
-    SoundEffect.play(SoundEffect.deploy);
+    // SoundEffect.play(SoundEffect.deploy);
   }
 
   @override

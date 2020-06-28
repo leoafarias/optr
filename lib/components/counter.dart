@@ -17,7 +17,8 @@ class OptrCounter extends HookWidget {
   final int max;
 
   /// Constructor
-  const OptrCounter(int value, this.onChanged, {this.min = 0, this.max = 100})
+  const OptrCounter(
+      {@required this.onChanged, int value, this.min = 0, this.max = 100})
       : _value = value ?? min;
 
   @override
