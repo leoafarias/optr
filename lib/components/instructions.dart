@@ -21,7 +21,7 @@ class Instructions extends HookWidget {
     void _runAnimation() async {
       await Future.delayed(const Duration(milliseconds: 1000));
       // ignore: unawaited_futures
-      SoundEffect.play(SoundEffect.typing_long);
+      SoundEffect.play(SoundEffect.typing_long, rate: 0.8);
       TypingEffect(content, (value) => text.value = value);
     }
 

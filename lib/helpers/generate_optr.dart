@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:cryptography/cryptography.dart';
-import 'package:uuid/uuid.dart';
 
 Future<String> generateOptr(String value, String salt) async {
   final pbkdf2 = Pbkdf2(
