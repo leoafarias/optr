@@ -47,9 +47,12 @@ class AccountDetail extends HookWidget {
               keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
               children: <Widget>[
                 const OptrSpacer(),
-                Text(
-                  'Account Passcode',
-                  style: Theme.of(context).textTheme.headline4,
+                Hero(
+                  tag: 'account:title',
+                  child: Text(
+                    'Account Passcode',
+                    style: Theme.of(context).textTheme.headline4,
+                  ),
                 ),
                 const OptrSpacer(),
                 OptrTextField(
@@ -75,7 +78,7 @@ class AccountDetail extends HookWidget {
                 ),
                 const SizedBox(height: 20),
                 OptrButton.success(
-                  label: 'Save',
+                  label: const Text('Save'),
                   onTap: saveAccount,
                 ),
               ],

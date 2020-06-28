@@ -53,11 +53,15 @@ class SecretDetail extends HookWidget {
             color: const Color(0xFF111111),
             child: ListView(
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
               children: <Widget>[
                 const OptrSpacer(),
-                Text(
-                  'Create Optr',
-                  style: Theme.of(context).textTheme.headline4,
+                Hero(
+                  tag: 'secret:title',
+                  child: Text(
+                    'Create Optr',
+                    style: Theme.of(context).textTheme.headline4,
+                  ),
                 ),
                 const OptrSpacer(),
                 const Instructions(
@@ -80,7 +84,10 @@ class SecretDetail extends HookWidget {
                 const OptrSpacer(),
                 Text(secret.value.hash),
                 const OptrSpacer(),
-                OptrButton.success(label: 'Save', onTap: saveSecret),
+                OptrButton.success(
+                  label: const Text('Save'),
+                  onTap: saveSecret,
+                ),
               ],
             ),
           ),
