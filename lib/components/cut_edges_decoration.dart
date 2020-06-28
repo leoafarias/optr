@@ -12,7 +12,7 @@ class CutEdgesDecoration extends Decoration {
   const CutEdgesDecoration({
     @required this.edges,
     this.color,
-    this.lineColor,
+    this.lineColor = Colors.black,
     this.lineStroke = 1.0,
     this.gradient,
     this.boxShadow,

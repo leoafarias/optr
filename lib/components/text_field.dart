@@ -19,12 +19,13 @@ class OptrTextField extends StatefulWidget {
   final Function(String) onChanged;
 
   /// TExt field constructor
-  const OptrTextField(
-      {this.label,
-      this.value,
-      this.obscureText = false,
-      @required this.onChanged,
-      this.autofocus = false});
+  const OptrTextField({
+    this.label,
+    this.value,
+    this.obscureText = false,
+    @required this.onChanged,
+    this.autofocus = false,
+  });
 
   @override
   _OptrTextFieldState createState() => _OptrTextFieldState();
