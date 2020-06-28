@@ -47,20 +47,37 @@ class HomeScreen extends HookWidget {
                 const OptrTextField(label: 'Name', onChanged: null),
                 const SizedBox(height: 40),
                 OptrButton(
-                  label: 'Cyberpunk',
-                  style: GoogleFonts.orbitron(),
+                  onTap: () => Navigator.pushNamed(context, '/secret'),
+                  label: Hero(
+                    tag: 'secret:title',
+                    child: Text(
+                      'Create Optr',
+                      style: GoogleFonts.orbitron(),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 40),
+                OptrButton(
+                  onTap: () => Navigator.pushNamed(context, '/account'),
+                  label: Hero(
+                    tag: 'account:title',
+                    child: Text(
+                      'Account Passcode',
+                      style: GoogleFonts.orbitron(),
+                    ),
+                  ),
                 ),
                 const SizedBox(height: 40),
                 Row(
                   children: <Widget>[
                     OptrButton.success(
-                      label: 'Success',
-                      icon: Icons.thumb_up,
+                      label: const Text('Success'),
+                      icon: Icon(Icons.thumb_up),
                     ),
                     const SizedBox(width: 40),
                     OptrButton.error(
-                      label: 'Error',
-                      icon: Icons.clear,
+                      label: const Text('Error'),
+                      icon: Icon(Icons.clear),
                     ),
                   ],
                 ),
