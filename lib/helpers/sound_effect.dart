@@ -1,14 +1,16 @@
 import 'package:flutter/services.dart';
 import 'package:soundpool/soundpool.dart';
 
-class SoundEffect {
-  static final _pool = Soundpool(streamType: StreamType.notification);
+// Only create one sound pool instance
+final _pool = Soundpool(streamType: StreamType.notification);
 
+class SoundEffect {
   static Future<int> ask = _load('ask');
   static Future<int> click = _load('click');
   static Future<int> error = _load('error');
   static Future<int> deploy = _load('deploy');
   static Future<int> typing = _load('typing');
+  static Future<int> typing_long = _load('typing_long');
   static Future<int> warning = _load('warning');
   static Future<int> information = _load('information');
 
