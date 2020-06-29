@@ -4,6 +4,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:optr/modules/account/account.model.dart';
 import 'package:optr/modules/secret/secret.model.dart';
+import 'package:optr/modules/word_icon/word_icon.repo.dart';
 import 'package:optr/screens/account_detail.screen.dart';
 import 'package:optr/screens/home.screen.dart';
 import 'package:optr/screens/secret_detail.screen.dart';
@@ -26,6 +27,8 @@ void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter<Account>(AccountAdapter());
   Hive.registerAdapter<Secret>(SecretAdapter());
+  Hive.registerAdapter<WordIcon>(WordIconAdapter());
+  WordIconRepo.openBox();
 
   runApp(const MyApp());
 }
@@ -37,14 +40,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ProviderScope(
       child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          theme: darkTheme(),
-          initialRoute: '/',
-          routes: {
-            '/': (context) => const HomeScreen(),
-            '/secret': (context) => SecretDetail(),
-            '/account': (context) => AccountDetail(),
-          }),
+        debugShowCheckedModeBanner: false,
+        theme: darkTheme(),
+        initialRoute: '/',
+        routes: {
+          '/': (context) => const HomeScreen(),
+          '/secret': (context) => SecretDetail(),
+          '/account': (context) => AccountDetail(),
+        },
+      ),
     );
   }
 }

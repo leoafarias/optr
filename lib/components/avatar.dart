@@ -19,16 +19,17 @@ class OptrAvatar extends StatelessWidget {
       color: Colors.black.withOpacity(0.95),
       borderColor: palette.borderColor,
       child: Container(
-          width: 60.0,
-          height: 60.0,
-          child: Center(
-            child: Text(
-              palette.initials,
-              style: Theme.of(context).textTheme.headline6.copyWith(
-                    color: palette.borderColor,
-                  ),
-            ),
-          )),
+        width: 60.0,
+        height: 60.0,
+        child: Center(
+          child: Text(
+            palette.initials,
+            style: Theme.of(context).textTheme.headline6.copyWith(
+                  color: palette.borderColor,
+                ),
+          ),
+        ),
+      ),
     );
   }
 }

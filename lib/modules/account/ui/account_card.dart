@@ -1,3 +1,4 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:optr/components/avatar.dart';
 import 'package:optr/components/edges.dart';
@@ -19,35 +20,40 @@ class AccountCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return OpenContainer(
+      tappable: true,
+      openColor: Colors.transparent,
+      closedColor: Colors.transparent,
+      transitionType: ContainerTransitionType.fade,
+      transitionDuration: const Duration(milliseconds: 300),
+      closedBuilder: (context, action) => _buildContainer(context),
+      openBuilder: (context, action) => AccountDetail(id: account.id),
+    );
+  }
+
+  Widget _buildContainer(BuildContext context) {
     final palette = colorFromString(account.identifier);
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => AccountDetail(id: account.id),
-          ),
-        );
-      },
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-        child: OptrDoubleEdge(
-          color: Colors.black.withOpacity(0.9),
-          corners: const EdgeCorners.cross(20, 5),
-          borderColor: palette.borderColor ?? Theme.of(context).accentColor,
-          child: Row(
-            children: <Widget>[
-              OptrAvatar(name: account.identifier),
-              const OptrSpacer(),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(account.identifier,
-                      style: Theme.of(context).textTheme.subtitle1),
-                ],
-              ),
-            ],
-          ),
+
+    return Container(
+      padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+      child: OptrDoubleEdge(
+        color: Colors.black.withOpacity(0.9),
+        corners: const EdgeCorners.cross(20, 5),
+        borderColor: palette.borderColor ?? Theme.of(context).accentColor,
+        child: Row(
+          children: <Widget>[
+            OptrAvatar(name: account.identifier),
+            const OptrSpacer(),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  account.identifier,
+                  style: Theme.of(context).textTheme.subtitle1,
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );
