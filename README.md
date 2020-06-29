@@ -1,10 +1,10 @@
-<p><image src="https://raw.githubusercontent.com/leoafarias/optr/master/optr-logo.png" width="500px"/></p>
+<p align="center"><image src="https://raw.githubusercontent.com/leoafarias/optr/master/optr-logo.png" width="300px"/></p>
 
-# optr
+# OPTR - One Password to Rule
 
 ## Flutter #Hack20 - Cyberpunk
 
-by [Leo Farias](https://github.com/leoafarias) and [Ianko Leite](https://github.com/ianko)
+Concepta Team: [Leo Farias](https://github.com/leoafarias) and [Ianko Leite](https://github.com/ianko)
 
 ## Pitch
 
