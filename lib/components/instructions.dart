@@ -33,10 +33,10 @@ class Instructions extends HookWidget {
     return Container(
       child: Frame(
         color: Colors.black.withOpacity(0.6),
-        lineColor: Colors.teal,
+        lineColor: Colors.tealAccent,
         boxShadow: [
           BoxShadow(
-            color: Colors.teal.withOpacity(0.2),
+            color: Colors.tealAccent.withOpacity(0.2),
             blurRadius: 3.0,
             spreadRadius: 3.0,
           )

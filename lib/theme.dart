@@ -6,7 +6,11 @@ const kBlueColor = Color(0xFF005EFF);
 
 TextTheme _textTheme() {
   return GoogleFonts.titilliumWebTextTheme()
-      .copyWith(headline6: GoogleFonts.orbitron())
+      .copyWith(
+        headline4: GoogleFonts.orbitron(),
+        headline5: GoogleFonts.orbitron(),
+        headline6: GoogleFonts.orbitron(),
+      )
       .apply(
         bodyColor: Colors.white,
         displayColor: Colors.white,
@@ -17,9 +21,9 @@ TextTheme _textTheme() {
 ThemeData darkTheme() {
   return ThemeData(
     brightness: Brightness.dark,
-    primaryColor: Colors.teal,
-    cardColor: const Color(0xFF111111),
-    scaffoldBackgroundColor: Colors.black,
+    primaryColor: Colors.tealAccent,
+    cardColor: Colors.black,
+    scaffoldBackgroundColor: const Color(0xFF101010),
     // buttonColor: Color(0xFF111111),
     cardTheme: const CardTheme(color: Color(0xFF222222), elevation: 0),
     textTheme: _textTheme(),

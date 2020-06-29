@@ -58,7 +58,7 @@ class OptrDoubleEdge extends StatelessWidget {
   const OptrDoubleEdge({
     Key key,
     @required this.child,
-    this.borderColor = Colors.teal,
+    this.borderColor = Colors.tealAccent,
     this.color = Colors.black,
     this.borderWidth = 1.0,
     this.corners = const EdgeCorners.only(5, 5, 5, 5),
