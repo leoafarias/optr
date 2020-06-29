@@ -17,7 +17,7 @@ class OptrButton extends StatelessWidget {
     Key key,
     @required this.label,
     this.icon,
-    this.color = Colors.tealAccent,
+    this.color,
     this.borderColor,
     this.textColor,
     this.backgroundColor,
@@ -77,8 +77,9 @@ class OptrButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Frame(
-      color: backgroundColor ?? Colors.black.withOpacity(0.6),
-      lineColor: borderColor ?? Colors.tealAccent,
+      color:
+          backgroundColor ?? Theme.of(context).backgroundColor.withOpacity(0.6),
+      lineColor: borderColor ?? Theme.of(context).accentColor,
       boxShadow: [
         BoxShadow(
           color: color.withOpacity(0.2),

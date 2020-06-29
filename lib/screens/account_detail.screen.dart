@@ -14,19 +14,19 @@ import 'package:uuid/uuid.dart';
 
 class AccountDetail extends HookWidget {
   /// Unique Identifier for the Account Password
-  final String _uuid;
+  final String _id;
 
   /// Flags if screen is in edit state
   final bool editing;
 
-  AccountDetail({String uuid})
-      : _uuid = uuid ?? Uuid().v4(),
-        editing = uuid == null;
+  AccountDetail({String id})
+      : _id = id ?? Uuid().v4(),
+        editing = id == null;
 
   @override
   Widget build(BuildContext context) {
     final provider = useProvider(accountProvider);
-    final account = useState(provider.getById(_uuid));
+    final account = useState(provider.getById(_id));
 
     void _onClose() {
       FocusScope.of(context).unfocus();
@@ -43,59 +43,63 @@ class AccountDetail extends HookWidget {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: OptrEdges(
-            corners: const EdgeCorners.only(25, 25, 0, 0),
+          padding: const EdgeInsets.all(10),
+          child: OptrDoubleEdge(
+            corners: const EdgeCorners.only(30, 30, 0, 30),
             color: const Color(0xFF111111),
-            child: ListView(
-              padding: const EdgeInsets.symmetric(horizontal: 10.0),
-              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-              children: <Widget>[
-                const OptrSpacer(),
-                Hero(
-                  tag: 'account:title',
-                  child: Text(
-                    'Account Passcode',
-                    style: Theme.of(context).textTheme.headline4,
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: ListView(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                keyboardDismissBehavior:
+                    ScrollViewKeyboardDismissBehavior.onDrag,
+                children: <Widget>[
+                  const OptrSpacer(),
+                  Hero(
+                    tag: 'account:title',
+                    child: Text(
+                      'Account Passcode',
+                      style: Theme.of(context).textTheme.headline4,
+                    ),
                   ),
-                ),
-                const OptrSpacer(),
-                OptrTextField(
-                  label: 'Identifier',
-                  value: account.value.identifier,
-                  onChanged: (value) => account.value.identifier = value,
-                ),
-                const OptrSpacer(),
-                OptrTextField(
-                  label: 'Website',
-                  value: account.value.website,
-                  onChanged: (value) => account.value.website = value,
-                ),
-                const OptrSpacer(),
-                OptrCounter(
-                  value: account.value.version,
-                  onChanged: (value) => account.value.version = value,
-                ),
-                const OptrSpacer(),
-                const Instructions(
-                  content:
-                      'Instructions about something go here to explain how versions work',
-                ),
-                const SizedBox(height: 20),
-                Row(
-                  children: <Widget>[
-                    OptrButton.success(
-                      label: const Text('Save'),
-                      onTap: saveAccount,
-                    ),
-                    const OptrSpacer(),
-                    OptrButton.error(
-                      label: const Text('Cancel'),
-                      onTap: _onClose,
-                    ),
-                  ],
-                ),
-              ],
+                  const OptrSpacer(),
+                  OptrTextField(
+                    label: 'Identifier',
+                    value: account.value.identifier,
+                    onChanged: (value) => account.value.identifier = value,
+                  ),
+                  const OptrSpacer(),
+                  OptrTextField(
+                    label: 'Website',
+                    value: account.value.website,
+                    onChanged: (value) => account.value.website = value,
+                  ),
+                  const OptrSpacer(),
+                  OptrCounter(
+                    value: account.value.version,
+                    onChanged: (value) => account.value.version = value,
+                  ),
+                  const OptrSpacer(),
+                  const Instructions(
+                    content:
+                        'Instructions about something go here to explain how versions work',
+                  ),
+                  const SizedBox(height: 20),
+                  Row(
+                    children: <Widget>[
+                      OptrButton.success(
+                        label: const Text('Save'),
+                        onTap: saveAccount,
+                      ),
+                      const OptrSpacer(),
+                      OptrButton.error(
+                        label: const Text('Cancel'),
+                        onTap: _onClose,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),

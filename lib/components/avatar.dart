@@ -14,17 +14,19 @@ class OptrAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final palette = colorFromString(_name);
-    return OptrEdges(
+    return OptrDoubleEdge(
       corners: const EdgeCorners.only(0, 0, 0, 0),
+      color: Colors.black.withOpacity(0.9),
+      borderColor: palette.borderColor,
       child: Container(
-          width: 40.0,
+          width: 60.0,
           height: 60.0,
-          color: palette.bgColor,
           child: Center(
             child: Text(
               palette.initials,
-              style: TextStyle(
-                  fontWeight: FontWeight.bold, color: palette.textColor),
+              style: Theme.of(context).textTheme.headline6.copyWith(
+                    color: palette.borderColor,
+                  ),
             ),
           )),
     );

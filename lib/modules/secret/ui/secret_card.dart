@@ -77,8 +77,8 @@ class SecretCard extends HookWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              const Divider(
-                color: Colors.tealAccent,
+              Divider(
+                color: Theme.of(context).accentColor,
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -96,14 +96,14 @@ class SecretCard extends HookWidget {
                   //     style: Theme.of(context).textTheme.caption),
                 ],
               ),
-              const Divider(
-                color: Colors.tealAccent,
+              Divider(
+                color: Theme.of(context).accentColor,
               ),
               Row(
                 children: <Widget>[
                   Expanded(
                     child: OptrDoubleEdge(
-                      borderColor: Colors.tealAccent,
+                      borderColor: Theme.of(context).accentColor,
                       color: Colors.black.withAlpha(230),
                       corners: const EdgeCorners.only(0, 0, 10, 0),
                       child: Padding(
@@ -120,7 +120,7 @@ class SecretCard extends HookWidget {
                     height: 40,
                     child: OptrDoubleEdge(
                         corners: const EdgeCorners.cross(0, 10),
-                        borderColor: Colors.tealAccent,
+                        borderColor: Theme.of(context).accentColor,
                         color: Colors.black.withAlpha(230),
                         child: OptrIconButton(
                             icon: Icon(Icons.add),

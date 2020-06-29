@@ -24,10 +24,6 @@ class SecretList extends HookWidget {
 
     return Column(
       children: <Widget>[
-        Text(
-          'OPTRs',
-          style: Theme.of(context).textTheme.headline5,
-        ),
         Container(
           height: 180,
           child: Swiper(
@@ -47,7 +43,6 @@ class SecretList extends HookWidget {
             layout: SwiperLayout.TINDER,
           ),
         ),
-        const OptrSpacer(),
       ],
     );
   }
