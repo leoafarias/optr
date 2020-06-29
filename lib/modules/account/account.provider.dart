@@ -42,7 +42,9 @@ class AccountProvider extends StateNotifier<List<Account>> {
 
   /// Add a new account to list
   Future<void> save(Account account) async {
+    await remove(account);
     state = [...state, account];
+
     await _repo.save(account);
   }
 

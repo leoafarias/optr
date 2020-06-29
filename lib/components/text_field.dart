@@ -51,6 +51,15 @@ class _OptrTextFieldState extends State<OptrTextField> {
     super.initState();
   }
 
+  @override
+  void didUpdateWidget(OptrTextField oldWidget) {
+    if (textFieldController.text != widget.value) {
+      textFieldController.text = widget.value;
+    }
+
+    super.didUpdateWidget(oldWidget);
+  }
+
   void _onFocusChange() {
     setState(() {
       _hasFocus = _focus.hasFocus;

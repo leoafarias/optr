@@ -41,6 +41,7 @@ class SecretProvider extends StateNotifier<List<Secret>> {
 
   /// Add a new account to list
   Future<void> save(Secret secret) async {
+    await remove(secret);
     state = [...state, secret];
     await _repo.save(secret);
   }

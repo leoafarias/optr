@@ -27,19 +27,6 @@ class SecretList extends HookWidget {
       }
     }
 
-    final _controller = SwiperController();
-
-    void move(int index) async {
-      await Future.delayed(Duration(seconds: 2));
-      await _controller.move(index);
-    }
-
-    useEffect(() {
-      move(initialIndex);
-
-      return;
-    }, []);
-
     if (list == null || list.isEmpty) {
       return const Center(
         child: Text('Add a Master Secret to get started'),
@@ -58,13 +45,11 @@ class SecretList extends HookWidget {
                 simpleCard: simpleCard,
                 active: index == currentIndex.value,
                 secret: secret,
-                onPressed: () {},
               );
             },
             onIndexChanged: handleIndexChange,
             itemCount: list.length,
             itemWidth: 400,
-            controller: _controller,
             itemHeight: 180,
             layout: SwiperLayout.TINDER,
           ),

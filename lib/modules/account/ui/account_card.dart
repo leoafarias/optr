@@ -1,7 +1,9 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:optr/components/avatar.dart';
+import 'package:optr/components/button.dart';
 import 'package:optr/components/edges.dart';
+import 'package:optr/components/icon_button.dart';
 import 'package:optr/components/spacer.dart';
 import 'package:optr/helpers/colors_from_string.dart';
 import 'package:optr/modules/account/account.model.dart';
@@ -49,10 +51,23 @@ class AccountCard extends StatelessWidget {
               children: <Widget>[
                 Text(
                   account.identifier,
-                  style: Theme.of(context).textTheme.subtitle1,
+                  style: Theme.of(context)
+                      .textTheme
+                      .subtitle1
+                      .copyWith(color: palette.borderColor),
                 ),
               ],
             ),
+            const Expanded(
+              child: SizedBox(),
+            ),
+            OptrIconButton(
+              icon: Icon(
+                Icons.content_copy,
+                color: palette.borderColor,
+              ),
+              color: palette.borderColor,
+            )
           ],
         ),
       ),

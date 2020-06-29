@@ -23,13 +23,15 @@ class AccountDetail extends HookWidget {
 
   AccountDetail({String id})
       : _id = id ?? Uuid().v4(),
-        editing = id == null;
+        editing = id != null;
 
   @override
   Widget build(BuildContext context) {
     final provider = useProvider(accountProvider);
+    final _secretProvider = useProvider(secretProvider);
     final secretList = useProvider(secretProvider.state);
     final account = useState(provider.getById(_id));
+    final index = useState(0);
     final palette = useState<StringPalette>(
       colorFromString(account.value.identifier),
     );
@@ -40,10 +42,22 @@ class AccountDetail extends HookWidget {
     }
 
     void saveAccount() async {
-      if (account.value.identifier.isEmpty) {
-        // TODO - Display validation error
+      if (account.value.masterId.isEmpty) {
+        account.value.masterId = secretList[index.value].id;
       }
+
+      final secret = _secretProvider.getById(account.value.masterId);
+      secret.accountCount = secret.accountCount + 1;
       await provider.save(account.value);
+      await _secretProvider.save(secret);
+      Navigator.pop(context);
+    }
+
+    void deleteAccount() async {
+      final secret = _secretProvider.getById(account.value.masterId);
+      secret.accountCount = secret.accountCount - 1;
+      await provider.remove(account.value);
+      await _secretProvider.save(secret);
       Navigator.pop(context);
     }
 
@@ -75,7 +89,9 @@ class AccountDetail extends HookWidget {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              account.value.identifier,
+                              editing
+                                  ? account.value.identifier
+                                  : 'Create Password',
                               style: Theme.of(context).textTheme.headline4,
                             ),
                           ],
@@ -123,18 +139,34 @@ class AccountDetail extends HookWidget {
                   onIndexChange: onIndexChange,
                 ),
                 const OptrSpacer(),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                  child: OptrButton.active(
+                    label: const Text('Copy Password'),
+                    icon: Icon(Icons.content_copy),
+                    onTap: () {},
+                  ),
+                ),
+                const OptrSpacer(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    OptrButton.active(
-                      label: const Text('Save'),
-                      onTap: saveAccount,
-                    ),
-                    const OptrSpacer(),
                     OptrButton.cancel(
-                      label: const Text('Cancel'),
+                      icon: Icon(Icons.arrow_back),
                       onTap: _onClose,
                     ),
+                    const OptrSpacer(),
+                    OptrButton.active(
+                      onTap: saveAccount,
+                      icon: Icon(Icons.check_circle),
+                    ),
+                    const OptrSpacer(),
+                    editing
+                        ? OptrButton.error(
+                            icon: Icon(Icons.delete_forever),
+                            onTap: deleteAccount,
+                          )
+                        : const SizedBox(),
                   ],
                 ),
               ],

@@ -1,17 +1,10 @@
 import 'dart:convert';
-import 'package:cryptography/cryptography.dart';
+import 'package:crypto/crypto.dart';
 
-Future<String> generateOptr(String value, String salt) async {
-  final pbkdf2 = Pbkdf2(
-    macAlgorithm: Hmac(sha256),
-    iterations: 1000,
-    bits: 256,
-  );
-
-  final hashBytes = await pbkdf2.deriveBits(
-    utf8.encode('valuesalt'),
-    nonce: Nonce(utf8.encode('valuesalt')),
-  );
-
-  return base64.encode(hashBytes);
+Future<String> generateOptr(String value) async {
+  final bytes = utf8.encode(value);
+  final hash = sha256.convert(bytes).toString();
+  final first16 = hash.substring(0, 16);
+  final spaceEvery4 = first16.replaceAll(RegExp('(?<=^(.{4})+)'), ' ');
+  return spaceEvery4;
 }

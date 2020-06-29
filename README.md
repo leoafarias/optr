@@ -1,6 +1,6 @@
 # optr
 
-A new Flutter project.
+Are you ready for password freedom? This is the first step to create easy to remember, impossible to guess unique passwords. How would you feel if you could recover all your credentials from memory? Well.. all that is possible. I will see you on the other side.
 
 ## Getting Started
 

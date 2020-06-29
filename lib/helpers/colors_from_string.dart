@@ -19,7 +19,8 @@ class StringPalette {
 }
 
 StringPalette colorFromString(String name) {
-  final color = searchBrandColor(name);
+  var color = searchBrandColor(name);
+  color ??= Colors.tealAccent;
   final initials = (name.length > 2) ? name.substring(0, 2) : name;
 
   var mainColor =

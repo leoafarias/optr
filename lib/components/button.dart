@@ -48,7 +48,7 @@ class OptrButton extends StatelessWidget {
 
   factory OptrButton.active({
     Key key,
-    @required Widget label,
+    Widget label,
     Widget icon,
     EdgeInsets padding = const EdgeInsets.all(15.0),
     VoidCallback onTap,
@@ -69,7 +69,7 @@ class OptrButton extends StatelessWidget {
 
   factory OptrButton.cancel({
     Key key,
-    @required Widget label,
+    Widget label,
     Widget icon,
     EdgeInsets padding = const EdgeInsets.all(15.0),
     VoidCallback onTap,
@@ -90,7 +90,7 @@ class OptrButton extends StatelessWidget {
 
   factory OptrButton.error({
     Key key,
-    @required Widget label,
+    Widget label,
     Widget icon,
     EdgeInsets padding = const EdgeInsets.all(15.0),
     VoidCallback onTap,
@@ -125,8 +125,8 @@ class OptrButton extends StatelessWidget {
       boxShadow: [
         BoxShadow(
           color: color.withOpacity(0.2),
-          blurRadius: 6.0,
-          spreadRadius: 6.0,
+          blurRadius: 3.0,
+          spreadRadius: 3.0,
         )
       ],
       child: _buildFlatButton(),
@@ -143,6 +143,14 @@ class OptrButton extends StatelessWidget {
         padding: padding,
         textColor: textColor,
         child: label,
+      );
+    } else if (label == null) {
+      return IconButton(
+        onPressed: _onPressed,
+        color: color,
+        splashColor: color.withOpacity(0.3),
+        padding: padding,
+        icon: icon,
       );
     } else {
       return FlatButton.icon(

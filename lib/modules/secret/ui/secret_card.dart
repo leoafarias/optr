@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:optr/components/edges.dart';
 import 'package:optr/components/icon_button.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:optr/helpers/sound_effect.dart';
 import 'package:optr/helpers/text_decoder_effect.dart';
 import 'package:optr/helpers/text_typing_effect.dart';
 import 'package:optr/modules/secret/secret.model.dart';
 import 'package:optr/screens/account_detail.screen.dart';
+import 'package:optr/screens/secret_detail.screen.dart';
 
 /// Tile for the Master Secret List
 class SecretCard extends HookWidget {
   final Secret _secret;
-
-  final Function _onPressed;
 
   final bool active;
 
@@ -22,11 +22,9 @@ class SecretCard extends HookWidget {
   const SecretCard({
     Key key,
     @required Secret secret,
-    @required Function onPressed,
     this.simpleCard = false,
     this.active = false,
   })  : _secret = secret,
-        _onPressed = onPressed,
         super(key: key);
 
   @override
@@ -41,9 +39,9 @@ class SecretCard extends HookWidget {
     if (accountCount == null || accountCount == 0) {
       accountsCountText = 'No passwords generated with secret.';
     } else if (_secret.accountCount == 1) {
-      accountsCountText = '$accountCount passwords generated.';
+      accountsCountText = '$accountCount passwords generated with secret.';
     } else {
-      accountsCountText = '$accountCount passwords generated.';
+      accountsCountText = '$accountCount passwords generated with secret.';
     }
 
     void _runAnimation() async {
@@ -52,7 +50,7 @@ class SecretCard extends HookWidget {
         SoundEffect.play(SoundEffect.typing, rate: 0.8);
         TypingEffect(accountsCountText, (value) => countText.value = value);
         TextDecoder(_secret.label, (value) => secretLabel.value = value);
-        TextDecoder('LABEL/ALIAS', (value) => labelText.value = value);
+        TextDecoder('LABEL', (value) => labelText.value = value);
       } on Exception {
         // Switching cards, disposes
         // Need to catch exception
@@ -67,7 +65,14 @@ class SecretCard extends HookWidget {
 
     return GestureDetector(
       key: key,
-      onTap: _onPressed,
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => SecretDetail(uuid: _secret.id),
+          ),
+        );
+      },
       child: OptrDoubleEdge(
         corners: const EdgeCorners.all(15),
         color: Colors.black,
@@ -121,19 +126,21 @@ class SecretCard extends HookWidget {
                       ? Container(
                           height: 40,
                           child: OptrDoubleEdge(
-                              corners: const EdgeCorners.cross(0, 10),
-                              borderColor: Theme.of(context).accentColor,
-                              color: Colors.black.withAlpha(230),
-                              child: OptrIconButton(
-                                  icon: Icon(Icons.add),
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              AccountDetail()),
-                                    );
-                                  })),
+                            corners: const EdgeCorners.cross(0, 10),
+                            borderColor: Theme.of(context).accentColor,
+                            color: Colors.black.withAlpha(230),
+                            child: OptrIconButton(
+                              icon: Icon(Icons.add),
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => AccountDetail(),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
                         )
                       : const SizedBox(height: 0),
                 ],
