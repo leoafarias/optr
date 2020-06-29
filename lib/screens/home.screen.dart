@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:optr/components/button.dart';
 import 'package:optr/components/edges.dart';
+import 'package:optr/components/instructions.dart';
 
 import 'package:optr/components/spacer.dart';
 import 'package:optr/modules/account/account.provider.dart';
@@ -23,29 +24,43 @@ class HomeScreen extends HookWidget {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: OptrEdges(
-            color: Colors.black,
+          child: OptrDoubleEdge(
+            color: Theme.of(context).cardColor,
             corners: const EdgeCorners.only(30, 30, 0, 30),
             child: Column(
               children: <Widget>[
-                const OptrSpacer(),
+                // Row(
+                //   children: <Widget>[
+                //     const OptrSpacer(),
+                //     const OptrSpacer(),
+                //     OptrButton(
+                //       label: const Text('Generate Secret'),
+                //       onTap: () {},
+                //     ),
+                //     const OptrSpacer(),
+                //     OptrButton(
+                //       label: const Text('How To'),
+                //       onTap: () {},
+                //     ),
+                //   ],
+                // ),
+                const SizedBox(height: 30),
                 Row(
                   children: <Widget>[
-                    const OptrSpacer(),
-                    const OptrSpacer(),
-                    OptrButton(
-                      label: const Text('Generate Secret'),
-                      onTap: () {},
-                    ),
-                    const OptrSpacer(),
-                    OptrButton(
-                      label: const Text('How To'),
-                      onTap: () {},
+                    const SizedBox(width: 30),
+                    Text(
+                      'OPTRs',
+                      style: Theme.of(context).textTheme.headline5,
                     ),
                   ],
                 ),
-                const OptrSpacer(),
                 SecretList(secretList),
+                const Padding(
+                  padding: EdgeInsets.all(20),
+                  child: Instructions(
+                      content:
+                          'You can create hacker safe passwords by choosing a secret you would liket o use'),
+                ),
                 Expanded(child: AccountList(accountList)),
               ],
             ),

@@ -8,25 +8,34 @@ import 'package:optr/components/edges.dart';
 import 'package:optr/components/instructions.dart';
 import 'package:optr/components/spacer.dart';
 import 'package:optr/components/text_field.dart';
+import 'package:optr/helpers/colors_from_string.dart';
 
 import 'package:optr/modules/account/account.provider.dart';
+import 'package:optr/modules/secret/secret.provider.dart';
+import 'package:optr/modules/secret/ui/secret_list.dart';
 import 'package:uuid/uuid.dart';
 
 class AccountDetail extends HookWidget {
   /// Unique Identifier for the Account Password
-  final String _uuid;
+  final String _id;
 
   /// Flags if screen is in edit state
   final bool editing;
 
-  AccountDetail({String uuid})
-      : _uuid = uuid ?? Uuid().v4(),
-        editing = uuid == null;
+  static const routeName = '/account';
+
+  AccountDetail({String id})
+      : _id = id ?? Uuid().v4(),
+        editing = id == null;
 
   @override
   Widget build(BuildContext context) {
     final provider = useProvider(accountProvider);
-    final account = useState(provider.getById(_uuid));
+    final secretList = useProvider(secretProvider.state);
+    final account = useState(provider.getById(_id));
+    final palette = useState<StringPalette>(
+      colorFromString(account.value.identifier),
+    );
 
     void _onClose() {
       FocusScope.of(context).unfocus();
@@ -38,50 +47,75 @@ class AccountDetail extends HookWidget {
         // TODO - Display validation error
       }
       await provider.save(account.value);
+      Navigator.pop(context, false);
     }
 
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: OptrEdges(
-            corners: const EdgeCorners.only(25, 25, 0, 0),
-            color: const Color(0xFF111111),
+          padding: const EdgeInsets.all(10),
+          child: OptrDoubleEdge(
+            corners: const EdgeCorners.only(30, 30, 0, 30),
+            color: Colors.black.withOpacity(0.95),
+            borderColor: palette.value.borderColor,
             child: ListView(
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
               keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
               children: <Widget>[
                 const OptrSpacer(),
-                Hero(
-                  tag: 'account:title',
-                  child: Text(
-                    'Account Passcode',
-                    style: Theme.of(context).textTheme.headline4,
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                  child: Column(
+                    children: <Widget>[
+                      Hero(
+                        tag: 'account:title',
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              account.value.identifier,
+                              style: Theme.of(context).textTheme.headline4,
+                            ),
+                          ],
+                        ),
+                      ),
+                      const OptrSpacer(),
+                      OptrTextField(
+                        label: 'Identifier',
+                        color: palette.value.borderColor,
+                        value: account.value.identifier,
+                        onChanged: (value) {
+                          account.value.identifier = value;
+                          palette.value = colorFromString(value);
+                        },
+                      ),
+                      const OptrSpacer(),
+                      OptrTextField(
+                        label: 'Website',
+                        value: account.value.website,
+                        color: palette.value.borderColor,
+                        onChanged: (value) => account.value.website = value,
+                      ),
+                      const OptrSpacer(),
+                      OptrCounter(
+                        color: palette.value.borderColor,
+                        value: account.value.version,
+                        onChanged: (value) => account.value.version = value,
+                      ),
+                      const OptrSpacer(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            'Secret code selected',
+                            style: Theme.of(context).textTheme.subtitle1,
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
-                const OptrSpacer(),
-                OptrTextField(
-                  label: 'Identifier',
-                  value: account.value.identifier,
-                  onChanged: (value) => account.value.identifier = value,
-                ),
-                const OptrSpacer(),
-                OptrTextField(
-                  label: 'Website',
-                  value: account.value.website,
-                  onChanged: (value) => account.value.website = value,
-                ),
-                const OptrSpacer(),
-                OptrCounter(
-                  value: account.value.version,
-                  onChanged: (value) => account.value.version = value,
-                ),
-                const OptrSpacer(),
-                const Instructions(
-                  content:
-                      'Instructions about something go here to explain how versions work',
-                ),
-                const SizedBox(height: 20),
+                SecretList(secretList),
                 Row(
                   children: <Widget>[
                     OptrButton.success(

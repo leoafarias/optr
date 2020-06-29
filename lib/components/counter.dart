@@ -16,9 +16,16 @@ class OptrCounter extends HookWidget {
   /// Max value of the counter
   final int max;
 
+  /// Field color
+  Color color;
+
   /// Constructor
-  const OptrCounter(
-      {@required this.onChanged, int value, this.min = 0, this.max = 100})
+  OptrCounter(
+      {@required this.onChanged,
+      int value,
+      this.min = 0,
+      this.max = 100,
+      this.color})
       : _value = value ?? min;
 
   @override
@@ -47,8 +54,12 @@ class OptrCounter extends HookWidget {
       count.value--;
     }
 
-    return OptrEdges(
-      color: Colors.black,
+    // Set default color
+    color ??= Theme.of(context).accentColor;
+
+    return OptrDoubleEdge(
+      color: Colors.black.withOpacity(0.9),
+      borderColor: color,
       corners: const EdgeCorners.cross(10, 0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,

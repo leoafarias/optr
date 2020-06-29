@@ -15,11 +15,15 @@ class SecretCard extends HookWidget {
 
   final bool active;
 
+  /// Simple card style
+  final bool simpleCard;
+
   /// Creates instance of Master Secret Tile
   const SecretCard({
     Key key,
     @required Secret secret,
     @required Function onPressed,
+    this.simpleCard = false,
     this.active = false,
   })  : _secret = secret,
         _onPressed = onPressed,
@@ -73,8 +77,8 @@ class SecretCard extends HookWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              const Divider(
-                color: Colors.tealAccent,
+              Divider(
+                color: Theme.of(context).accentColor,
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -92,14 +96,14 @@ class SecretCard extends HookWidget {
                   //     style: Theme.of(context).textTheme.caption),
                 ],
               ),
-              const Divider(
-                color: Colors.tealAccent,
+              Divider(
+                color: Theme.of(context).accentColor,
               ),
               Row(
                 children: <Widget>[
                   Expanded(
                     child: OptrDoubleEdge(
-                      borderColor: Colors.tealAccent,
+                      borderColor: Theme.of(context).accentColor,
                       color: Colors.black.withAlpha(230),
                       corners: const EdgeCorners.only(0, 0, 10, 0),
                       child: Padding(
@@ -112,22 +116,25 @@ class SecretCard extends HookWidget {
                     ),
                   ),
                   const SizedBox(width: 10),
-                  Container(
-                    height: 40,
-                    child: OptrDoubleEdge(
-                        corners: const EdgeCorners.cross(0, 10),
-                        borderColor: Colors.tealAccent,
-                        color: Colors.black.withAlpha(230),
-                        child: OptrIconButton(
-                            icon: Icon(Icons.add),
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => AccountDetail()),
-                              );
-                            })),
-                  ),
+                  simpleCard
+                      ? Container(
+                          height: 40,
+                          child: OptrDoubleEdge(
+                              corners: const EdgeCorners.cross(0, 10),
+                              borderColor: Theme.of(context).accentColor,
+                              color: Colors.black.withAlpha(230),
+                              child: OptrIconButton(
+                                  icon: Icon(Icons.add),
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              AccountDetail()),
+                                    );
+                                  })),
+                        )
+                      : const SizedBox(height: 0),
                 ],
               ),
             ],

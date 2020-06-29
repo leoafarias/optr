@@ -12,10 +12,11 @@ class OptrIconButton extends StatelessWidget {
   final Function onPressed;
 
   /// Constructor
-  const OptrIconButton(
-      {@required this.icon,
-      @required this.onPressed,
-      this.color = Colors.tealAccent});
+  const OptrIconButton({
+    @required this.icon,
+    @required this.onPressed,
+    this.color,
+  });
 
   @override
   Widget build(BuildContext context) {
