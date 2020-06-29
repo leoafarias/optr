@@ -27,7 +27,7 @@ class SecretDetail extends HookWidget {
     final provider = useProvider(secretProvider);
     final secret = useState(provider.getById(_uuid));
     final label = useState(
-      editing ? secret.value.label : 'New Secret Code',
+      editing ? secret.value.label : 'Add a Secret Code',
     );
     final passphrase = useState('');
 
@@ -46,6 +46,8 @@ class SecretDetail extends HookWidget {
       Navigator.pop(context);
     }
 
+    void onGenerate() {}
+
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -60,51 +62,49 @@ class SecretDetail extends HookWidget {
               keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
               children: <Widget>[
                 const OptrSpacer(),
-                Expanded(
-                  flex: 1,
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                    child: Column(
-                      children: <Widget>[
-                        Hero(
-                          tag: 'secret:name',
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                label.value,
-                                style: Theme.of(context).textTheme.headline4,
-                              ),
-                            ],
-                          ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                  child: Column(
+                    children: <Widget>[
+                      Hero(
+                        tag: 'secret:name',
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              label.value,
+                              style: Theme.of(context).textTheme.headline4,
+                            ),
+                          ],
                         ),
-                        const OptrSpacer(),
-                        OptrTextField(
-                          label: 'Label',
-                          color: Theme.of(context).accentColor,
-                          value: secret.value.label,
-                          onChanged: (value) {
-                            secret.value.label = value;
-                            // Updates the label display also
-                            label.value = value;
-                          },
-                        ),
-                        const OptrSpacer(),
-                        OptrTextField(
-                          label: 'Secret code',
-                          obscureText: true,
-                          value: passphrase.value,
-                          color: Theme.of(context).accentColor,
-                          onChanged: (value) => passphrase.value = value,
-                        ),
-                        const OptrSpacer(),
-                        OptrButton.active(
-                          label: const Text('Generate a passphrase for me.'),
-                          onTap: saveSecret,
-                        ),
-                        const OptrSpacer(),
-                      ],
-                    ),
+                      ),
+                      const OptrSpacer(),
+                      OptrTextField(
+                        label: 'Label',
+                        autofocus: true,
+                        color: Theme.of(context).accentColor,
+                        value: secret.value.label,
+                        onChanged: (value) {
+                          secret.value.label = value;
+                          // Updates the label display also
+                          label.value = value;
+                        },
+                      ),
+                      const OptrSpacer(),
+                      OptrTextField(
+                        label: 'Secret code',
+                        value: passphrase.value,
+                        color: Theme.of(context).accentColor,
+                        onChanged: (value) => passphrase.value = value,
+                      ),
+                      const OptrSpacer(),
+                      OptrButton.active(
+                        label: const Text('Generate a passphrase for me.'),
+                        icon: Icon(Icons.vpn_key),
+                        onTap: onGenerate,
+                      ),
+                      const OptrSpacer(),
+                    ],
                   ),
                 ),
                 Row(
