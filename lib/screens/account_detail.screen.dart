@@ -2,14 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:optr/components/button.dart';
-
 import 'package:optr/components/counter.dart';
 import 'package:optr/components/edges.dart';
-import 'package:optr/components/instructions.dart';
 import 'package:optr/components/spacer.dart';
 import 'package:optr/components/text_field.dart';
 import 'package:optr/helpers/colors_from_string.dart';
-
 import 'package:optr/modules/account/account.provider.dart';
 import 'package:optr/modules/secret/secret.provider.dart';
 import 'package:optr/modules/secret/ui/secret_list.dart';
@@ -39,7 +36,7 @@ class AccountDetail extends HookWidget {
 
     void _onClose() {
       FocusScope.of(context).unfocus();
-      Navigator.pop(context, false);
+      Navigator.pop(context);
     }
 
     void saveAccount() async {
@@ -47,7 +44,7 @@ class AccountDetail extends HookWidget {
         // TODO - Display validation error
       }
       await provider.save(account.value);
-      Navigator.pop(context, false);
+      Navigator.pop(context);
     }
 
     return Scaffold(
