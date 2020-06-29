@@ -19,6 +19,7 @@ class AccountCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final palette = colorFromString(account.identifier);
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -31,9 +32,9 @@ class AccountCard extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
         child: OptrDoubleEdge(
-          color: Colors.black,
+          color: Colors.black.withOpacity(0.9),
           corners: const EdgeCorners.cross(20, 5),
-          borderColor: Theme.of(context).accentColor,
+          borderColor: palette.borderColor ?? Theme.of(context).accentColor,
           child: Row(
             children: <Widget>[
               OptrAvatar(name: account.identifier),

@@ -120,7 +120,7 @@ class SecretCard extends HookWidget {
                     ),
                   ),
                   const SizedBox(width: 10),
-                  simpleCard
+                  !simpleCard
                       ? Container(
                           height: 40,
                           child: OptrDoubleEdge(
