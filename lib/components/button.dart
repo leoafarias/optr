@@ -46,6 +46,48 @@ class OptrButton extends StatelessWidget {
     );
   }
 
+  factory OptrButton.active({
+    Key key,
+    @required Widget label,
+    Widget icon,
+    EdgeInsets padding = const EdgeInsets.all(15.0),
+    VoidCallback onTap,
+  }) {
+    return OptrButton(
+      key: key,
+      label: label,
+      icon: icon,
+      padding: padding,
+      onTap: onTap,
+      color: Colors.tealAccent,
+      textColor: Colors.tealAccent,
+      backgroundColor: Colors.black.withOpacity(0.9),
+      borderColor: Colors.tealAccent,
+      soundEffect: SoundEffect.click,
+    );
+  }
+
+  factory OptrButton.cancel({
+    Key key,
+    @required Widget label,
+    Widget icon,
+    EdgeInsets padding = const EdgeInsets.all(15.0),
+    VoidCallback onTap,
+  }) {
+    return OptrButton(
+      key: key,
+      label: label,
+      icon: icon,
+      padding: padding,
+      onTap: onTap,
+      color: Colors.tealAccent,
+      textColor: Colors.tealAccent,
+      backgroundColor: Colors.black.withOpacity(0.9),
+      borderColor: Colors.tealAccent,
+      soundEffect: SoundEffect.error,
+    );
+  }
+
   factory OptrButton.error({
     Key key,
     @required Widget label,

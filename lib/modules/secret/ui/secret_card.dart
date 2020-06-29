@@ -51,8 +51,9 @@ class SecretCard extends HookWidget {
     }
 
     void _runAnimation() async {
-      // ignore: unawaited_futures
       try {
+        // ignore: unawaited_futures
+        SoundEffect.play(SoundEffect.typing, rate: 0.8);
         TypingEffect(accountsCountText, (value) => countText.value = value);
         TextDecoder(_secret.label, (value) => secretLabel.value = value);
         TextDecoder('LABEL/ALIAS', (value) => labelText.value = value);

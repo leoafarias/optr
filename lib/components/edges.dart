@@ -8,6 +8,9 @@ class OptrEdges extends StatelessWidget {
   /// Edge color
   final Color color;
 
+  /// Gradient color
+  final bool gradient;
+
   /// Sharpness of the corners
   final EdgeCorners corners;
 
@@ -15,7 +18,8 @@ class OptrEdges extends StatelessWidget {
   const OptrEdges({
     Key key,
     @required this.child,
-    this.color = Colors.grey,
+    this.color = Colors.black,
+    this.gradient = false,
     this.corners = const EdgeCorners.only(5, 5, 5, 5),
   }) : super(key: key);
 
@@ -33,7 +37,13 @@ class OptrEdges extends StatelessWidget {
           ),
         ),
       ),
-      child: Container(child: child, decoration: BoxDecoration(color: color)),
+      child: Container(
+          child: child,
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [color, gradient ? Colors.black : color]))),
     );
   }
 }
@@ -48,6 +58,9 @@ class OptrDoubleEdge extends StatelessWidget {
   /// Border color
   final Color borderColor;
 
+  /// Gradient color
+  final bool gradient;
+
   ///Border width
   final double borderWidth;
 
@@ -61,6 +74,7 @@ class OptrDoubleEdge extends StatelessWidget {
     this.borderColor = Colors.tealAccent,
     this.color = Colors.black,
     this.borderWidth = 1.0,
+    this.gradient = false,
     this.corners = const EdgeCorners.only(5, 5, 5, 5),
   }) : super(key: key);
 
@@ -70,6 +84,7 @@ class OptrDoubleEdge extends StatelessWidget {
     return OptrEdges(
       color: borderColor,
       corners: corners,
+      gradient: gradient,
       child: Padding(
         padding: EdgeInsets.all(borderWidth),
         child: OptrEdges(

@@ -50,12 +50,17 @@ class AccountDetail extends HookWidget {
       Navigator.pop(context, false);
     }
 
+    void onIndexChange(int index) {
+      account.value.masterId = secretList[index].id;
+    }
+
     return Scaffold(
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(10),
           child: OptrDoubleEdge(
             corners: const EdgeCorners.only(30, 30, 0, 30),
+            gradient: true,
             color: Colors.black.withOpacity(0.95),
             borderColor: palette.value.borderColor,
             child: ListView(
@@ -115,15 +120,21 @@ class AccountDetail extends HookWidget {
                     ],
                   ),
                 ),
-                SecretList(secretList),
+                SecretList(
+                  secretList,
+                  simpleCard: true,
+                  onIndexChange: onIndexChange,
+                ),
+                const OptrSpacer(),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    OptrButton.success(
+                    OptrButton.active(
                       label: const Text('Save'),
                       onTap: saveAccount,
                     ),
                     const OptrSpacer(),
-                    OptrButton.error(
+                    OptrButton.cancel(
                       label: const Text('Cancel'),
                       onTap: _onClose,
                     ),

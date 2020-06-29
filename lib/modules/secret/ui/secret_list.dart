@@ -2,24 +2,48 @@ import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
-import 'package:optr/components/spacer.dart';
-
 import 'package:optr/modules/secret/secret.model.dart';
 import 'package:optr/modules/secret/ui/secret_card.dart';
 
 /// List that display account passwords
 class SecretList extends HookWidget {
   final List<Secret> list;
+  final bool simpleCard;
+  final Function(int) onIndexChange;
+  final int initialIndex;
 
   /// Creates instance of the password list
-  const SecretList(this.list);
+  const SecretList(this.list,
+      {this.simpleCard = false, this.onIndexChange, this.initialIndex = 1});
 
   @override
   Widget build(BuildContext context) {
     final currentIndex = useState<int>(0);
 
+    void handleIndexChange(int index) {
+      currentIndex.value = index;
+      if (onIndexChange.call != null) {
+        onIndexChange(index);
+      }
+    }
+
+    final _controller = SwiperController();
+
+    void move(int index) async {
+      await Future.delayed(Duration(seconds: 2));
+      await _controller.move(index);
+    }
+
+    useEffect(() {
+      move(initialIndex);
+
+      return;
+    }, []);
+
     if (list == null || list.isEmpty) {
-      return const Center(child: Text('Add a Master Secret to get started'));
+      return const Center(
+        child: Text('Add a Master Secret to get started'),
+      );
     }
 
     return Column(
@@ -31,14 +55,16 @@ class SecretList extends HookWidget {
               final secret = list[index];
               return SecretCard(
                 key: Key(list[index].id),
+                simpleCard: simpleCard,
                 active: index == currentIndex.value,
                 secret: secret,
                 onPressed: () {},
               );
             },
-            onIndexChanged: (index) => currentIndex.value = index,
+            onIndexChanged: handleIndexChange,
             itemCount: list.length,
             itemWidth: 400,
+            controller: _controller,
             itemHeight: 180,
             layout: SwiperLayout.TINDER,
           ),

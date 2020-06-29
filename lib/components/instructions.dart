@@ -7,11 +7,13 @@ import 'package:optr/helpers/text_typing_effect.dart';
 class Instructions extends HookWidget {
   final String content;
   final String title;
+  final Duration duration;
 
   const Instructions({
     Key key,
     @required this.content,
     this.title,
+    this.duration = const Duration(milliseconds: 800),
   }) : super(key: key);
 
   @override
@@ -22,7 +24,11 @@ class Instructions extends HookWidget {
       await Future.delayed(const Duration(milliseconds: 1000));
       // ignore: unawaited_futures
       SoundEffect.play(SoundEffect.typing_long, rate: 0.8);
-      TypingEffect(content, (value) => text.value = value);
+      TypingEffect(
+        content,
+        (value) => text.value = value,
+        duration: duration,
+      );
     }
 
     useEffect(() {
@@ -44,7 +50,17 @@ class Instructions extends HookWidget {
         child: Padding(
           padding: const EdgeInsets.all(12.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
+              title != null
+                  ? Text(
+                      title,
+                      style: Theme.of(context)
+                          .textTheme
+                          .subtitle1
+                          .copyWith(fontWeight: FontWeight.bold),
+                    )
+                  : const SizedBox(),
               Stack(
                 // Stacks to set the height of the content
                 children: <Widget>[
