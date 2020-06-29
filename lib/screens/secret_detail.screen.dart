@@ -11,11 +11,6 @@ import 'package:optr/helpers/generate_optr.dart';
 import 'package:optr/modules/secret/secret.provider.dart';
 import 'package:uuid/uuid.dart';
 
-// Text(
-//                           '${DateFormat().format(_secret.createdAt).toUpperCase()} / ${_secret.device.info.toUpperCase()}',
-//                           style: Theme.of(context).textTheme.caption,
-//                         ),
-
 class SecretDetail extends HookWidget {
   /// Unique Identifier for the Account Password
   final String _uuid;
@@ -25,12 +20,15 @@ class SecretDetail extends HookWidget {
 
   SecretDetail({String uuid})
       : _uuid = uuid ?? Uuid().v4(),
-        editing = uuid == null;
+        editing = uuid != null;
 
   @override
   Widget build(BuildContext context) {
     final provider = useProvider(secretProvider);
     final secret = useState(provider.getById(_uuid));
+    final label = useState(
+      editing ? secret.value.label : 'New Secret Code',
+    );
     final passphrase = useState('');
 
     useValueChanged(passphrase.value, (_, __) async {
@@ -44,49 +42,86 @@ class SecretDetail extends HookWidget {
       await provider.save(secret.value);
     }
 
+    void onClose() {
+      Navigator.pop(context);
+    }
+
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: OptrEdges(
-            corners: const EdgeCorners.only(25, 25, 0, 0),
-            color: const Color(0xFF111111),
+          padding: const EdgeInsets.all(10),
+          child: OptrDoubleEdge(
+            corners: const EdgeCorners.only(30, 30, 0, 30),
+            gradient: true,
+            color: Colors.black.withOpacity(0.95),
+            borderColor: Theme.of(context).accentColor,
             child: ListView(
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
               keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
               children: <Widget>[
                 const OptrSpacer(),
-                Hero(
-                  tag: 'secret:title',
-                  child: Text(
-                    'Create Optr',
-                    style: Theme.of(context).textTheme.headline4,
+                Expanded(
+                  flex: 1,
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                    child: Column(
+                      children: <Widget>[
+                        Hero(
+                          tag: 'secret:name',
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                label.value,
+                                style: Theme.of(context).textTheme.headline4,
+                              ),
+                            ],
+                          ),
+                        ),
+                        const OptrSpacer(),
+                        OptrTextField(
+                          label: 'Label',
+                          color: Theme.of(context).accentColor,
+                          value: secret.value.label,
+                          onChanged: (value) {
+                            secret.value.label = value;
+                            // Updates the label display also
+                            label.value = value;
+                          },
+                        ),
+                        const OptrSpacer(),
+                        OptrTextField(
+                          label: 'Secret code',
+                          obscureText: true,
+                          value: passphrase.value,
+                          color: Theme.of(context).accentColor,
+                          onChanged: (value) => passphrase.value = value,
+                        ),
+                        const OptrSpacer(),
+                        OptrButton.active(
+                          label: const Text('Generate a passphrase for me.'),
+                          onTap: saveSecret,
+                        ),
+                        const OptrSpacer(),
+                      ],
+                    ),
                   ),
                 ),
-                const OptrSpacer(),
-                const Instructions(
-                  content:
-                      'Optr (One Password to Rule): Is a hashed passphrase which allows you to retrieve any account passwords from memory.',
-                ),
-                const OptrSpacer(),
-                OptrTextField(
-                  label: 'Label',
-                  value: secret.value.label,
-                  onChanged: (value) => secret.value.label = value,
-                ),
-                const OptrSpacer(),
-                OptrTextField(
-                  label: 'Passphrase',
-                  obscureText: true,
-                  value: passphrase.value,
-                  onChanged: (value) => passphrase.value = value,
-                ),
-                const OptrSpacer(),
-                Text(secret.value.hash),
-                const OptrSpacer(),
-                OptrButton.success(
-                  label: const Text('Save'),
-                  onTap: saveSecret,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    OptrButton.active(
+                      label: const Text('Save'),
+                      icon: Icon(Icons.check_circle),
+                      onTap: saveSecret,
+                    ),
+                    const OptrSpacer(),
+                    OptrButton.cancel(
+                      label: const Text('Cancel'),
+                      icon: Icon(Icons.cancel),
+                      onTap: onClose,
+                    ),
+                  ],
                 ),
               ],
             ),
