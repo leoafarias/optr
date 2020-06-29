@@ -16,7 +16,7 @@ class OptrAvatar extends StatelessWidget {
     final palette = colorFromString(_name);
     return OptrDoubleEdge(
       corners: const EdgeCorners.only(0, 0, 0, 0),
-      color: Colors.black.withOpacity(0.9),
+      color: Colors.black.withOpacity(0.95),
       borderColor: palette.borderColor,
       child: Container(
         width: 60.0,
