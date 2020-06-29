@@ -19,11 +19,15 @@ class SecretCard extends HookWidget {
 
   final bool active;
 
+  /// Simple card style
+  final bool simpleCard;
+
   /// Creates instance of Master Secret Tile
   const SecretCard({
     Key key,
     @required Secret secret,
     @required Function onPressed,
+    this.simpleCard = false,
     this.active = false,
   })  : _secret = secret,
         _onPressed = onPressed,
@@ -116,22 +120,25 @@ class SecretCard extends HookWidget {
                     ),
                   ),
                   const SizedBox(width: 10),
-                  Container(
-                    height: 40,
-                    child: OptrDoubleEdge(
-                        corners: const EdgeCorners.cross(0, 10),
-                        borderColor: Theme.of(context).accentColor,
-                        color: Colors.black.withAlpha(230),
-                        child: OptrIconButton(
-                            icon: Icon(Icons.add),
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => AccountDetail()),
-                              );
-                            })),
-                  ),
+                  simpleCard
+                      ? Container(
+                          height: 40,
+                          child: OptrDoubleEdge(
+                              corners: const EdgeCorners.cross(0, 10),
+                              borderColor: Theme.of(context).accentColor,
+                              color: Colors.black.withAlpha(230),
+                              child: OptrIconButton(
+                                  icon: Icon(Icons.add),
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              AccountDetail()),
+                                    );
+                                  })),
+                        )
+                      : const SizedBox(height: 0),
                 ],
               ),
             ],

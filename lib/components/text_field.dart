@@ -81,10 +81,10 @@ class _OptrTextFieldState extends State<OptrTextField> {
         lineColor: widget.color,
         lineStroke: 1.0,
         edges: const CutEdgeCorners.cross(10.0, 0.0),
-        boxShadow: _hasFocus
+        boxShadow: !_hasFocus
             ? [
                 BoxShadow(
-                  color: widget.color.withAlpha(150),
+                  color: widget.color.withAlpha(100),
                   blurRadius: 6.0,
                   spreadRadius: 1.0,
                 )

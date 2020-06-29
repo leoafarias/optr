@@ -47,6 +47,7 @@ class AccountDetail extends HookWidget {
         // TODO - Display validation error
       }
       await provider.save(account.value);
+      Navigator.pop(context, false);
     }
 
     return Scaffold(
@@ -57,62 +58,78 @@ class AccountDetail extends HookWidget {
             corners: const EdgeCorners.only(30, 30, 0, 30),
             color: Colors.black.withOpacity(0.95),
             borderColor: palette.value.borderColor,
-            child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: ListView(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                keyboardDismissBehavior:
-                    ScrollViewKeyboardDismissBehavior.onDrag,
-                children: <Widget>[
-                  const OptrSpacer(),
-                  Hero(
-                    tag: 'account:title',
-                    child: Text(
-                      'Account Passcode',
-                      style: Theme.of(context).textTheme.headline4,
-                    ),
-                  ),
-                  const OptrSpacer(),
-                  OptrTextField(
-                    label: 'Identifier',
-                    color: palette.value.borderColor,
-                    value: account.value.identifier,
-                    onChanged: (value) {
-                      account.value.identifier = value;
-                      palette.value = colorFromString(value);
-                    },
-                  ),
-                  const OptrSpacer(),
-                  OptrTextField(
-                    label: 'Website',
-                    value: account.value.website,
-                    color: palette.value.borderColor,
-                    onChanged: (value) => account.value.website = value,
-                  ),
-                  const OptrSpacer(),
-                  OptrCounter(
-                    color: palette.value.borderColor,
-                    value: account.value.version,
-                    onChanged: (value) => account.value.version = value,
-                  ),
-                  const OptrSpacer(),
-                  const SizedBox(height: 20),
-                  SecretList(secretList),
-                  Row(
+            child: ListView(
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+              children: <Widget>[
+                const OptrSpacer(),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                  child: Column(
                     children: <Widget>[
-                      OptrButton.success(
-                        label: const Text('Save'),
-                        onTap: saveAccount,
+                      Hero(
+                        tag: 'account:title',
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              account.value.identifier,
+                              style: Theme.of(context).textTheme.headline4,
+                            ),
+                          ],
+                        ),
                       ),
                       const OptrSpacer(),
-                      OptrButton.error(
-                        label: const Text('Cancel'),
-                        onTap: _onClose,
+                      OptrTextField(
+                        label: 'Identifier',
+                        color: palette.value.borderColor,
+                        value: account.value.identifier,
+                        onChanged: (value) {
+                          account.value.identifier = value;
+                          palette.value = colorFromString(value);
+                        },
+                      ),
+                      const OptrSpacer(),
+                      OptrTextField(
+                        label: 'Website',
+                        value: account.value.website,
+                        color: palette.value.borderColor,
+                        onChanged: (value) => account.value.website = value,
+                      ),
+                      const OptrSpacer(),
+                      OptrCounter(
+                        color: palette.value.borderColor,
+                        value: account.value.version,
+                        onChanged: (value) => account.value.version = value,
+                      ),
+                      const OptrSpacer(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            'Secret code selected',
+                            style: Theme.of(context).textTheme.subtitle1,
+                          ),
+                        ],
                       ),
                     ],
                   ),
-                ],
-              ),
+                ),
+                SecretList(secretList),
+                Row(
+                  children: <Widget>[
+                    OptrButton.success(
+                      label: const Text('Save'),
+                      onTap: saveAccount,
+                    ),
+                    const OptrSpacer(),
+                    OptrButton.error(
+                      label: const Text('Cancel'),
+                      onTap: _onClose,
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
         ),
