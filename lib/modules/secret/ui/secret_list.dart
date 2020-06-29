@@ -9,16 +9,16 @@ import 'package:optr/modules/secret/ui/secret_card.dart';
 
 /// List that display account passwords
 class SecretList extends HookWidget {
-  final List<Secret> _list;
+  final List<Secret> list;
 
   /// Creates instance of the password list
-  const SecretList(this._list);
+  const SecretList(this.list);
 
   @override
   Widget build(BuildContext context) {
     final currentIndex = useState<int>(0);
 
-    if (_list == null || _list.isEmpty) {
+    if (list == null || list.isEmpty) {
       return const Center(child: Text('Add a Master Secret to get started'));
     }
 
@@ -28,16 +28,16 @@ class SecretList extends HookWidget {
           height: 180,
           child: Swiper(
             itemBuilder: (BuildContext context, int index) {
-              final secret = _list[index];
+              final secret = list[index];
               return SecretCard(
-                key: Key(_list[index].id),
+                key: Key(list[index].id),
                 active: index == currentIndex.value,
                 secret: secret,
                 onPressed: () {},
               );
             },
             onIndexChanged: (index) => currentIndex.value = index,
-            itemCount: _list.length,
+            itemCount: list.length,
             itemWidth: 400,
             itemHeight: 180,
             layout: SwiperLayout.TINDER,

@@ -15,13 +15,17 @@ class OptrTextField extends StatefulWidget {
   /// Is this  a password
   final bool obscureText;
 
+  /// Color
+  Color color;
+
   /// Fired when field changes
   final Function(String) onChanged;
 
   /// TExt field constructor
-  const OptrTextField({
+  OptrTextField({
     this.label,
     this.value,
+    this.color,
     this.obscureText = false,
     @required this.onChanged,
     this.autofocus = false,
@@ -68,18 +72,19 @@ class _OptrTextFieldState extends State<OptrTextField> {
 
   @override
   Widget build(BuildContext context) {
+    widget.color ??= Theme.of(context).accentColor;
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10.0),
       decoration: CutEdgesDecoration(
-        color: _hasFocus ? Colors.black : Colors.transparent,
-        lineColor:
-            _hasFocus ? Theme.of(context).accentColor : const Color(0xFF222222),
+        color: Colors.black.withOpacity(0.8),
+        lineColor: widget.color,
         lineStroke: 1.0,
         edges: const CutEdgeCorners.cross(10.0, 0.0),
         boxShadow: _hasFocus
             ? [
                 BoxShadow(
-                  color: Theme.of(context).accentColor.withAlpha(150),
+                  color: widget.color.withAlpha(150),
                   blurRadius: 6.0,
                   spreadRadius: 1.0,
                 )
@@ -89,7 +94,7 @@ class _OptrTextFieldState extends State<OptrTextField> {
       child: TextField(
         controller: textFieldController,
         onChanged: widget.onChanged,
-        cursorColor: Theme.of(context).accentColor,
+        cursorColor: widget.color,
         textInputAction: TextInputAction.next,
         autofocus: widget.autofocus,
         autocorrect: false,
@@ -97,6 +102,7 @@ class _OptrTextFieldState extends State<OptrTextField> {
         focusNode: _focus,
         onSubmitted: (_) => FocusScope.of(context).nextFocus(),
         decoration: InputDecoration(
+          labelStyle: TextStyle(color: Colors.white.withOpacity(0.6)),
           suffixIcon: _buildRevealButton(),
           border: InputBorder.none,
           labelText: widget.label,
