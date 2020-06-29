@@ -39,4 +39,3 @@ flutter:
   assets:
     - assets/sounds/
     - assets/word_icon.hive
-    - assets/brand_colors.json
