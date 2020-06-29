@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:optr/components/button.dart';
 import 'package:optr/components/edges.dart';
+import 'package:optr/components/icon_button.dart';
 import 'package:optr/components/spacer.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:optr/helpers/sound_effect.dart';
 import 'package:optr/helpers/text_decoder_effect.dart';
 import 'package:optr/helpers/text_typing_effect.dart';
 import 'package:optr/modules/secret/secret.model.dart';
+import 'package:optr/screens/account_detail.screen.dart';
 
 /// Tile for the Master Secret List
 class SecretCard extends HookWidget {
@@ -47,10 +49,9 @@ class SecretCard extends HookWidget {
     void _runAnimation() async {
       // ignore: unawaited_futures
       try {
-        // TextDecoder(accountsCountText, (value) => countText.value = value);
         TypingEffect(accountsCountText, (value) => countText.value = value);
         TextDecoder(_secret.label, (value) => secretLabel.value = value);
-        TextDecoder('MASTER SECRET_ Label', (value) => labelText.value = value);
+        TextDecoder('LABEL/ALIAS', (value) => labelText.value = value);
       } on Exception {
         // Switching cards, disposes
         // Need to catch exception
@@ -77,7 +78,7 @@ class SecretCard extends HookWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               const Divider(
-                color: Colors.teal,
+                color: Colors.tealAccent,
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -86,16 +87,23 @@ class SecretCard extends HookWidget {
                       style: Theme.of(context).textTheme.bodyText2),
                   Text(secretLabel.value.toUpperCase(),
                       style: Theme.of(context).textTheme.headline6),
+                  // Text(
+                  //     'GENERATED @ | ${DateFormat().format(_secret.createdAt).toUpperCase()}',
+                  //     style: Theme.of(context).textTheme.caption),
+                  // Text('HOST | ${_secret.device.info.toUpperCase()}',
+                  //     style: Theme.of(context).textTheme.caption),
+                  // Text('ID | ${_secret.device.deviceIdentifier.toUpperCase()}',
+                  //     style: Theme.of(context).textTheme.caption),
                 ],
               ),
               const Divider(
-                color: Colors.teal,
+                color: Colors.tealAccent,
               ),
               Row(
                 children: <Widget>[
                   Expanded(
                     child: OptrDoubleEdge(
-                      borderColor: Colors.teal,
+                      borderColor: Colors.tealAccent,
                       color: Colors.black.withAlpha(230),
                       corners: const EdgeCorners.only(0, 0, 10, 0),
                       child: Padding(
@@ -106,7 +114,24 @@ class SecretCard extends HookWidget {
                         ),
                       ),
                     ),
-                  )
+                  ),
+                  const SizedBox(width: 10),
+                  Container(
+                    height: 40,
+                    child: OptrDoubleEdge(
+                        corners: const EdgeCorners.cross(0, 10),
+                        borderColor: Colors.tealAccent,
+                        color: Colors.black.withAlpha(230),
+                        child: OptrIconButton(
+                            icon: Icon(Icons.add),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => AccountDetail()),
+                              );
+                            })),
+                  ),
                 ],
               ),
             ],

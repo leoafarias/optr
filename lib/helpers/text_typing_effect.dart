@@ -41,6 +41,7 @@ class TypingEffect {
   void setText(String newText) async {
     /// Removes text
     /// Needs to have length > 0
+
     _text = ' ';
     await Future.delayed(_delay, update);
 

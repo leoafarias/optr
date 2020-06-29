@@ -72,7 +72,7 @@ class _OptrTextFieldState extends State<OptrTextField> {
       padding: const EdgeInsets.symmetric(horizontal: 10.0),
       decoration: CutEdgesDecoration(
         color: _hasFocus ? Colors.black : Colors.transparent,
-        lineColor: _hasFocus ? Colors.teal : const Color(0xFF222222),
+        lineColor: _hasFocus ? Colors.tealAccent : const Color(0xFF222222),
         lineStroke: 1.0,
         edges: const CutEdgeCorners.cross(10.0, 0.0),
         boxShadow: _hasFocus
@@ -88,7 +88,7 @@ class _OptrTextFieldState extends State<OptrTextField> {
       child: TextField(
         controller: textFieldController,
         onChanged: widget.onChanged,
-        cursorColor: Colors.teal,
+        cursorColor: Colors.tealAccent,
         textInputAction: TextInputAction.next,
         autofocus: widget.autofocus,
         autocorrect: false,

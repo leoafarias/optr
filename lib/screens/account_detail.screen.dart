@@ -28,6 +28,11 @@ class AccountDetail extends HookWidget {
     final provider = useProvider(accountProvider);
     final account = useState(provider.getById(_uuid));
 
+    void _onClose() {
+      FocusScope.of(context).unfocus();
+      Navigator.pop(context, false);
+    }
+
     void saveAccount() async {
       if (account.value.identifier.isEmpty) {
         // TODO - Display validation error
@@ -77,9 +82,18 @@ class AccountDetail extends HookWidget {
                       'Instructions about something go here to explain how versions work',
                 ),
                 const SizedBox(height: 20),
-                OptrButton.success(
-                  label: const Text('Save'),
-                  onTap: saveAccount,
+                Row(
+                  children: <Widget>[
+                    OptrButton.success(
+                      label: const Text('Save'),
+                      onTap: saveAccount,
+                    ),
+                    const OptrSpacer(),
+                    OptrButton.error(
+                      label: const Text('Cancel'),
+                      onTap: _onClose,
+                    ),
+                  ],
                 ),
               ],
             ),

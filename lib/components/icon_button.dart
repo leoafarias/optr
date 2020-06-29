@@ -15,21 +15,14 @@ class OptrIconButton extends StatelessWidget {
   const OptrIconButton(
       {@required this.icon,
       @required this.onPressed,
-      this.color = Colors.teal});
+      this.color = Colors.tealAccent});
 
   @override
   Widget build(BuildContext context) {
     return RawMaterialButton(
-      fillColor: color,
       child: icon,
       padding: const EdgeInsets.all(8.0),
       onPressed: onPressed,
-      shape: const BeveledRectangleBorder(
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(10),
-              topRight: Radius.circular(0),
-              bottomRight: Radius.circular(10),
-              bottomLeft: Radius.circular(0))),
       constraints: const BoxConstraints(),
       elevation: 0.0,
     );
