@@ -17,16 +17,17 @@ class OptrAvatar extends StatelessWidget {
     return OptrEdges(
       corners: const EdgeCorners.only(0, 0, 0, 0),
       child: Container(
-          width: 40.0,
-          height: 60.0,
-          color: palette.bgColor,
-          child: Center(
-            child: Text(
-              palette.initials,
-              style: TextStyle(
-                  fontWeight: FontWeight.bold, color: palette.textColor),
-            ),
-          )),
+        width: 40.0,
+        height: 60.0,
+        color: palette.bgColor,
+        child: Center(
+          child: Text(
+            palette.initials,
+            style: TextStyle(
+                fontWeight: FontWeight.bold, color: palette.textColor),
+          ),
+        ),
+      ),
     );
   }
 }

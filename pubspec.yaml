@@ -36,5 +36,5 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - assets/icons.json
     - assets/sounds/
+    - assets/word_icon.hive
