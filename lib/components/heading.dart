@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:optr/helpers/colors_from_string.dart';
 
 /// Avatar for Account Passwords
 class OptrHeading extends StatelessWidget {

@@ -37,14 +37,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ProviderScope(
       child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          theme: darkTheme(),
-          initialRoute: '/',
-          routes: {
-            '/': (context) => const HomeScreen(),
-            '/secret': (context) => SecretDetail(),
-            '/account': (context) => AccountDetail(),
-          }),
+        debugShowCheckedModeBanner: false,
+        theme: darkTheme(),
+        initialRoute: '/',
+        routes: {
+          '/': (context) => const HomeScreen(),
+          '/secret': (context) => SecretDetail(),
+          '/account': (context) => AccountDetail(),
+        },
+      ),
     );
   }
 }

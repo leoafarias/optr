@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:optr/components/button.dart';
 import 'package:optr/components/edges.dart';
 import 'package:optr/components/icon_button.dart';
-import 'package:optr/components/spacer.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:optr/helpers/sound_effect.dart';
 import 'package:optr/helpers/text_decoder_effect.dart';
 import 'package:optr/helpers/text_typing_effect.dart';
 import 'package:optr/modules/secret/secret.model.dart';
