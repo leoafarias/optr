@@ -6,7 +6,7 @@ import 'package:optr/components/instructions.dart';
 import 'package:optr/components/spacer.dart';
 import 'package:optr/screens/secret_detail.screen.dart';
 
-/// Tile for the Master Secret List
+/// Walk through widget explaining
 class WalkThorugh extends HookWidget {
   final bool active;
 
@@ -46,7 +46,6 @@ class WalkThorugh extends HookWidget {
               title: 'Hi, Welcome!',
               content:
                   '\nAre you ready for password freedom?  This is the first step to create easy to remember, impossible to guess unique passwords.\n\nHow would you feel if you could recover all your credentials from memory?\n\n Well.. all that is possible. I will see you on the other side.\n',
-              duration: Duration(seconds: 5),
             ),
             const OptrSpacer(),
             showNext.value

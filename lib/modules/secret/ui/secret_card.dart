@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:optr/components/edges.dart';
 import 'package:optr/components/icon_button.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+
 import 'package:optr/helpers/sound_effect.dart';
 import 'package:optr/helpers/text_decoder_effect.dart';
-import 'package:optr/helpers/text_typing_effect.dart';
+
 import 'package:optr/modules/secret/secret.model.dart';
 import 'package:optr/screens/account_detail.screen.dart';
 import 'package:optr/screens/secret_detail.screen.dart';
+import 'package:vizor/components/atoms/text_typing/text_typing.dart';
 
 /// Tile for the Master Secret List
 class SecretCard extends HookWidget {
@@ -29,7 +31,6 @@ class SecretCard extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final countText = useState('');
     final secretLabel = useState('');
     final labelText = useState('');
 
@@ -48,7 +49,7 @@ class SecretCard extends HookWidget {
       try {
         // ignore: unawaited_futures
         SoundEffect.play(SoundEffect.typing, rate: 0.8);
-        TypingEffect(accountsCountText, (value) => countText.value = value);
+
         TextDecoder(_secret.label, (value) => secretLabel.value = value);
         TextDecoder('LABEL', (value) => labelText.value = value);
       } on Exception {
@@ -114,8 +115,8 @@ class SecretCard extends HookWidget {
                       corners: const EdgeCorners.only(0, 0, 10, 0),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          countText.value,
+                        child: TextTyping(
+                          accountsCountText,
                           style: Theme.of(context).textTheme.caption,
                         ),
                       ),

@@ -1,34 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:optr/components/frame.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+
+import 'package:vizor/vizor.dart';
 import 'package:optr/helpers/sound_effect.dart';
-import 'package:optr/helpers/text_typing_effect.dart';
 
 class Instructions extends HookWidget {
   final String content;
   final String title;
-  final Duration duration;
 
   const Instructions({
     Key key,
     @required this.content,
     this.title,
-    this.duration = const Duration(milliseconds: 800),
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final text = useState('');
-
     void _runAnimation() async {
-      await Future.delayed(const Duration(milliseconds: 1000));
       // ignore: unawaited_futures
       SoundEffect.play(SoundEffect.typing_long, rate: 0.8);
-      TypingEffect(
-        content,
-        (value) => text.value = value,
-        duration: duration,
-      );
     }
 
     useEffect(() {
@@ -64,7 +55,10 @@ class Instructions extends HookWidget {
               Stack(
                 // Stacks to set the height of the content
                 children: <Widget>[
-                  Text(text.value),
+                  TextTyping(
+                    content,
+                    effectDuration: Duration(milliseconds: 10 * content.length),
+                  ),
                   Opacity(
                     opacity: 0,
                     child: Text(
