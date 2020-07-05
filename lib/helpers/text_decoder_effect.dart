@@ -40,7 +40,9 @@ class TextDecoder {
 
   /// Constructor
   TextDecoder(this.currentText, this.fn,
-      {this.delay = const Duration(milliseconds: 10)});
+      {this.delay = const Duration(milliseconds: 1)}) {
+    setText(currentText);
+  }
 
   /// Sets initial text
   void setText(String newText) {
@@ -55,8 +57,8 @@ class TextDecoder {
     for (var i = 0; i < length; i++) {
       final from = oldText[i];
       final to = newText[i];
-      final start = Random().nextInt(length);
-      final end = start + Random().nextInt(length);
+      final start = Random().nextInt(200);
+      final end = start + Random().nextInt(200);
       _queue.add(Character(from, to, end, start));
     }
     update();
@@ -67,7 +69,8 @@ class TextDecoder {
     var output = '';
     var complete = 0;
     _queue;
-    createOutput(Character c) {
+
+    void createOutput(Character c) {
       if (frame >= c.end) {
         complete++;
         output += c.to;
@@ -94,7 +97,7 @@ class TextDecoder {
     Future.delayed(delay, update);
   }
 
-  _randomChar() {
+  String _randomChar() {
     return _chars[Random().nextInt(_chars.length)];
   }
 }

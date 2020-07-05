@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:optr/components/edge.dart';
+import 'package:optr/components/edges.dart';
 
 /// Generic wrapper for Optr
 class Wrapper extends StatelessWidget {
@@ -14,13 +14,13 @@ class Wrapper extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: OptrEdges(
-        corners: EdgeCorners.only(25, 25, 0, 40),
+        corners: const EdgeCorners.only(25, 25, 0, 40),
         child: Padding(
           padding: const EdgeInsets.all(0),
           child: OptrEdges(
               child: child,
-              corners: EdgeCorners.only(25, 25, 0, 40),
-              color: Color.fromRGBO(10, 10, 10, 1)),
+              corners: const EdgeCorners.only(25, 25, 0, 40),
+              color: const Color.fromRGBO(10, 10, 10, 1)),
         ),
       ),
     );
