@@ -459,6 +459,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.2"
+  pbkdf2_dart:
+    dependency: "direct main"
+    description:
+      name: pbkdf2_dart
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.0"
   pedantic:
     dependency: "direct dev"
     description:

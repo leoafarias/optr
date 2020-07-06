@@ -9,11 +9,11 @@ import 'package:optr/components/instructions.dart';
 import 'package:optr/components/spacer.dart';
 import 'package:optr/components/text_field.dart';
 import 'package:optr/helpers/generate_optr.dart';
-import 'package:optr/helpers/text_decoder_effect.dart';
 
 import 'package:optr/modules/secret/secret.provider.dart';
 import 'package:optr/modules/word_icon/word_icon.repo.dart';
 import 'package:uuid/uuid.dart';
+import 'package:vizor/components/atoms/text_decoding/text_decoding.dart';
 
 class SecretDetail extends HookWidget {
   /// Unique Identifier for the Account Password
@@ -42,8 +42,8 @@ class SecretDetail extends HookWidget {
     }
 
     useValueChanged(passphrase.value, (_, __) async {
-      secret.value.hash = await generateOptr(passphrase.value);
-      TextDecoder(secret.value.hash, decodeCallback);
+      secret.value.hash = await hashSecret(passphrase.value);
+      TextDecoding(secret.value.hash);
     });
 
     void saveSecret() async {

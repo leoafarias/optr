@@ -27,7 +27,7 @@ class AccountCard extends StatelessWidget {
       openColor: Colors.transparent,
       closedColor: Colors.transparent,
       transitionType: ContainerTransitionType.fade,
-      transitionDuration: const Duration(milliseconds: 300),
+      transitionDuration: const Duration(milliseconds: 100),
       closedBuilder: (context, action) => _buildContainer(context),
       openBuilder: (context, action) => AccountDetail(id: account.id),
     );
@@ -39,7 +39,6 @@ class AccountCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
       child: OptrDoubleEdge(
-        color: Colors.black.withOpacity(0.9),
         corners: const EdgeCorners.cross(20, 5),
         borderColor: palette.borderColor ?? Theme.of(context).accentColor,
         child: Row(

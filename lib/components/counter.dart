@@ -23,7 +23,7 @@ class OptrCounter extends HookWidget {
   OptrCounter(
       {@required this.onChanged,
       int value,
-      this.min = 0,
+      this.min = 1,
       this.max = 100,
       this.color})
       : _value = value ?? min;
