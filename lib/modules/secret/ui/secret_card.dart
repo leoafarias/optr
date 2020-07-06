@@ -4,11 +4,11 @@ import 'package:optr/components/icon_button.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
 import 'package:optr/helpers/sound_effect.dart';
-import 'package:optr/helpers/text_decoder_effect.dart';
 
 import 'package:optr/modules/secret/secret.model.dart';
 import 'package:optr/screens/account_detail.screen.dart';
 import 'package:optr/screens/secret_detail.screen.dart';
+import 'package:vizor/components/atoms/text_decoding/text_decoding.dart';
 import 'package:vizor/components/atoms/text_typing/text_typing.dart';
 
 /// Tile for the Master Secret List
@@ -31,9 +31,6 @@ class SecretCard extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final secretLabel = useState('');
-    final labelText = useState('');
-
     String accountsCountText;
     final accountCount = _secret.accountCount;
 
@@ -49,9 +46,6 @@ class SecretCard extends HookWidget {
       try {
         // ignore: unawaited_futures
         SoundEffect.play(SoundEffect.typing, rate: 0.8);
-
-        TextDecoder(_secret.label, (value) => secretLabel.value = value);
-        TextDecoder('LABEL', (value) => labelText.value = value);
       } on Exception {
         // Switching cards, disposes
         // Need to catch exception
@@ -90,9 +84,9 @@ class SecretCard extends HookWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(labelText.value,
+                  TextDecoding('Label',
                       style: Theme.of(context).textTheme.bodyText2),
-                  Text(secretLabel.value.toUpperCase(),
+                  TextDecoding(_secret.label.toUpperCase(),
                       style: Theme.of(context).textTheme.headline6),
                   // Text(
                   //     'GENERATED @ | ${DateFormat().format(_secret.createdAt).toUpperCase()}',
