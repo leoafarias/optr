@@ -21,7 +21,7 @@ class WordCard extends StatelessWidget {
         corners: const EdgeCorners.cross(0, 20),
         child: Row(
           children: <Widget>[
-            OptrAvatar(name: wordIcon.word),
+            OptrAvatar(wordIcon.word),
             const OptrSpacer(),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,

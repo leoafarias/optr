@@ -39,7 +39,7 @@ class HomeScreen extends HookWidget {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: OptrDoubleEdge(
-            color: Theme.of(context).cardColor,
+            color: Theme.of(context).scaffoldBackgroundColor,
             corners: const EdgeCorners.only(30, 30, 0, 30),
             child: Column(
               children: <Widget>[
@@ -83,12 +83,6 @@ class HomeScreen extends HookWidget {
                   ),
                 ),
                 SecretList(secretList),
-                const Padding(
-                  padding: EdgeInsets.all(20),
-                  child: Instructions(
-                      content:
-                          'You can create hacker safe passwords by choosing a secret you would liket o use'),
-                ),
                 Expanded(child: AccountList(accountList)),
               ],
             ),

@@ -18,14 +18,38 @@ class AccountList extends StatelessWidget {
           message: 'No Accounts Have\n Been Added Yet', icon: Icons.vpn_key);
     }
 
-    return ListView.builder(
-      itemBuilder: (context, index) {
-        final item = _list[index];
-        return AccountCard(
-          account: item,
-        );
-      },
-      itemCount: _list.length,
+    return Column(
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.all(20),
+          child: Row(
+            children: <Widget>[
+              Text(
+                'Passwords',
+                style: Theme.of(context).textTheme.headline6.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+              ),
+            ],
+          ),
+        ),
+        Expanded(
+          child: ListView.builder(
+            itemBuilder: (context, index) {
+              final item = _list[index];
+              return Column(
+                children: <Widget>[
+                  AccountCard(
+                    account: item,
+                  ),
+                  const SizedBox(height: 20),
+                ],
+              );
+            },
+            itemCount: _list.length,
+          ),
+        ),
+      ],
     );
   }
 }

@@ -1,8 +1,7 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:optr/components/avatar.dart';
-import 'package:optr/components/button.dart';
-import 'package:optr/components/edges.dart';
+
 import 'package:optr/components/icon_button.dart';
 import 'package:optr/components/spacer.dart';
 import 'package:optr/helpers/colors_from_string.dart';
@@ -33,42 +32,55 @@ class AccountCard extends StatelessWidget {
     );
   }
 
+  Widget WebsiteLabel(BuildContext context, String website) {
+    if (website == null || website.isEmpty) {
+      return const SizedBox();
+    }
+
+    return Text(
+      account.website,
+      style: Theme.of(context).textTheme.bodyText1.copyWith(
+            color: Colors.grey,
+            fontWeight: FontWeight.bold,
+          ),
+    );
+  }
+
   Widget _buildContainer(BuildContext context) {
     final palette = colorFromString(account.identifier);
 
     return Container(
-      padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-      child: OptrDoubleEdge(
-        corners: const EdgeCorners.cross(20, 5),
-        borderColor: palette.borderColor ?? Theme.of(context).accentColor,
-        child: Row(
-          children: <Widget>[
-            OptrAvatar(name: account.identifier),
-            const OptrSpacer(),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  account.identifier,
-                  style: Theme.of(context)
-                      .textTheme
-                      .subtitle1
-                      .copyWith(color: palette.borderColor),
-                ),
-              ],
-            ),
-            const Expanded(
-              child: SizedBox(),
-            ),
-            OptrIconButton(
-              icon: Icon(
-                Icons.content_copy,
-                color: palette.borderColor,
+      padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+      child: Row(
+        children: <Widget>[
+          OptrAvatar(account.identifier),
+          const OptrSpacer(),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                account.identifier,
+                style: Theme.of(context).textTheme.subtitle1.copyWith(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
               ),
-              color: palette.borderColor,
-            )
-          ],
-        ),
+              WebsiteLabel(context, account.website),
+            ],
+          ),
+          const Expanded(
+            child: SizedBox(),
+          ),
+          OptrIconButton(
+            icon: Icon(
+              Icons.content_copy,
+              color: Colors.white.withOpacity(0.3),
+            ),
+            color: palette.borderColor,
+            onPressed: () {},
+          )
+        ],
       ),
     );
   }

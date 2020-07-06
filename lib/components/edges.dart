@@ -71,7 +71,7 @@ class OptrDoubleEdge extends StatelessWidget {
   const OptrDoubleEdge({
     Key key,
     @required this.child,
-    this.borderColor = Colors.tealAccent,
+    this.borderColor,
     this.color = Colors.black,
     this.borderWidth = 1.0,
     this.gradient = false,
@@ -82,7 +82,7 @@ class OptrDoubleEdge extends StatelessWidget {
   Widget build(BuildContext context) {
     // if (corners == null) corners = EdgeCorners.only(25, 25, 0, 40);
     return OptrEdges(
-      color: borderColor,
+      color: borderColor ?? Theme.of(context).accentColor,
       corners: corners,
       gradient: gradient,
       child: Padding(

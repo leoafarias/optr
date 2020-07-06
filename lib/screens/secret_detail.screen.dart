@@ -37,13 +37,8 @@ class SecretDetail extends HookWidget {
     final hash = useState(editing ? secret.value.hash : '**** **** **** ****');
     final icons = useState<List<Uint8List>>();
 
-    void decodeCallback(String value) {
-      hash.value = value;
-    }
-
     useValueChanged(passphrase.value, (_, __) async {
       secret.value.hash = await hashSecret(passphrase.value);
-      TextDecoding(secret.value.hash);
     });
 
     void saveSecret() async {
@@ -78,9 +73,8 @@ class SecretDetail extends HookWidget {
           padding: const EdgeInsets.all(10),
           child: OptrDoubleEdge(
             corners: const EdgeCorners.only(30, 30, 0, 30),
-            gradient: true,
-            color: Colors.black.withAlpha(230),
-            borderColor: Colors.deepPurpleAccent,
+            color: Theme.of(context).cardColor,
+            borderColor: Theme.of(context).accentColor,
             child: ListView(
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
               keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
@@ -90,17 +84,14 @@ class SecretDetail extends HookWidget {
                   padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                   child: Column(
                     children: <Widget>[
-                      Hero(
-                        tag: 'secret:name',
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Text(
-                              label.value,
-                              style: Theme.of(context).textTheme.headline4,
-                            ),
-                          ],
-                        ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            label.value,
+                            style: Theme.of(context).textTheme.headline4,
+                          ),
+                        ],
                       ),
                       const OptrSpacer(),
                       OptrTextField(

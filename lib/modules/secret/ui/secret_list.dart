@@ -36,7 +36,7 @@ class SecretList extends HookWidget {
     return Column(
       children: <Widget>[
         Container(
-          height: 180,
+          height: 100,
           child: Swiper(
             itemBuilder: (BuildContext context, int index) {
               final secret = list[index];
@@ -49,9 +49,10 @@ class SecretList extends HookWidget {
             },
             onIndexChanged: handleIndexChange,
             itemCount: list.length,
-            itemWidth: 400,
-            itemHeight: 180,
-            layout: SwiperLayout.TINDER,
+            itemWidth: 200,
+            itemHeight: 100,
+            viewportFraction: 0.5,
+            scale: 0.8,
           ),
         ),
       ],
