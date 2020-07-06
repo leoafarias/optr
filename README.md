@@ -1,12 +1,12 @@
-<p align="center"><image src="https://raw.githubusercontent.com/leoafarias/optr/master/demo.gif" width="150px"/></p>
+<p align="center"><image src="https://raw.githubusercontent.com/leoafarias/optr/master/optr-logo.png" width="300px"/></p>
 
 # OPTR - One Password to Rule
 
 ## Flutter #Hack20 - Cyberpunk
 
-<p> <a href="https://youtu.be/MAFTLxvyIPQ"><image src="https://raw.githubusercontent.com/leoafarias/optr/master/video.png" width="300px"/></a></p>
+<p> <a href="https://youtu.be/MAFTLxvyIPQ"><image src="https://raw.githubusercontent.com/leoafarias/optr/master/demo.gif" width="150px"/></a></p>
 
-Team: [Leo Farias](https://github.com/leoafarias) and [Ianko Leite](https://github.com/ianko)
+Concepta Team: [Leo Farias](https://github.com/leoafarias) and [Ianko Leite](https://github.com/ianko)
 
 ## Pitch
 
