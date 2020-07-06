@@ -40,16 +40,17 @@ class SecretCard extends HookWidget {
     return GestureDetector(
       key: key,
       onTap: () {
-        showMaterialModalBottomSheet(
-          context: context,
-          builder: (context) => SecretDetail(uuid: _secret.id),
-        );
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(
-        //     builder: (context) => SecretDetail(uuid: _secret.id),
-        //   ),
+        // showCupertinoModalBottomSheet(
+        //   context: context,
+        //   builder: (context, scrollController) =>
+        //       SecretDetail(uuid: _secret.id),
         // );
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => SecretDetail(uuid: _secret.id),
+          ),
+        );
       },
       child: OptrDoubleEdge(
         corners: const EdgeCorners.all(10),
