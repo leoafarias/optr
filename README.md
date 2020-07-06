@@ -1,4 +1,4 @@
-<p align="center"><image src="https://raw.githubusercontent.com/leoafarias/optr/master/optr-logo.png" width="300px"/></p>
+<p align="center"><image src="https://raw.githubusercontent.com/leoafarias/optr/master/demo.gif" width="150px"/></p>
 
 # OPTR - One Password to Rule
 
