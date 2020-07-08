@@ -4,13 +4,12 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:optr/components/edges.dart';
 import 'package:optr/components/icon_button.dart';
-import 'package:optr/components/instructions.dart';
 import 'package:optr/components/walkthrough.dart';
-import 'package:optr/modules/account/account.provider.dart';
-import 'package:optr/modules/account/ui/account_list.dart';
+import 'package:optr/modules/password/password.provider.dart';
+import 'package:optr/modules/password/components/password_list.dart';
 import 'package:optr/modules/secret/secret.provider.dart';
-import 'package:optr/modules/secret/secret.repo.dart';
-import 'package:optr/modules/secret/ui/secret_list.dart';
+
+import 'package:optr/modules/secret/components/secret_list.dart';
 import 'package:optr/screens/secret_detail.screen.dart';
 
 class HomeScreen extends HookWidget {
@@ -19,7 +18,7 @@ class HomeScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final secretList = useProvider(secretProvider.state);
-    final accountList = useProvider(accountProvider.state);
+    final accountList = useProvider(passwordProvider.state);
 
     if (secretList == null || secretList.isEmpty) {
       return const Scaffold(
@@ -83,7 +82,7 @@ class HomeScreen extends HookWidget {
                   ),
                 ),
                 SecretList(secretList),
-                Expanded(child: AccountList(accountList)),
+                Expanded(child: PasswordList(accountList)),
               ],
             ),
           ),

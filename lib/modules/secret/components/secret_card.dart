@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:optr/components/edges.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:optr/modules/secret/secret.model.dart';
@@ -27,11 +26,11 @@ class SecretCard extends HookWidget {
   @override
   Widget build(BuildContext context) {
     String accountsCountText;
-    final accountCount = _secret.accountCount;
+    final accountCount = _secret.passwords;
 
     if (accountCount == null || accountCount == 0) {
       accountsCountText = 'No passwords';
-    } else if (_secret.accountCount == 1) {
+    } else if (_secret.passwords == 1) {
       accountsCountText = '$accountCount password';
     } else {
       accountsCountText = '$accountCount passwords';
@@ -40,11 +39,6 @@ class SecretCard extends HookWidget {
     return GestureDetector(
       key: key,
       onTap: () {
-        // showCupertinoModalBottomSheet(
-        //   context: context,
-        //   builder: (context, scrollController) =>
-        //       SecretDetail(uuid: _secret.id),
-        // );
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -66,19 +60,12 @@ class SecretCard extends HookWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   TextDecoding(
-                    _secret.label.toUpperCase(),
+                    _secret.name.toUpperCase(),
                     style: Theme.of(context).textTheme.headline5.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
                   ),
                   TextDecoding(accountsCountText),
-                  // Text(
-                  //     'GENERATED @ | ${DateFormat().format(_secret.createdAt).toUpperCase()}',
-                  //     style: Theme.of(context).textTheme.caption),
-                  // Text('HOST | ${_secret.device.info.toUpperCase()}',
-                  //     style: Theme.of(context).textTheme.caption),
-                  // Text('ID | ${_secret.device.deviceIdentifier.toUpperCase()}',
-                  //     style: Theme.of(context).textTheme.caption),
                 ],
               ),
             ],

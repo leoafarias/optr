@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:optr/modules/word_icon/word_icon.model.dart';
-import 'package:optr/modules/base.repo.dart';
 
 export 'package:optr/modules/word_icon/word_icon.model.dart';
 
@@ -11,7 +10,7 @@ export 'package:optr/modules/word_icon/word_icon.model.dart';
 final wordIconRepoProvider = Provider((_) => WordIconRepo());
 
 /// Repository to be used with all words functionality
-class WordIconRepo extends BaseRepo<WordIcon> {
+class WordIconRepo {
   /// Hive box name
   static const boxName = 'word_info';
   static final box = Hive.box<WordIcon>(boxName);

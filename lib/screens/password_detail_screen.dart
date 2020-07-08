@@ -7,33 +7,33 @@ import 'package:optr/components/edges.dart';
 import 'package:optr/components/spacer.dart';
 import 'package:optr/components/text_field.dart';
 import 'package:optr/helpers/colors_from_string.dart';
-import 'package:optr/modules/account/account.provider.dart';
+import 'package:optr/modules/password/password.provider.dart';
 import 'package:optr/modules/secret/secret.provider.dart';
-import 'package:optr/modules/secret/ui/secret_list.dart';
+import 'package:optr/modules/secret/components/secret_list.dart';
 import 'package:uuid/uuid.dart';
 
-class AccountDetail extends HookWidget {
+class PasswordDetail extends HookWidget {
   /// Unique Identifier for the Account Password
   final String _id;
 
   /// Flags if screen is in edit state
   final bool editing;
 
-  static const routeName = '/account';
+  static const routeName = '/password-detail';
 
-  AccountDetail({String id})
+  PasswordDetail({String id})
       : _id = id ?? Uuid().v4(),
         editing = id != null;
 
   @override
   Widget build(BuildContext context) {
-    final provider = useProvider(accountProvider);
+    final provider = useProvider(passwordProvider);
     final _secretProvider = useProvider(secretProvider);
     final secretList = useProvider(secretProvider.state);
-    final account = useState(provider.getById(_id));
+    final password = useState(provider.getById(_id));
     final index = useState(0);
     final palette = useState<StringPalette>(
-      colorFromString(account.value.identifier),
+      colorFromString(password.value.name),
     );
 
     void _onClose() {
@@ -41,28 +41,28 @@ class AccountDetail extends HookWidget {
       Navigator.pop(context);
     }
 
-    void saveAccount() async {
-      if (account.value.masterId.isEmpty) {
-        account.value.masterId = secretList[index.value].id;
+    void save() async {
+      if (password.value.masterId.isEmpty) {
+        password.value.masterId = secretList[index.value].id;
       }
 
-      final secret = _secretProvider.getById(account.value.masterId);
-      secret.accountCount = secret.accountCount + 1;
-      await provider.save(account.value);
-      await _secretProvider.save(secret);
+      final secret = _secretProvider.getById(password.value.masterId);
+      secret.passwords = secret.passwords + 1;
+      await password.value.save();
+      await _secretProvider.add(secret);
       Navigator.pop(context);
     }
 
     void deleteAccount() async {
-      final secret = _secretProvider.getById(account.value.masterId);
-      secret.accountCount = secret.accountCount - 1;
-      await provider.remove(account.value);
-      await _secretProvider.save(secret);
+      final secret = _secretProvider.getById(password.value.masterId);
+      secret.passwords = secret.passwords - 1;
+      await password.value.delete();
+      await _secretProvider.add(secret);
       Navigator.pop(context);
     }
 
     void onIndexChange(int index) {
-      account.value.masterId = secretList[index].id;
+      password.value.masterId = secretList[index].id;
     }
 
     return Scaffold(
@@ -89,9 +89,7 @@ class AccountDetail extends HookWidget {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              editing
-                                  ? account.value.identifier
-                                  : 'Create Password',
+                              editing ? password.value.name : 'Create Password',
                               style: Theme.of(context).textTheme.headline4,
                             ),
                           ],
@@ -101,24 +99,24 @@ class AccountDetail extends HookWidget {
                       OptrTextField(
                         label: 'Identifier',
                         color: palette.value.borderColor,
-                        value: account.value.identifier,
+                        value: password.value.name,
                         onChanged: (value) {
-                          account.value.identifier = value;
+                          password.value.name = value;
                           palette.value = colorFromString(value);
                         },
                       ),
                       const OptrSpacer(),
                       OptrTextField(
                         label: 'Website',
-                        value: account.value.website,
+                        value: password.value.website,
                         color: palette.value.borderColor,
-                        onChanged: (value) => account.value.website = value,
+                        onChanged: (value) => password.value.website = value,
                       ),
                       const OptrSpacer(),
                       OptrCounter(
                         color: palette.value.borderColor,
-                        value: account.value.version,
-                        onChanged: (value) => account.value.version = value,
+                        value: password.value.version,
+                        onChanged: (value) => password.value.version = value,
                       ),
                       const OptrSpacer(),
                       Row(
@@ -157,7 +155,7 @@ class AccountDetail extends HookWidget {
                     ),
                     const OptrSpacer(),
                     OptrButton.active(
-                      onTap: saveAccount,
+                      onTap: save,
                       icon: Icon(Icons.check_circle),
                     ),
                     const OptrSpacer(),

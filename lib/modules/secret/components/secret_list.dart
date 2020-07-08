@@ -3,7 +3,7 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
 import 'package:optr/modules/secret/secret.model.dart';
-import 'package:optr/modules/secret/ui/secret_card.dart';
+import 'package:optr/modules/secret/components/secret_card.dart';
 
 /// List that display account passwords
 class SecretList extends HookWidget {
@@ -35,6 +35,7 @@ class SecretList extends HookWidget {
 
     return Column(
       children: <Widget>[
+        const SizedBox(height: 20),
         Container(
           height: 100,
           child: Swiper(

@@ -2,10 +2,9 @@ import 'dart:convert';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:optr/modules/base.model.dart';
 
 /// WordIcon Model
-class WordIcon implements BaseModel {
+class WordIcon {
   /// Word
   String word;
 

@@ -19,7 +19,7 @@ class Instructions extends HookWidget {
   Widget build(BuildContext context) {
     void _runAnimation() async {
       // ignore: unawaited_futures
-      SoundEffect.play(SoundEffect.typing_long, rate: 0.8);
+      // SoundEffect.play(SoundEffect.typing_long, rate: 0.8);
     }
 
     useEffect(() {

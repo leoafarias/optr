@@ -13,7 +13,6 @@ import 'package:optr/helpers/generate_optr.dart';
 import 'package:optr/modules/secret/secret.provider.dart';
 import 'package:optr/modules/word_icon/word_icon.repo.dart';
 import 'package:uuid/uuid.dart';
-import 'package:vizor/components/atoms/text_decoding/text_decoding.dart';
 
 class SecretDetail extends HookWidget {
   /// Unique Identifier for the Account Password
@@ -21,6 +20,8 @@ class SecretDetail extends HookWidget {
 
   /// Flags if screen is in edit state
   final bool editing;
+
+  static String routeName = '/secret-detail';
 
   SecretDetail({String uuid})
       : _uuid = uuid ?? Uuid().v4(),
@@ -31,7 +32,7 @@ class SecretDetail extends HookWidget {
     final provider = useProvider(secretProvider);
     final secret = useState(provider.getById(_uuid));
     final label = useState(
-      editing ? secret.value.label : 'Generate Hash',
+      editing ? secret.value.name : 'Generate Hash',
     );
     final passphrase = useState('');
     final hash = useState(editing ? secret.value.hash : '**** **** **** ****');
@@ -41,20 +42,21 @@ class SecretDetail extends HookWidget {
       secret.value.hash = await hashSecret(passphrase.value);
     });
 
-    void saveSecret() async {
-      if (secret.value.label.isEmpty) {
-        // TODO - Display validation error
-      }
-      await provider.save(secret.value);
-      Navigator.pop(context);
-    }
-
     void onClose() {
       Navigator.pop(context);
     }
 
-    void onDelete() async {
-      await provider.remove(secret.value);
+    void save() {
+      if (secret.value.name.isEmpty) {
+        // TODO - Display validation error
+      }
+      secret.value.save();
+      onClose();
+    }
+
+    void onDelete() {
+      secret.value.delete();
+      onClose();
     }
 
     void onGenerate() {
@@ -98,9 +100,9 @@ class SecretDetail extends HookWidget {
                         label: 'Label',
                         autofocus: true,
                         color: Theme.of(context).accentColor,
-                        value: secret.value.label,
+                        value: secret.value.name,
                         onChanged: (value) {
-                          secret.value.label = value;
+                          secret.value.name = value;
                           // Updates the label display also
                           label.value = value;
                         },
@@ -172,7 +174,7 @@ class SecretDetail extends HookWidget {
                   children: <Widget>[
                     OptrButton.active(
                       icon: Icon(Icons.check_circle),
-                      onTap: saveSecret,
+                      onTap: save,
                     ),
                     const OptrSpacer(),
                     OptrButton.cancel(

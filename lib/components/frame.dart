@@ -43,7 +43,7 @@ class _FrameState extends State<Frame> {
     super.initState();
 
     if (widget.enableSoundEffect) {
-      SoundEffect.play(widget.soundEffect ?? SoundEffect.deploy);
+      // SoundEffect.play(widget.soundEffect ?? SoundEffect.deploy);
     }
   }
 

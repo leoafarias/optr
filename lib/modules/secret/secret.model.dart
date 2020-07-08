@@ -1,81 +1,38 @@
-// To parse this JSON data, do
-//
-//     final masterSecret = masterSecretFromJson(jsonString);
-
-import 'dart:convert';
-
+import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:optr/modules/base.model.dart';
-import 'package:optr/modules/device/device.model.dart';
 
-/// Master Secret Model
-class Secret implements BaseModel {
-  /// Master secret Hash
-  String hash;
-
-  /// ID of Master Secret
-  @override
+@HiveType()
+class Secret extends HiveObject implements Comparable<Secret> {
+  @HiveField(0)
   String id;
+  @HiveField(1)
+  String hash;
+  @HiveField(2)
+  String name;
+  @HiveField(3)
+  HiveList passwords;
 
-  /// Label for easy identification of the Master Secret
-  String label;
+  Secret({
+    @required this.id,
+    this.hash = '',
+    this.name = '',
+  });
 
-  /// Date generated
-  DateTime createdAt;
-
-  /// Count of accounts using this Master Secret
-  int accountCount;
-
-  /// Hash to check if values changed
-  String valueSignature;
-
-  /// Device information used to generate
-  Device device;
-
-  final PasswordType _type = PasswordType.secret;
-
-  /// Constructor
-  Secret(
-      {this.hash = '',
-      this.id,
-      this.label = '',
-      this.createdAt,
-      this.device,
-      this.accountCount = 0}) {
-    // If no created at time. Timestamp now
-    createdAt ??= DateTime.now();
-    loadDevice();
-  }
-
-  /// Creates Master Secret form Json
-  factory Secret.fromJson(String str) => Secret.fromMap(json.decode(str));
-
-  /// Creates Master Seret from Map
   factory Secret.fromMap(Map<String, dynamic> json) => Secret(
-        hash: json['hash'],
         id: json['id'],
-        label: json['label'],
-        accountCount: json['accountCount'],
-        device: json['device'] != null ? Device.fromMap(json['device']) : null,
+        hash: json['hash'],
+        name: json['name'],
       );
 
-  void loadDevice() async {
-    device = await getDevice();
+  @override
+  int compareTo(Secret other) {
+    return name.compareTo(other.name);
   }
 
-  /// Converts Master Secret to Json
-  @override
-  String toJson() => json.encode(toMap());
-
-  /// Converts Master Secret to Map
-  @override
   Map<String, dynamic> toMap() => {
         'id': id,
-        'label': label,
+        'name': name,
         'hash': hash,
-        'type': _type.toString(),
-        'accountCount': accountCount,
-        'device': device.toMap(),
       };
 }
 
@@ -85,11 +42,12 @@ class SecretAdapter extends TypeAdapter<Secret> {
 
   @override
   Secret read(BinaryReader reader) {
-    return Secret.fromMap(reader.readMap());
+    return Secret.fromMap(reader.readMap())..passwords = reader.read();
   }
 
   @override
-  void write(BinaryWriter writer, Secret obj) {
-    writer.writeMap(obj.toMap());
+  void write(BinaryWriter writer, Secret secret) {
+    writer.write(secret);
+    writer.write(secret.passwords);
   }
 }

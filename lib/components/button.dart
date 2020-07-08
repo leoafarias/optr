@@ -109,7 +109,7 @@ class OptrButton extends StatelessWidget {
   }
 
   void _onPressed() {
-    SoundEffect.play(soundEffect ?? SoundEffect.click);
+    // SoundEffect.play(soundEffect ?? SoundEffect.click);
 
     if (onTap != null) {
       onTap();
