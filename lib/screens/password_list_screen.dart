@@ -38,29 +38,23 @@ class PasswordListScreen extends HookWidget {
         slivers: <Widget>[
           SliverAppBar(
             floating: false,
-            expandedHeight: 140.0,
+            expandedHeight: 120.0,
             pinned: true,
-            actions: <Widget>[Icon(Icons.add), Icon(Icons.offline_bolt)],
+            actions: <Widget>[Icon(Icons.add), Icon(Icons.search)],
             flexibleSpace: FlexibleSpaceBar(
-              collapseMode: CollapseMode.none,
-              title: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.max,
-                children: <Widget>[
-                  const Text('Passwords'),
-                ],
+              titlePadding: const EdgeInsets.all(15),
+              title: Container(
+                width: double.infinity,
+                child: const Text(
+                  'Passwords',
+                ),
               ),
-              background: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[OptrSearchField()],
-              ),
+              centerTitle: false,
             ),
           ),
           SliverList(
             delegate: SliverChildBuilderDelegate(
-              (context, index) => PasswordItem(
-                password: filteredPasswords.value[index],
-              ),
+              (context, index) => PasswordItem(filteredPasswords.value[index]),
               childCount: filteredPasswords.value.length,
             ),
           ),

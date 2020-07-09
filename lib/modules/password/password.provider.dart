@@ -3,7 +3,26 @@ import 'package:hive/hive.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:optr/modules/password/password.model.dart';
 
+import 'package:optr/modules/secret/secret.provider.dart';
 import 'package:state_notifier/state_notifier.dart';
+
+// ignore: top_level_function_literal_block
+final passwordListProvider = Computed((read) {
+  final passwords = read(passwordProvider.state);
+  final secrets = read(secretProvider.state);
+
+  final passwordList = <PasswordWithSecret>[];
+
+  // TODO: look into improving this
+  secrets.forEach((s) {
+    passwords.forEach((p) {
+      if (s.id == p.secretId) {
+        passwordList.add(PasswordWithSecret(p, s));
+      }
+    });
+  });
+  return passwordList;
+});
 
 /// Password Provider
 final passwordProvider = StateNotifierProvider<PasswordProvider>((ref) {
@@ -30,9 +49,8 @@ class PasswordProvider extends StateNotifier<List<Password>> {
 
   void init() async {
     await Hive.openBox<Password>(boxName);
-    box.watch().listen((_) {
-      state = [...box.values];
-    });
+
+    state = box.values.toList();
   }
 
   Password getById(String id) {
@@ -47,6 +65,16 @@ class PasswordProvider extends StateNotifier<List<Password>> {
     }
 
     return state.where(startsWithQuery).toList();
+  }
+
+  void save(Password password) async {
+    await box.put(password.id, password);
+    state = box.values.toList();
+  }
+
+  void delete(Password password) async {
+    await box.delete(password.id);
+    state = box.values.toList();
   }
 
   @override

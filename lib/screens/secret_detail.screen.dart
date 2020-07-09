@@ -50,12 +50,12 @@ class SecretDetail extends HookWidget {
       if (secret.value.name.isEmpty) {
         // TODO - Display validation error
       }
-      secret.value.save();
+      provider.save(secret.value);
       onClose();
     }
 
     void onDelete() {
-      secret.value.delete();
+      provider.delete(secret.value);
       onClose();
     }
 

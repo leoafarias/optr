@@ -15,20 +15,19 @@ class OptrSearchField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: TextField(
-        autofocus: true,
-        onChanged: (String value) {
-          onChange(value);
-        },
-        decoration: InputDecoration(
-          hintText: searchHint,
-          border: InputBorder.none,
-          hintStyle: TextStyle(
-              // color: mainTextColor.withAlpha(100),
-              ),
-          suffixIcon: Icon(
-            Icons.search,
-            // color: mainTextColor.withAlpha(100),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+        child: TextField(
+          autofocus: true,
+          onChanged: (String value) {
+            onChange(value);
+          },
+          decoration: InputDecoration(
+            hintText: searchHint,
+            border: InputBorder.none,
+            suffixIcon: Icon(
+              Icons.search,
+            ),
           ),
         ),
       ),

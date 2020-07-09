@@ -1,18 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:optr/modules/secret/secret.model.dart';
 
-@HiveType()
-class Password extends HiveObject implements Comparable<Password> {
-  @HiveField(0)
+class PasswordWithSecret extends Password {
+  Secret secret;
+  PasswordWithSecret(Password password, this.secret)
+      : super(
+          id: password.id,
+          name: password.name,
+          website: password.website,
+          version: password.version,
+          secretId: password.secretId,
+        );
+}
+
+class Password implements Comparable<Password> {
   String id;
-  @HiveField(1)
   String name;
-  @HiveField(2)
   String username;
-  @HiveField(3)
   String website;
-  @HiveField(4)
   int version;
+  String secretId;
 
   Password({
     @required this.id,
@@ -20,6 +28,7 @@ class Password extends HiveObject implements Comparable<Password> {
     this.username = '',
     this.website = '',
     this.version = 1,
+    this.secretId = '',
   });
 
   factory Password.fromMap(Map<String, dynamic> json) => Password(
@@ -28,6 +37,7 @@ class Password extends HiveObject implements Comparable<Password> {
         username: json['username'],
         website: json['website'],
         version: json['version'],
+        secretId: json['secretId'],
       );
 
   @override
@@ -41,6 +51,7 @@ class Password extends HiveObject implements Comparable<Password> {
         'username': username,
         'website': website,
         'version': version,
+        'secretId': secretId,
       };
 }
 

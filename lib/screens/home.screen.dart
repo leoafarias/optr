@@ -4,7 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:optr/components/edges.dart';
 import 'package:optr/components/icon_button.dart';
-import 'package:optr/components/walkthrough.dart';
+
 import 'package:optr/modules/password/password.provider.dart';
 import 'package:optr/modules/password/components/password_list.dart';
 import 'package:optr/modules/secret/secret.provider.dart';
@@ -17,20 +17,9 @@ class HomeScreen extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final secretList = useProvider(secretProvider.state);
+    final secretList = useProvider(secretListProvider);
     final accountList = useProvider(passwordProvider.state);
-
-    if (secretList == null || secretList.isEmpty) {
-      return const Scaffold(
-        resizeToAvoidBottomInset: true,
-        body: SafeArea(
-          child: Padding(
-            padding: EdgeInsets.all(8.0),
-            child: WalkThorugh(),
-          ),
-        ),
-      );
-    }
+    final count = useProvider(passwordCountProvider);
 
     return Scaffold(
       resizeToAvoidBottomInset: true,

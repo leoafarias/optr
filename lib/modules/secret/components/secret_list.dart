@@ -42,8 +42,6 @@ class SecretList extends HookWidget {
             itemBuilder: (BuildContext context, int index) {
               final secret = list[index];
               return SecretCard(
-                key: Key(list[index].id),
-                simpleCard: simpleCard,
                 active: index == currentIndex.value,
                 secret: secret,
               );

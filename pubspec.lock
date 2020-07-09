@@ -128,7 +128,7 @@ packages:
     source: hosted
     version: "3.3.0"
   collection:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: collection
       url: "https://pub.dartlang.org"
@@ -204,13 +204,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.10.11"
-  flappy_search_bar:
-    dependency: "direct main"
-    description:
-      name: flappy_search_bar
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.7.2"
   floating_search_bar:
     dependency: "direct main"
     description:
@@ -258,13 +251,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.3.3"
-  flutter_staggered_grid_view:
-    dependency: transitive
-    description:
-      name: flutter_staggered_grid_view
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.3.0"
   flutter_swiper:
     dependency: "direct main"
     description:

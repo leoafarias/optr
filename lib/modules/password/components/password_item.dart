@@ -11,7 +11,7 @@ class PasswordItem extends StatelessWidget {
   final Password password;
 
   /// Constrctor for the password Item
-  const PasswordItem({this.password});
+  PasswordItem(this.password) : super(key: Key(password.id));
 
   @override
   Widget build(BuildContext context) {

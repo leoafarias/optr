@@ -42,27 +42,22 @@ class PasswordDetail extends HookWidget {
     }
 
     void save() async {
-      if (password.value.masterId.isEmpty) {
-        password.value.masterId = secretList[index.value].id;
+      if (password.value.secretId.isEmpty) {
+        password.value.secretId = secretList[index.value].id;
       }
 
-      final secret = _secretProvider.getById(password.value.masterId);
-      secret.passwords = secret.passwords + 1;
-      await password.value.save();
-      await _secretProvider.add(secret);
+      await provider.save(password.value);
+
       Navigator.pop(context);
     }
 
     void deleteAccount() async {
-      final secret = _secretProvider.getById(password.value.masterId);
-      secret.passwords = secret.passwords - 1;
-      await password.value.delete();
-      await _secretProvider.add(secret);
+      await provider.delete(password.value);
       Navigator.pop(context);
     }
 
     void onIndexChange(int index) {
-      password.value.masterId = secretList[index].id;
+      password.value.secretId = secretList[index].id;
     }
 
     return Scaffold(

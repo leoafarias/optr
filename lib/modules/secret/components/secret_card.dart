@@ -11,26 +11,21 @@ class SecretCard extends HookWidget {
 
   final bool active;
 
-  /// Simple card style
-  final bool simpleCard;
-
   /// Creates instance of Master Secret Tile
-  const SecretCard({
-    Key key,
+  SecretCard({
     @required Secret secret,
-    this.simpleCard = false,
     this.active = false,
   })  : _secret = secret,
-        super(key: key);
+        super(key: Key(secret.id));
 
   @override
   Widget build(BuildContext context) {
     String accountsCountText;
-    final accountCount = _secret.passwords;
+    final accountCount = _secret.passwords.length;
 
     if (accountCount == null || accountCount == 0) {
       accountsCountText = 'No passwords';
-    } else if (_secret.passwords == 1) {
+    } else if (accountCount == 1) {
       accountsCountText = '$accountCount password';
     } else {
       accountsCountText = '$accountCount passwords';

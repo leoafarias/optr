@@ -20,10 +20,7 @@ class PasswordList extends StatelessWidget {
 
     return ListView.separated(
       itemBuilder: (context, index) {
-        final item = list[index];
-        return PasswordItem(
-          password: item,
-        );
+        return PasswordItem(list[index]);
       },
       separatorBuilder: (_, __) => const Divider(),
       itemCount: list.length,
