@@ -22,9 +22,10 @@ class HomeScreen extends HookWidget {
 
     useValueChanged(currentIndex.value, (_, __) {
       activePasswords.value = [];
-      var timer = Timer(const Duration(milliseconds: 100), () {
+      Timer timer;
+      timer = Timer(const Duration(milliseconds: 0), () {
         activePasswords.value = secretList[currentIndex.value].passwords;
-        // timer.cancel();
+        timer.cancel();
       });
     });
 
