@@ -11,6 +11,8 @@ final secretListProvider = Computed((read) {
   final secrets = read(secretProvider.state);
 
   return secrets.map<Secret>((s) {
+    // Clear passwords of secret before adding
+    s.passwords = [];
     passwords.forEach((p) {
       if (s.id == p.secretId) s.passwords.add(p);
     });

@@ -31,7 +31,7 @@ class Password implements Comparable<Password> {
     this.secretId = '',
   });
 
-  factory Password.fromMap(Map<String, dynamic> json) => Password(
+  factory Password.fromMap(Map<dynamic, dynamic> json) => Password(
         id: json['id'],
         name: json['name'],
         username: json['username'],
@@ -45,7 +45,7 @@ class Password implements Comparable<Password> {
     return name.compareTo(other.name);
   }
 
-  Map<String, dynamic> toMap() => {
+  Map<dynamic, dynamic> toMap() => {
         'id': id,
         'name': name,
         'username': username,

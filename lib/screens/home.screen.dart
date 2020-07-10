@@ -1,15 +1,14 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-
-import 'package:optr/components/edges.dart';
-import 'package:optr/components/icon_button.dart';
-
-import 'package:optr/modules/password/password.provider.dart';
+import 'package:optr/components/typography.dart';
 import 'package:optr/modules/password/components/password_list.dart';
+import 'package:optr/modules/password/password.model.dart';
 import 'package:optr/modules/secret/secret.provider.dart';
-
 import 'package:optr/modules/secret/components/secret_list.dart';
+import 'package:optr/screens/password_detail_screen.dart';
 import 'package:optr/screens/secret_detail.screen.dart';
 
 class HomeScreen extends HookWidget {
@@ -18,62 +17,76 @@ class HomeScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final secretList = useProvider(secretListProvider);
-    final accountList = useProvider(passwordProvider.state);
-    final count = useProvider(passwordCountProvider);
+    final currentIndex = useState<int>(0);
+    final activePasswords = useState<List<Password>>();
+
+    useValueChanged(currentIndex.value, (_, __) {
+      activePasswords.value = [];
+      var timer = Timer(const Duration(milliseconds: 100), () {
+        activePasswords.value = secretList[currentIndex.value].passwords;
+        // timer.cancel();
+      });
+    });
+
+    final activeSecret =
+        secretList.isNotEmpty ? secretList[currentIndex.value] : null;
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: OptrDoubleEdge(
-            color: Theme.of(context).scaffoldBackgroundColor,
-            corners: const EdgeCorners.only(30, 30, 0, 30),
-            child: Column(
-              children: <Widget>[
-                const SizedBox(height: 20),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        'OPTRs',
-                        style: Theme.of(context).textTheme.headline5,
-                      ),
-                      Text(
-                        'One Password to Rule',
-                        style: Theme.of(context).textTheme.caption,
-                      ),
-                      Container(
-                        height: 40,
-                        child: OptrDoubleEdge(
-                          corners: const EdgeCorners.cross(10, 0),
-                          borderColor: Theme.of(context).accentColor,
-                          color: Colors.black.withAlpha(230),
-                          child: OptrIconButton(
-                            icon: const Icon(Icons.enhanced_encryption),
-                            onPressed: () {
-                              // final repo = SecretRepo();
-                              // repo.removeAll();
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => SecretDetail(),
-                                ),
-                              );
-                            },
-                          ),
+          child: Column(
+            children: <Widget>[
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  const OptrTitle('Secrets'),
+                  OutlineButton.icon(
+                    label: const Text('Generate'),
+                    icon: const Icon(Icons.add_box),
+                    onPressed: () {
+                      // final repo = SecretRepo();
+                      // repo.removeAll();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SecretDetail(),
                         ),
-                      )
-                    ],
+                      );
+                    },
                   ),
-                ),
-                SecretList(secretList),
-                Expanded(child: PasswordList(accountList)),
-              ],
-            ),
+                ],
+              ),
+              SecretList(
+                secretList,
+                onIndexChange: (index) {
+                  currentIndex.value = index;
+                },
+              ),
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  const OptrTitle('Passwords'),
+                  OutlineButton.icon(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PasswordDetail(),
+                        ),
+                      );
+                    },
+                    icon: Icon(Icons.create_new_folder),
+                    label: Text('Add to ${activeSecret?.name}'),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
+              Expanded(child: PasswordList(activePasswords.value)),
+            ],
           ),
         ),
       ),

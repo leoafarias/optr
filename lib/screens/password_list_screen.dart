@@ -1,19 +1,14 @@
-import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:optr/components/search_field.dart';
-import 'package:optr/helpers/fade_on_scroller.dart';
+
 import 'package:optr/modules/password/components/password_item.dart';
 import 'package:optr/modules/password/password.model.dart';
 import 'package:optr/modules/password/password.provider.dart';
 
 class PasswordListScreen extends HookWidget {
   PasswordListScreen();
-
-  final scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {

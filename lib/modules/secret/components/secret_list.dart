@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -13,8 +15,12 @@ class SecretList extends HookWidget {
   final int initialIndex;
 
   /// Creates instance of the password list
-  const SecretList(this.list,
-      {this.simpleCard = false, this.onIndexChange, this.initialIndex = 1});
+  const SecretList(
+    this.list, {
+    @required this.onIndexChange,
+    this.simpleCard = false,
+    this.initialIndex = 1,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,9 +28,7 @@ class SecretList extends HookWidget {
 
     void handleIndexChange(int index) {
       currentIndex.value = index;
-      if (onIndexChange.call != null) {
-        onIndexChange(index);
-      }
+      onIndexChange(index);
     }
 
     if (list == null || list.isEmpty) {
@@ -37,7 +41,7 @@ class SecretList extends HookWidget {
       children: <Widget>[
         const SizedBox(height: 20),
         Container(
-          height: 100,
+          height: 120,
           child: Swiper(
             itemBuilder: (BuildContext context, int index) {
               final secret = list[index];

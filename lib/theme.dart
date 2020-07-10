@@ -5,7 +5,13 @@ import 'package:google_fonts/google_fonts.dart';
 const kBlueColor = Color(0xFF005EFF);
 
 TextTheme _textTheme() {
-  return GoogleFonts.titilliumWebTextTheme().copyWith().apply(
+  return GoogleFonts.titilliumWebTextTheme()
+      .copyWith(
+        headline5: TextStyle(
+          fontWeight: FontWeight.bold,
+        ),
+      )
+      .apply(
         bodyColor: Colors.white,
         displayColor: Colors.white,
       );

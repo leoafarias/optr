@@ -3,10 +3,14 @@ import 'package:flutter/material.dart';
 class OptrTitle extends StatelessWidget {
   final String data;
   const OptrTitle(this.data, {Key key}) : super(key: key);
+  // TODO: Implement this for all typography items
+  static TextStyle style(BuildContext context) {
+    return Theme.of(context).textTheme.headline5;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Text(data, style: Theme.of(context).textTheme.headline5);
+    return Text(data, style: OptrTitle.style(context));
   }
 }
 

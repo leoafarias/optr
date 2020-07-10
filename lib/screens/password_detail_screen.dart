@@ -28,8 +28,7 @@ class PasswordDetail extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final provider = useProvider(passwordProvider);
-    final _secretProvider = useProvider(secretProvider);
-    final secretList = useProvider(secretProvider.state);
+    final secretList = useProvider(secretListProvider);
     final password = useState(provider.getById(_id));
     final index = useState(0);
     final palette = useState<StringPalette>(
