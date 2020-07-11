@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -21,26 +19,23 @@ class HomeScreen extends HookWidget {
   Widget build(BuildContext context) {
     final secretList = useProvider(secretListProvider);
     final currentIndex = useState<int>(0);
-    final activePasswords = useState<List<Password>>();
+    final activePasswords = useState<List<Password>>([]);
     final activeSecret = useState<Secret>();
-    final secret =
-        secretList.isNotEmpty ? secretList[currentIndex.value] : null;
 
-    // ignore: missing_return
-    useEffect(() {
+    void setActive(int index) {
       if (secretList.isEmpty) return;
-      // Reset index, in case an item has been removed
-      currentIndex.value = 0;
+      currentIndex.value = index;
       activeSecret.value = secretList[currentIndex.value];
-    }, [secretList]);
+      activePasswords.value = [];
+      // To trigger list animation
+      defer(() => activePasswords.value = activeSecret.value.passwords);
+    }
 
     // ignore: missing_return
     useEffect(() {
-      activePasswords.value = [];
-      if (secret == null) return;
-      // To trigger list animation
-      defer(() => activePasswords.value = secret.passwords);
-    }, [activeSecret.value]);
+      // Update index if secretList changes
+      setActive(0);
+    }, [secretList]);
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -58,8 +53,6 @@ class HomeScreen extends HookWidget {
                     label: const Text('Generate'),
                     icon: const Icon(Icons.add_box),
                     onPressed: () {
-                      // final repo = SecretRepo();
-                      // repo.removeAll();
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -72,9 +65,7 @@ class HomeScreen extends HookWidget {
               ),
               SecretList(
                 secretList,
-                onIndexChange: (index) {
-                  currentIndex.value = index;
-                },
+                onIndexChange: setActive,
               ),
               const SizedBox(height: 20),
               Row(
@@ -91,7 +82,7 @@ class HomeScreen extends HookWidget {
                       );
                     },
                     icon: Icon(Icons.create_new_folder),
-                    label: Text('Add to ${secret?.name}'),
+                    label: Text('Add to ${activeSecret.value?.name}'),
                   ),
                 ],
               ),

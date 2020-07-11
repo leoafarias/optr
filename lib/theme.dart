@@ -22,8 +22,8 @@ ThemeData darkTheme() {
   return ThemeData(
     brightness: Brightness.dark,
     primaryColor: Colors.deepPurple,
-    accentColor: Colors.grey,
-    cardColor: const Color(0xFF111111),
+    accentColor: Colors.tealAccent,
+    cardColor: Colors.black,
     scaffoldBackgroundColor: Colors.black,
     backgroundColor: Colors.black,
     // buttonColor: Color(0xFF111111),

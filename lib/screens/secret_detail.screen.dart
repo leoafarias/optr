@@ -32,7 +32,7 @@ class SecretDetail extends HookWidget {
     final provider = useProvider(secretProvider);
     final secret = useState(provider.getById(_uuid));
     final label = useState(
-      editing ? secret.value.name : 'Generate Hash',
+      editing ? secret.value.name : 'Generate Secret',
     );
     final passphrase = useState('');
     final hash = useState(editing ? secret.value.hash : '**** **** **** ****');
