@@ -4,8 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:optr/components/typography.dart';
+import 'package:optr/helpers/timers.dart';
 import 'package:optr/modules/password/components/password_list.dart';
 import 'package:optr/modules/password/password.model.dart';
+import 'package:optr/modules/secret/secret.model.dart';
+
 import 'package:optr/modules/secret/secret.provider.dart';
 import 'package:optr/modules/secret/components/secret_list.dart';
 import 'package:optr/screens/password_detail_screen.dart';
@@ -20,17 +23,16 @@ class HomeScreen extends HookWidget {
     final currentIndex = useState<int>(0);
     final activePasswords = useState<List<Password>>();
 
-    useValueChanged(currentIndex.value, (_, __) {
-      activePasswords.value = [];
-      Timer timer;
-      timer = Timer(const Duration(milliseconds: 0), () {
-        activePasswords.value = secretList[currentIndex.value].passwords;
-        timer.cancel();
-      });
-    });
-
-    final activeSecret =
+    final secret =
         secretList.isNotEmpty ? secretList[currentIndex.value] : null;
+
+    // ignore: missing_return
+    useEffect(() {
+      activePasswords.value = [];
+      if (secret == null) return;
+      // To trigger list animation
+      defer(() => activePasswords.value = secret.passwords);
+    }, [secret]);
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -81,12 +83,14 @@ class HomeScreen extends HookWidget {
                       );
                     },
                     icon: Icon(Icons.create_new_folder),
-                    label: Text('Add to ${activeSecret?.name}'),
+                    label: Text('Add to ${secret?.name}'),
                   ),
                 ],
               ),
               const SizedBox(height: 20),
-              Expanded(child: PasswordList(activePasswords.value)),
+              Expanded(
+                child: PasswordList(activePasswords.value),
+              ),
             ],
           ),
         ),

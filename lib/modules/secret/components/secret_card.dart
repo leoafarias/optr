@@ -8,7 +8,7 @@ import 'package:vizor/components/atoms/text_decoding/text_decoding.dart';
 
 /// Tile for the Master Secret List
 class SecretCard extends HookWidget {
-  final Secret _secret;
+  final Secret secret;
 
   final bool active;
   final String labelRedacted = '████';
@@ -16,15 +16,14 @@ class SecretCard extends HookWidget {
 
   /// Creates instance of Master Secret Tile
   SecretCard({
-    @required Secret secret,
+    @required this.secret,
     this.active = false,
-  })  : _secret = secret,
-        super(key: Key(secret.id));
+  }) : super(key: Key(secret.id));
 
   @override
   Widget build(BuildContext context) {
     String accountsCountText;
-    final accountCount = _secret.passwords.length;
+    final accountCount = secret.passwords.length;
 
     if (accountCount == null || accountCount == 0) {
       accountsCountText = 'No passwords';
@@ -34,13 +33,18 @@ class SecretCard extends HookWidget {
       accountsCountText = '$accountCount passwords';
     }
 
+    String redactName(String name) {
+      if (name == null && name.isEmpty) return '';
+      return '${name[0]} $labelRedacted';
+    }
+
     return GestureDetector(
       key: key,
       onTap: () {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => SecretDetail(uuid: _secret.id),
+            builder: (context) => SecretDetail(uuid: secret.id),
           ),
         );
       },
@@ -54,9 +58,7 @@ class SecretCard extends HookWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               TextDecoding(
-                active
-                    ? _secret.name.toUpperCase()
-                    : '${_secret.name[0]} $labelRedacted',
+                active ? secret.name.toUpperCase() : redactName(secret.name),
                 shouldDecode: active,
                 style: OptrTitle.style(context),
               ),
