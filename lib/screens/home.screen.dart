@@ -22,9 +22,17 @@ class HomeScreen extends HookWidget {
     final secretList = useProvider(secretListProvider);
     final currentIndex = useState<int>(0);
     final activePasswords = useState<List<Password>>();
-
+    final activeSecret = useState<Secret>();
     final secret =
         secretList.isNotEmpty ? secretList[currentIndex.value] : null;
+
+    // ignore: missing_return
+    useEffect(() {
+      if (secretList.isEmpty) return;
+      // Reset index, in case an item has been removed
+      currentIndex.value = 0;
+      activeSecret.value = secretList[currentIndex.value];
+    }, [secretList]);
 
     // ignore: missing_return
     useEffect(() {
@@ -32,7 +40,7 @@ class HomeScreen extends HookWidget {
       if (secret == null) return;
       // To trigger list animation
       defer(() => activePasswords.value = secret.passwords);
-    }, [secret]);
+    }, [activeSecret.value]);
 
     return Scaffold(
       resizeToAvoidBottomInset: true,

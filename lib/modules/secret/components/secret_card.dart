@@ -34,7 +34,7 @@ class SecretCard extends HookWidget {
     }
 
     String redactName(String name) {
-      if (name == null && name.isEmpty) return '';
+      if (name == null || name.isEmpty) return labelRedacted;
       return '${name[0]} $labelRedacted';
     }
 
