@@ -66,8 +66,9 @@ class OptrCounter extends HookWidget {
         children: <Widget>[
           const SizedBox(width: 10),
           Expanded(
-              child: Text('Version',
-                  style: Theme.of(context).textTheme.subtitle1)),
+            child:
+                Text('Version', style: Theme.of(context).textTheme.subtitle1),
+          ),
           Container(
             child: IconButton(
               icon: Icon(Icons.remove),

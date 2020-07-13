@@ -9,10 +9,15 @@ import 'package:optr/components/instructions.dart';
 import 'package:optr/components/spacer.dart';
 import 'package:optr/components/text_field.dart';
 import 'package:optr/helpers/generate_optr.dart';
+import 'package:optr/helpers/seconds_to_readable.dart';
 
 import 'package:optr/modules/secret/secret.provider.dart';
 import 'package:optr/modules/word_icon/word_icon.repo.dart';
 import 'package:uuid/uuid.dart';
+import 'package:xcvbnm/xcvbnm.dart';
+import 'package:percent_indicator/percent_indicator.dart';
+
+final xcvbm = Xcvbnm();
 
 class SecretDetail extends HookWidget {
   /// Unique Identifier for the Account Password
@@ -31,15 +36,15 @@ class SecretDetail extends HookWidget {
   Widget build(BuildContext context) {
     final provider = useProvider(secretProvider);
     final secret = useState(provider.getById(_uuid));
-    final label = useState(
-      editing ? secret.value.name : 'Generate Secret',
-    );
+
     final passphrase = useState('');
+    final result = useState<Result>();
     final hash = useState(editing ? secret.value.hash : '**** **** **** ****');
     final icons = useState<List<Uint8List>>();
 
     useValueChanged(passphrase.value, (_, __) async {
       secret.value.hash = await hashSecret(passphrase.value);
+      result.value = xcvbm.estimate(passphrase.value);
     });
 
     void onClose() {
@@ -90,7 +95,7 @@ class SecretDetail extends HookWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Text(
-                            label.value,
+                            'Generate Secret',
                             style: Theme.of(context).textTheme.headline4,
                           ),
                         ],
@@ -103,8 +108,6 @@ class SecretDetail extends HookWidget {
                         value: secret.value.name,
                         onChanged: (value) {
                           secret.value.name = value;
-                          // Updates the label display also
-                          label.value = value;
                         },
                       ),
                       !editing
@@ -112,8 +115,9 @@ class SecretDetail extends HookWidget {
                               children: <Widget>[
                                 const OptrSpacer(),
                                 const Instructions(
-                                    content:
-                                        'We can help you generate an fully random secure easy to remember passphrase.'),
+                                  content:
+                                      'We can help you generate an fully random secure easy to remember passphrase.',
+                                ),
                                 Container(
                                   width: double.infinity,
                                   child: OptrButton.active(
@@ -131,9 +135,23 @@ class SecretDetail extends HookWidget {
                                       passphrase.value = value,
                                 ),
                                 const OptrSpacer(),
+                                result.value != null
+                                    ? LinearPercentIndicator(
+                                        // width: 140.0,
+                                        lineHeight: 14.0,
+                                        percent: result.value.score * 0.25,
+                                        backgroundColor:
+                                            Theme.of(context).cardColor,
+                                        progressColor:
+                                            Theme.of(context).accentColor,
+                                      )
+                                    : const SizedBox(),
                               ],
                             )
                           : const SizedBox(),
+                      const SizedBox(height: 20),
+                      Text(convertSecondsToReadable(result.value?.crackTime)),
+                      const SizedBox(height: 20),
                       icons.value != null
                           ? Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -149,22 +167,6 @@ class SecretDetail extends HookWidget {
                               }).toList(),
                             )
                           : const SizedBox(),
-                      const OptrSpacer(),
-                      OptrDoubleEdge(
-                        color: Theme.of(context).cardColor,
-                        corners: const EdgeCorners.cross(10, 0),
-                        borderColor: Theme.of(context).accentColor,
-                        child: SizedBox(
-                            height: 80,
-                            child: Center(
-                                child: Text(
-                              hash.value,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline6
-                                  .copyWith(color: Colors.white),
-                            ))),
-                      ),
                       const OptrSpacer(),
                     ],
                   ),

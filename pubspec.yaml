@@ -10,6 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
 
+  uuid: ^2.1.0
   device_info: ^0.4.2+4
   intl: ^0.16.1
   soundpool: ^1.1.1
@@ -18,10 +19,10 @@ dependencies:
   barcode: ^1.13.0
   hive: ^1.4.1+1
   hive_flutter: ^0.3.0+2
-  uuid: ^2.1.0
   crypto: ^2.1.5
   pbkdf2_dart: ^2.1.0
   collection: ^1.14.12
+  xcvbnm: ^1.0.0
 
   cupertino_icons: ^0.1.3
   google_fonts: ^1.1.0
@@ -34,6 +35,7 @@ dependencies:
   drawing_animation: ^0.1.3
   flutter_staggered_animations: ^0.1.2
   modal_bottom_sheet: ^0.2.0
+  percent_indicator: ^2.1.5
   # sa_stateless_animation: ^1.0.1
 
   vizor:
