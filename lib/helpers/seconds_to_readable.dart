@@ -1,30 +1,36 @@
-String convertSecondsToReadable(seconds) {
+import 'package:intl/intl.dart';
+
+String formatNumber(double number) {
+  final f = NumberFormat.decimalPattern();
+  return f.format(number);
+}
+
+String convertSecondsToReadable(int seconds) {
   if (seconds == null) return '';
   var timeString = '';
 
-  // Enumerate all the numbers
-  final numMilliseconds = seconds * 1000;
-  final numSeconds = seconds.floor();
-  final numMinutes = (numSeconds / 60).floor();
-  final numHours = (numSeconds / (60 * 60)).floor();
-  final numDays = (numSeconds / (60 * 60 * 24)).floor();
-  final numYears = (numSeconds / (60 * 60 * 24 * 365)).floor();
-  final numCenturies = (numSeconds / (60 * 60 * 24 * 365 * 100)).floor();
+  final numSeconds = seconds.floor().toDouble();
+  final numMinutes = seconds.floor() / 60;
+  final numHours = numMinutes.floor() / 60;
+  final numDays = numHours.floor() / 24;
+  final numYears = numDays.floor() / 365;
+  final numCenturies = numYears.floor() / 100;
 
-  if (numMilliseconds < 1000) {
-    timeString = '$timeString $numMilliseconds milliseconds';
+  if (numSeconds == 0) {
+    timeString = 'less than a seconds';
   } else if (numSeconds < 60) {
-    timeString = '$numSeconds seconds';
+    timeString = '${formatNumber(numSeconds)} seconds';
   } else if (numMinutes < 60) {
-    timeString = '$numMinutes minutes';
+    timeString = '${formatNumber(numMinutes)} minutes';
   } else if (numHours < 24) {
-    timeString = '$numHours hours';
+    timeString = '${formatNumber(numHours)} hours';
   } else if (numDays < 365) {
-    timeString = '$numDays days';
+    timeString = '${formatNumber(numDays)} days';
   } else if (numYears < 100) {
-    timeString = '$numYears years';
+    timeString = '${formatNumber(numYears)} years';
   } else {
-    timeString = '$numCenturies centuries';
+    timeString = '${formatNumber(numCenturies)} centuries';
   }
-  return timeString.replaceAll(RegExp('/\B(?=(\d{3})+(?!\d))/g'), ',');
+
+  return timeString;
 }

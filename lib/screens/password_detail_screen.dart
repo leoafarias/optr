@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:optr/components/button.dart';
+import 'package:optr/components/display_button.dart';
 import 'package:optr/components/counter.dart';
 import 'package:optr/components/edges.dart';
 import 'package:optr/components/spacer.dart';
@@ -133,7 +133,7 @@ class PasswordDetail extends HookWidget {
                 const OptrSpacer(),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                  child: OptrButton.active(
+                  child: OptrDisplayButton.active(
                     label: const Text('Copy Password'),
                     icon: Icon(Icons.content_copy),
                     onTap: () {},
@@ -143,18 +143,18 @@ class PasswordDetail extends HookWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    OptrButton.cancel(
+                    OptrDisplayButton.cancel(
                       icon: Icon(Icons.arrow_back),
                       onTap: _onClose,
                     ),
                     const OptrSpacer(),
-                    OptrButton.active(
+                    OptrDisplayButton.active(
                       onTap: save,
                       icon: Icon(Icons.check_circle),
                     ),
                     const OptrSpacer(),
                     editing
-                        ? OptrButton.error(
+                        ? OptrDisplayButton.error(
                             icon: Icon(Icons.delete_forever),
                             onTap: deleteAccount,
                           )

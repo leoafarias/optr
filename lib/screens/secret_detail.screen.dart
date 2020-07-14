@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:optr/components/button.dart';
+import 'package:optr/components/display_button.dart';
 import 'package:optr/components/edges.dart';
 import 'package:optr/components/instructions.dart';
 import 'package:optr/components/spacer.dart';
@@ -120,7 +121,7 @@ class SecretDetail extends HookWidget {
                                 ),
                                 Container(
                                   width: double.infinity,
-                                  child: OptrButton.active(
+                                  child: OptrDisplayButton.active(
                                     label: const Text('Generate a passphrase'),
                                     icon: Icon(Icons.vpn_key),
                                     onTap: onGenerate,
@@ -150,7 +151,9 @@ class SecretDetail extends HookWidget {
                             )
                           : const SizedBox(),
                       const SizedBox(height: 20),
-                      Text(convertSecondsToReadable(result.value?.crackTime)),
+                      Text(
+                        'Approximate Crack Time: ${convertSecondsToReadable(result.value?.crackTime)}',
+                      ),
                       const SizedBox(height: 20),
                       icons.value != null
                           ? Row(
@@ -174,18 +177,18 @@ class SecretDetail extends HookWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    OptrButton.active(
-                      icon: Icon(Icons.check_circle),
-                      onTap: save,
+                    OptrButton(
+                      child: Text('Save'),
+                      onPressed: save,
                     ),
                     const OptrSpacer(),
-                    OptrButton.cancel(
+                    OptrDisplayButton.cancel(
                       icon: Icon(Icons.cancel),
                       onTap: onClose,
                     ),
                     const OptrSpacer(),
                     editing
-                        ? OptrButton.error(
+                        ? OptrDisplayButton.error(
                             icon: Icon(Icons.delete_forever),
                             onTap: onDelete,
                           )

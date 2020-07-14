@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:optr/components/cut_edges_decoration.dart';
-import 'package:optr/components/edges.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:optr/components/typography.dart';
 import 'package:optr/modules/secret/secret.model.dart';

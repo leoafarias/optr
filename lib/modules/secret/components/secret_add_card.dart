@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:optr/components/button.dart';
+import 'package:optr/components/display_button.dart';
 import 'package:optr/components/edges.dart';
 
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -41,7 +41,7 @@ class SecretAddCard extends HookWidget {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                OptrButton.active(
+                OptrDisplayButton.active(
                   label: const Text('Generate a Secret Code'),
                 )
               ],

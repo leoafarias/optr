@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:optr/components/button.dart';
+import 'package:optr/components/display_button.dart';
 import 'package:optr/components/instructions.dart';
 import 'package:optr/components/spacer.dart';
 import 'package:optr/screens/secret_detail.screen.dart';
@@ -49,7 +49,7 @@ class WalkThorugh extends HookWidget {
             ),
             const OptrSpacer(),
             showNext.value
-                ? OptrButton.active(
+                ? OptrDisplayButton.active(
                     label: const Text('Next '),
                     icon: Icon(Icons.arrow_forward),
                     onTap: onPress,
