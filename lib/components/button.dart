@@ -7,12 +7,14 @@ class OptrButton extends StatelessWidget {
   final NotchedCorner edgeCorners;
   final TextStyle textStyle;
   final Color color;
+  final IconData icon;
   const OptrButton({
     this.label,
     this.onPressed,
     this.edgeCorners = const NotchedCorner.cross(10, 0),
     this.color,
     this.textStyle,
+    this.icon,
   });
 
   @override
@@ -35,6 +37,32 @@ class OptrButton extends StatelessWidget {
 
     final labelStyle = _textStyle.copyWith(color: _color);
 
+    Widget _renderLabel() {
+      if (label == null) return const SizedBox();
+      return Text(label, style: labelStyle);
+    }
+
+    Widget _renderIcon() {
+      if (icon == null) return const SizedBox();
+      return Icon(icon, color: _color);
+    }
+
+    Widget _renderSpace() {
+      if (label == null || icon == null) return const SizedBox();
+      return const SizedBox(width: 5);
+    }
+
+    Widget renderElement() {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          _renderIcon(),
+          _renderSpace(),
+          _renderLabel(),
+        ],
+      );
+    }
+
     return Material(
       shape: shapeBorder,
       color: Colors.transparent,
@@ -48,7 +76,7 @@ class OptrButton extends StatelessWidget {
         child: Container(
           color: Colors.transparent,
           padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-          child: Text(label, style: labelStyle),
+          child: renderElement(),
         ),
       ),
     );
