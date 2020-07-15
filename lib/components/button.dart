@@ -1,34 +1,56 @@
 import 'package:flutter/material.dart';
-import 'package:optr/components/cut_edges_decoration.dart';
+import 'package:optr/components/edges.dart';
 
 class OptrButton extends StatelessWidget {
-  final Widget child;
+  final String label;
   final Function() onPressed;
-  const OptrButton({this.child, this.onPressed});
+  final NotchedCorner edgeCorners;
+  final TextStyle textStyle;
+  final Color color;
+  const OptrButton({
+    this.label,
+    this.onPressed,
+    this.edgeCorners = const NotchedCorner.cross(10, 0),
+    this.color,
+    this.textStyle,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        padding: EdgeInsets.all(0),
-        decoration: CutEdgesDecoration(
-          color: Colors.red,
-          lineColor: Theme.of(context).accentColor,
-          lineStroke: 1.0,
-          edges: const CutEdgeCorners.cross(10.0, 10.0),
+    final _color = color ?? Theme.of(context).buttonColor;
+    final _textStyle = textStyle ?? Theme.of(context).textTheme.button;
+
+    final shapeBorder = BeveledRectangleBorder(
+      side: BorderSide(
+        width: 1,
+        color: _color,
+      ),
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(edgeCorners.topLeft),
+        topRight: Radius.circular(edgeCorners.topRight),
+        bottomRight: Radius.circular(edgeCorners.bottomRight),
+        bottomLeft: Radius.circular(edgeCorners.bottomLeft),
+      ),
+    );
+
+    final labelStyle = _textStyle.copyWith(color: _color);
+
+    return Material(
+      shape: shapeBorder,
+      color: Colors.transparent,
+      child: InkWell(
+        highlightColor: _color.withOpacity(0.1),
+        splashColor: _color.withOpacity(0.2),
+        focusColor: _color.withOpacity(0.1),
+        hoverColor: _color.withOpacity(0.1),
+        customBorder: shapeBorder,
+        onTap: onPressed,
+        child: Container(
+          color: Colors.transparent,
+          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+          child: Text(label, style: labelStyle),
         ),
-        child: RawMaterialButton(
-          fillColor: Colors.blue,
-          padding: const EdgeInsets.all(0),
-          child: child,
-          onPressed: onPressed,
-          shape: const BeveledRectangleBorder(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(10),
-              topRight: Radius.circular(10),
-              bottomRight: Radius.circular(10),
-              bottomLeft: Radius.circular(10),
-            ),
-          ),
-        ));
+      ),
+    );
   }
 }

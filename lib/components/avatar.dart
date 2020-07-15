@@ -30,7 +30,7 @@ class OptrAvatar extends StatelessWidget {
     }
 
     return OptrEdges(
-      corners: const EdgeCorners.cross(15, 0),
+      corners: NotchedCorner.cross(15, 0),
       color: palette.borderColor,
       child: Container(
         width: 60.0,

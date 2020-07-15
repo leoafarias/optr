@@ -1,6 +1,6 @@
 import 'package:intl/intl.dart';
 
-String formatNumber(double number) {
+String formatNumber(int number) {
   final f = NumberFormat.decimalPattern();
   return f.format(number);
 }
@@ -9,12 +9,12 @@ String convertSecondsToReadable(int seconds) {
   if (seconds == null) return '';
   var timeString = '';
 
-  final numSeconds = seconds.floor().toDouble();
-  final numMinutes = seconds.floor() / 60;
-  final numHours = numMinutes.floor() / 60;
-  final numDays = numHours.floor() / 24;
-  final numYears = numDays.floor() / 365;
-  final numCenturies = numYears.floor() / 100;
+  final numSeconds = seconds.floor();
+  final numMinutes = (seconds / 60).floor();
+  final numHours = (numMinutes / 60).floor();
+  final numDays = (numHours / 24).floor();
+  final numYears = (numDays / 365).floor();
+  final numCenturies = (numYears / 100).floor();
 
   if (numSeconds == 0) {
     timeString = 'less than a seconds';

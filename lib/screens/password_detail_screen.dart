@@ -64,7 +64,7 @@ class PasswordDetail extends HookWidget {
         child: Padding(
           padding: const EdgeInsets.all(10),
           child: OptrDoubleEdge(
-            corners: const EdgeCorners.only(30, 30, 0, 30),
+            corners: const NotchedCorner.only(30, 30, 0, 30),
             gradient: true,
             color: Colors.black.withOpacity(0.95),
             borderColor: palette.value.borderColor,

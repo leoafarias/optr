@@ -60,7 +60,7 @@ class OptrCounter extends HookWidget {
     return OptrDoubleEdge(
       color: Colors.black.withOpacity(0.9),
       borderColor: color,
-      corners: const EdgeCorners.cross(10, 0),
+      corners: const NotchedCorner.cross(10, 0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[

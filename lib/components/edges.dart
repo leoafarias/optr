@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 /// Default edges for components
+@deprecated
 class OptrEdges extends StatelessWidget {
   /// Widget child
   final Widget child;
@@ -12,7 +13,7 @@ class OptrEdges extends StatelessWidget {
   final bool gradient;
 
   /// Sharpness of the corners
-  final EdgeCorners corners;
+  final NotchedCorner corners;
 
   /// Constructor
   const OptrEdges({
@@ -20,7 +21,7 @@ class OptrEdges extends StatelessWidget {
     @required this.child,
     this.color = Colors.black,
     this.gradient = false,
-    this.corners = const EdgeCorners.only(5, 5, 5, 5),
+    this.corners = const NotchedCorner.only(5, 5, 5, 5),
   }) : super(key: key);
 
   @override
@@ -48,6 +49,7 @@ class OptrEdges extends StatelessWidget {
   }
 }
 
+@deprecated
 class OptrDoubleEdge extends StatelessWidget {
   /// Widget child
   final Widget child;
@@ -65,7 +67,7 @@ class OptrDoubleEdge extends StatelessWidget {
   final double borderWidth;
 
   /// Sharpness of the corners
-  final EdgeCorners corners;
+  final NotchedCorner corners;
 
   /// Constructor
   const OptrDoubleEdge({
@@ -75,7 +77,7 @@ class OptrDoubleEdge extends StatelessWidget {
     this.color = Colors.black,
     this.borderWidth = 1.0,
     this.gradient = false,
-    this.corners = const EdgeCorners.only(5, 5, 5, 5),
+    this.corners = const NotchedCorner.only(5, 5, 5, 5),
   }) : super(key: key);
 
   @override
@@ -98,7 +100,7 @@ class OptrDoubleEdge extends StatelessWidget {
 }
 
 /// Helper for edge corners
-class EdgeCorners {
+class NotchedCorner {
   /// Top left corner
   final double topLeft;
 
@@ -112,7 +114,7 @@ class EdgeCorners {
   final double bottomLeft;
 
   /// Constructor
-  const EdgeCorners({
+  const NotchedCorner({
     this.topLeft = 0,
     this.topRight = 0,
     this.bottomLeft = 0,
@@ -120,7 +122,7 @@ class EdgeCorners {
   });
 
   /// Creates some edge cuts on all corners
-  const EdgeCorners.all(double size)
+  const NotchedCorner.all(double size)
       : this(
           topLeft: size,
           topRight: size,
@@ -129,7 +131,7 @@ class EdgeCorners {
         );
 
   /// Creates edge corners by setting eacy corner individually
-  const EdgeCorners.only(
+  const NotchedCorner.only(
       double topRight, double topLeft, double bottomRight, double bottomLeft)
       : this(
           topLeft: topLeft,
@@ -139,6 +141,6 @@ class EdgeCorners {
         );
 
   /// Creates cross axis edge corners
-  const EdgeCorners.cross(double topToBottom, double bottomToTop)
+  const NotchedCorner.cross(double topToBottom, double bottomToTop)
       : this.only(topToBottom, bottomToTop, bottomToTop, topToBottom);
 }

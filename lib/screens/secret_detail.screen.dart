@@ -80,7 +80,7 @@ class SecretDetail extends HookWidget {
         child: Padding(
           padding: const EdgeInsets.all(10),
           child: OptrDoubleEdge(
-            corners: const EdgeCorners.only(30, 30, 0, 30),
+            corners: const NotchedCorner.only(30, 30, 0, 30),
             color: Theme.of(context).cardColor,
             borderColor: Theme.of(context).accentColor,
             child: ListView(
@@ -178,7 +178,7 @@ class SecretDetail extends HookWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     OptrButton(
-                      child: Text('Save'),
+                      label: 'Save',
                       onPressed: save,
                     ),
                     const OptrSpacer(),

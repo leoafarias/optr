@@ -31,7 +31,7 @@ class SecretAddCard extends HookWidget {
       key: key,
       onTap: onPress,
       child: OptrDoubleEdge(
-        corners: const EdgeCorners.all(15),
+        corners: const NotchedCorner.all(15),
         color: Colors.black,
         child: Padding(
           padding: const EdgeInsets.all(20),

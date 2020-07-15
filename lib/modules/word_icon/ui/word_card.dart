@@ -18,7 +18,7 @@ class WordCard extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
       child: OptrDoubleEdge(
         color: Colors.black,
-        corners: const EdgeCorners.cross(0, 20),
+        corners: const NotchedCorner.cross(0, 20),
         child: Row(
           children: <Widget>[
             OptrAvatar(wordIcon.word),

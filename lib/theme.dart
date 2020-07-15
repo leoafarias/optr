@@ -26,7 +26,7 @@ ThemeData darkTheme() {
     cardColor: Colors.black,
     scaffoldBackgroundColor: Colors.black,
     backgroundColor: Colors.black,
-    // buttonColor: Color(0xFF111111),
+    buttonColor: Colors.tealAccent,
     cardTheme: const CardTheme(elevation: 0),
     textTheme: _textTheme(),
   );
