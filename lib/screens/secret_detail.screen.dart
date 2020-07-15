@@ -6,7 +6,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:optr/components/button.dart';
 import 'package:optr/components/display_button.dart';
 import 'package:optr/components/edges.dart';
+import 'package:optr/components/empty_space.dart';
 import 'package:optr/components/instructions.dart';
+import 'package:optr/components/password_strength.dart';
 import 'package:optr/components/spacer.dart';
 import 'package:optr/components/text_field.dart';
 import 'package:optr/helpers/generate_optr.dart';
@@ -52,7 +54,7 @@ class SecretDetail extends HookWidget {
       Navigator.pop(context);
     }
 
-    void save() {
+    void onSave() {
       if (secret.value.name.isEmpty) {
         // TODO - Display validation error
       }
@@ -75,129 +77,112 @@ class SecretDetail extends HookWidget {
       passphrase.value;
     }
 
+    Widget renderDeleteButton() {
+      return Expanded(
+        child: OptrButton(
+          label: 'Delete',
+          onPressed: onDelete,
+          icon: Icons.delete,
+          color: Colors.red,
+        ),
+      );
+    }
+
+    Widget renderSaveButton() {
+      return Expanded(
+        child: OptrButton(
+          label: 'Save',
+          onPressed: onSave,
+          icon: Icons.check_circle,
+        ),
+      );
+    }
+
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Generate Secret'),
+      ),
+      bottomNavigationBar: SafeArea(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            renderSaveButton(),
+            const OptrSpacer(),
+            editing ? renderDeleteButton() : Empty,
+          ],
+        ),
+      ),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(10),
-          child: OptrDoubleEdge(
-            corners: const NotchedCorner.only(30, 30, 0, 30),
-            color: Theme.of(context).cardColor,
-            borderColor: Theme.of(context).accentColor,
-            child: ListView(
-              padding: const EdgeInsets.symmetric(horizontal: 10.0),
-              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-              children: <Widget>[
-                const OptrSpacer(),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                  child: Column(
-                    children: <Widget>[
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Text(
-                            'Generate Secret',
-                            style: Theme.of(context).textTheme.headline4,
-                          ),
-                        ],
-                      ),
-                      const OptrSpacer(),
-                      OptrTextField(
-                        label: 'Label',
-                        autofocus: true,
-                        color: Theme.of(context).accentColor,
-                        value: secret.value.name,
-                        onChanged: (value) {
-                          secret.value.name = value;
-                        },
-                      ),
-                      !editing
-                          ? Column(
-                              children: <Widget>[
-                                const OptrSpacer(),
-                                const Instructions(
-                                  content:
-                                      'We can help you generate an fully random secure easy to remember passphrase.',
-                                ),
-                                Container(
-                                  width: double.infinity,
-                                  child: OptrDisplayButton.active(
-                                    label: const Text('Generate a passphrase'),
-                                    icon: Icon(Icons.vpn_key),
-                                    onTap: onGenerate,
-                                  ),
-                                ),
-                                const OptrSpacer(),
-                                OptrTextField(
-                                  label: 'Passphrase',
-                                  value: passphrase.value,
-                                  color: Theme.of(context).accentColor,
-                                  onChanged: (value) =>
-                                      passphrase.value = value,
-                                ),
-                                const OptrSpacer(),
-                                result.value != null
-                                    ? LinearPercentIndicator(
-                                        // width: 140.0,
-                                        lineHeight: 14.0,
-                                        percent: result.value.score * 0.25,
-                                        backgroundColor:
-                                            Theme.of(context).cardColor,
-                                        progressColor:
-                                            Theme.of(context).accentColor,
-                                      )
-                                    : const SizedBox(),
-                              ],
-                            )
-                          : const SizedBox(),
-                      const SizedBox(height: 20),
-                      Text(
-                        'Approximate Crack Time: ${convertSecondsToReadable(result.value?.crackTime)}',
-                      ),
-                      const SizedBox(height: 20),
-                      icons.value != null
-                          ? Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: icons.value.map((icon) {
-                                return SizedBox(
-                                  height: 40,
-                                  width: 40,
-                                  child: Image.memory(
-                                    icon,
-                                    color: Theme.of(context).accentColor,
-                                  ),
-                                );
-                              }).toList(),
-                            )
-                          : const SizedBox(),
-                      const OptrSpacer(),
-                    ],
+        child: ListView(
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+          children: <Widget>[
+            const OptrSpacer(),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+              child: Column(
+                children: <Widget>[
+                  const OptrSpacer(),
+                  OptrTextField(
+                    label: 'Label',
+                    autofocus: true,
+                    color: Theme.of(context).accentColor,
+                    value: secret.value.name,
+                    onChanged: (value) {
+                      secret.value.name = value;
+                    },
                   ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    OptrButton(
-                      label: 'Save',
-                      onPressed: save,
-                    ),
-                    const OptrSpacer(),
-                    OptrDisplayButton.cancel(
-                      icon: Icon(Icons.cancel),
-                      onTap: onClose,
-                    ),
-                    const OptrSpacer(),
-                    editing
-                        ? OptrDisplayButton.error(
-                            icon: Icon(Icons.delete_forever),
-                            onTap: onDelete,
-                          )
-                        : const SizedBox(),
-                  ],
-                ),
-              ],
+                  !editing
+                      ? Column(
+                          children: <Widget>[
+                            const OptrSpacer(),
+                            const Instructions(
+                              content:
+                                  'We can help you generate an fully random secure easy to remember passphrase.',
+                            ),
+                            Container(
+                              width: double.infinity,
+                              child: OptrDisplayButton.active(
+                                label: const Text('Generate a passphrase'),
+                                icon: Icon(Icons.vpn_key),
+                                onTap: onGenerate,
+                              ),
+                            ),
+                            const OptrSpacer(),
+                            OptrTextField(
+                              label: 'Passphrase',
+                              value: passphrase.value,
+                              color: Theme.of(context).accentColor,
+                              onChanged: (value) => passphrase.value = value,
+                            ),
+                            const OptrSpacer(),
+                            PasswordStrengthDisplay(result.value)
+                          ],
+                        )
+                      : const SizedBox(),
+                  const SizedBox(height: 20),
+                  // TODO:
+                  const SizedBox(height: 20),
+                  icons.value != null
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: icons.value.map((icon) {
+                            return SizedBox(
+                              height: 40,
+                              width: 40,
+                              child: Image.memory(
+                                icon,
+                                color: Theme.of(context).accentColor,
+                              ),
+                            );
+                          }).toList(),
+                        )
+                      : const SizedBox(),
+                  const OptrSpacer(),
+                ],
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );

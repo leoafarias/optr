@@ -21,7 +21,7 @@ TextTheme _textTheme() {
 ThemeData darkTheme() {
   return ThemeData(
     brightness: Brightness.dark,
-    primaryColor: Colors.deepPurple,
+    primaryColor: Colors.black,
     accentColor: Colors.tealAccent,
     cardColor: Colors.black,
     scaffoldBackgroundColor: Colors.black,
