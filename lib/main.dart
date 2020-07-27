@@ -17,7 +17,7 @@ void main() async {
   Hive.registerAdapter<Secret>(SecretAdapter());
   Hive.registerAdapter<WordIcon>(WordIconAdapter());
   WordIconRepo.openBox();
-  runApp(const MyApp());
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -25,17 +25,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ProviderScope(
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: darkTheme(),
-        initialRoute: '/',
-        routes: {
-          '/': (context) => HomeScreen(),
-          SecretDetail.routeName: (context) => SecretDetail(),
-          PasswordDetail.routeName: (context) => PasswordDetail(),
-        },
-      ),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: darkTheme(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => HomeScreen(),
+        SecretDetail.routeName: (context) => SecretDetail(),
+        PasswordDetail.routeName: (context) => PasswordDetail(),
+      },
     );
   }
 }

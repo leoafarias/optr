@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-/// Standard blue color
-const kBlueColor = Color(0xFF005EFF);
-
 TextTheme _textTheme() {
   return GoogleFonts.titilliumWebTextTheme()
       .copyWith(

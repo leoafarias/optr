@@ -1,13 +1,25 @@
 import 'package:intl/intl.dart';
+import 'package:xcvbnm/xcvbnm.dart';
 
 String formatNumber(int number) {
   final f = NumberFormat.decimalPattern();
   return f.format(number);
 }
 
-String convertSecondsToReadable(int seconds) {
-  if (seconds == null) return '';
-  var timeString = '';
+class PasswordStrength {
+  final String message;
+  final double strength;
+
+  PasswordStrength({this.message, this.strength});
+}
+
+PasswordStrength getPasswordStrength(Result result) {
+  if (result == null || result.crackTime == null || result.crackTime == 0) {
+    return PasswordStrength(message: '', strength: 0);
+  }
+  final seconds = result.crackTime;
+  var message = '';
+  var strength = 0.0;
 
   final numSeconds = seconds.floor();
   final numMinutes = (seconds / 60).floor();
@@ -17,20 +29,32 @@ String convertSecondsToReadable(int seconds) {
   final numCenturies = (numYears / 100).floor();
 
   if (numSeconds == 0) {
-    timeString = 'less than a seconds';
+    message = 'less than a seconds';
+    strength = 0.01;
   } else if (numSeconds < 60) {
-    timeString = '${formatNumber(numSeconds)} seconds';
+    message = '${formatNumber(numSeconds)} seconds';
+    strength = 0.1;
   } else if (numMinutes < 60) {
-    timeString = '${formatNumber(numMinutes)} minutes';
+    message = '${formatNumber(numMinutes)} minutes';
+    strength = 0.2;
   } else if (numHours < 24) {
-    timeString = '${formatNumber(numHours)} hours';
+    message = '${formatNumber(numHours)} hours';
+    strength = 0.3;
   } else if (numDays < 365) {
-    timeString = '${formatNumber(numDays)} days';
+    message = '${formatNumber(numDays)} days';
+    numDays < 100 ? strength = 0.5 : strength = 0.6;
   } else if (numYears < 100) {
-    timeString = '${formatNumber(numYears)} years';
+    message = '${formatNumber(numYears)} years';
+    numYears < 10 ? strength = 0.65 : strength = 0.75;
   } else {
-    timeString = '${formatNumber(numCenturies)} centuries';
+    message = '${formatNumber(numCenturies)} centuries';
+    numCenturies < 100 ? strength = 0.85 : strength = 0.9;
+    // Check if its over 100k centuries
+    numCenturies > 100000 ? strength = 1.0 : strength;
   }
 
-  return timeString;
+  return PasswordStrength(
+    message: message,
+    strength: strength,
+  );
 }

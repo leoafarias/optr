@@ -5,20 +5,17 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:optr/components/button.dart';
 import 'package:optr/components/display_button.dart';
-import 'package:optr/components/edges.dart';
 import 'package:optr/components/empty_space.dart';
 import 'package:optr/components/instructions.dart';
 import 'package:optr/components/password_strength.dart';
 import 'package:optr/components/spacer.dart';
 import 'package:optr/components/text_field.dart';
 import 'package:optr/helpers/generate_optr.dart';
-import 'package:optr/helpers/seconds_to_readable.dart';
 
 import 'package:optr/modules/secret/secret.provider.dart';
 import 'package:optr/modules/word_icon/word_icon.repo.dart';
 import 'package:uuid/uuid.dart';
 import 'package:xcvbnm/xcvbnm.dart';
-import 'package:percent_indicator/percent_indicator.dart';
 
 final xcvbm = Xcvbnm();
 

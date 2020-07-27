@@ -12,28 +12,37 @@ class PasswordStrengthDisplay extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final score = useState<int>(0);
+    final passwordStrength = useState(getPasswordStrength(result));
+    final color = useState(Colors.transparent);
 
     useValueChanged(result, (_, __) {
-      score.value = result.score;
+      passwordStrength.value = getPasswordStrength(result);
+      color.value = passwordStrength.value.strength < 0.7
+          ? Colors.deepOrangeAccent
+          : Colors.tealAccent;
     });
 
-    if (result == null || result.score == null) return Empty;
-    final crackTime = convertSecondsToReadable(result.crackTime);
+    if (passwordStrength.value.strength == 0.0) return Empty;
 
     return Column(
       children: <Widget>[
         LinearPercentIndicator(
           // width: 140.0,
           lineHeight: 14.0,
-          animation: true,
           animateFromLastPercent: true,
-          percent: score.value * 0.25,
-          backgroundColor: Theme.of(context).cardColor,
-          progressColor: Theme.of(context).accentColor,
+          animation: true,
+          leading: const Text('Weak'),
+          trailing: const Text('Strong'),
+          percent: passwordStrength.value.strength,
+
+          backgroundColor: Colors.white.withOpacity(0.1),
+          linearStrokeCap: LinearStrokeCap.butt,
+          animationDuration: 500,
+          // curve: Curves.easeInCubic,
+          progressColor: color.value,
         ),
         const OptrSpacer(),
-        Text('Approximate Crack Time: $crackTime'),
+        Text('Approximate Crack Time: ${passwordStrength.value.message}'),
       ],
     );
   }

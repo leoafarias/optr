@@ -16,7 +16,8 @@ class PasswordList extends StatelessWidget {
   Widget build(BuildContext context) {
     if (list == null || list.isEmpty) {
       return EmptyDataset(
-          message: 'No Accounts Have\n Been Added Yet', icon: Icons.vpn_key);
+          message: 'No Passwords Have\n Been Created With This Secret',
+          icon: Icons.vpn_key);
     }
 
     return ListView.separated(
